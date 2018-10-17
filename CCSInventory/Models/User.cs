@@ -7,49 +7,58 @@ using System.ComponentModel.DataAnnotations;
 
 // https://crackstation.net/hashing-security.htm : Why we hash and salt passwords
 
-namespace CCSInventory.Models{
+namespace CCSInventory.Models
+{
 
     // This shouldn't be bound to forms.  This class is for the DB and internal logic.
     // Use the ViewModels for UserLogin and UserCreate instead.
     [BindNever]
-    public class User : TrackedModel {
-        public long ID {get; set;}
+    public class User : TrackedModel
+    {
+        public long ID { get; set; }
 
-        public string FirstName {get; set;}
-        public string LastName {get; set;}
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        public string FullName {get => $"{FirstName} {LastName}";}
+        public string FullName { get => $"{FirstName} {LastName}"; }
 
-        public string UserName {get; set;}
-        
+        public string UserName { get; set; }
+
         [DataType(DataType.EmailAddress)]
-        public string Email {get; set;}
-        public string PasswordHash {get; private set;}
-        public string Note {get; set;}
+        public string Email { get; set; }
+        public string PasswordHash { get; private set; }
+        public string Note { get; set; }
 
-        public UserRole Role {get; set;}
+        public UserRole Role { get; set; }
 
-        public bool MatchesPassword(string password){
+        public bool MatchesPassword(string password)
+        {
             return BCrypt.Net.BCrypt.EnhancedVerify(password, this.PasswordHash);
         }
 
-        public PasswordChangeResult ChangePassword(string newPassword){
-            if(String.IsNullOrEmpty(newPassword)){
+        public PasswordChangeResult ChangePassword(string newPassword)
+        {
+            if (String.IsNullOrEmpty(newPassword))
+            {
                 return PasswordChangeResult.PASSWORD_FAILURE;
-            } else {
+            }
+            else
+            {
                 // Add constraints here for password complexity
                 this.PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(newPassword, workFactor: 10);
                 return PasswordChangeResult.PASSWORD_OK;
             }
         }
     }
-    
-    public enum PasswordChangeResult{
+
+    public enum PasswordChangeResult
+    {
         PASSWORD_FAILURE,
         PASSWORD_OK,
     }
 
-    public enum UserRole {
+    public enum UserRole
+    {
         DISABLED,
         READONLY,
         STANDARD,

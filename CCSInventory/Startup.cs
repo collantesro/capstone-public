@@ -17,7 +17,7 @@ namespace CCSInventory
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<RouteOptions>(o=>o.LowercaseUrls = true);
+            services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
