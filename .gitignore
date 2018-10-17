@@ -491,3 +491,6 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/macos,aspnetcore,visualstudio
+
+# Ignore the libman-installed client libraries
+*/wwwroot/lib
