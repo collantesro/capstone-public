@@ -24,6 +24,7 @@ namespace CCSInventory.Models
         public string LastName { get; set; }
 
         public string FullName { get => $"{FirstName} {LastName}"; }
+        public string FullNameLastFirst { get => $"{LastName}, {FirstName}"; }
 
         [Required]
         public string UserName { get; set; }
@@ -37,7 +38,8 @@ namespace CCSInventory.Models
 
         public bool MatchesPassword(string password)
         {
-            return BCrypt.Net.BCrypt.EnhancedVerify(password, this.PasswordHash);
+            return !String.IsNullOrEmpty(this.PasswordHash) &&
+                BCrypt.Net.BCrypt.EnhancedVerify(password, this.PasswordHash);
         }
 
         public PasswordChangeResult ChangePassword(string newPassword)
