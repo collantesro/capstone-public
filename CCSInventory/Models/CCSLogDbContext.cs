@@ -4,7 +4,6 @@ namespace CCSInventory.Models
 {
     public class CCSLogDbContext : DbContext
     {
-        public CCSLogDbContext(DbContextOptions<CCSLogDbContext> o) : base(o) { }
-
+        public CCSLogDbContext(DbContextOptions<CCSLogDbContext> options) : base(options) { }
     }
 }

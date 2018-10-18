@@ -17,19 +17,23 @@ namespace CCSInventory.Models
     {
         public long ID { get; set; }
 
+        [Required]
         public string FirstName { get; set; }
+
+        [Required]
         public string LastName { get; set; }
 
         public string FullName { get => $"{FirstName} {LastName}"; }
 
+        [Required]
         public string UserName { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
         public string PasswordHash { get; private set; }
         public string Note { get; set; }
-
-        public UserRole Role { get; set; }
+        public UserRole Role { get; set; } = UserRole.DISABLED;
 
         public bool MatchesPassword(string password)
         {
