@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CCSInventory.Migrations
 {
     [DbContext(typeof(CCSDbContext))]
-    [Migration("20181018123018_Initial")]
+    [Migration("20181019170426_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

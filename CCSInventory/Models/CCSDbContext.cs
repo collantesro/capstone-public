@@ -18,31 +18,25 @@ namespace CCSInventory.Models
             // For Alternate Keys
             modelBuilder.Entity<User>().HasAlternateKey(u => u.UserName);
 
-            // Seeding data: default admin user:
-            var defaultAdmin = new User
+            // Seeding data
+            // Add a default user to the table.  Using anonymous type instead of a User
+            // object so the passwordHash and all other data is constant across migrations
+            DateTime createdModified = DateTime.Parse("2018-10-18T12:30:18.051Z").ToUniversalTime();
+            modelBuilder.Entity<User>().HasData(new
             {
-                ID = 1, // An ID must be specified here.
+                ID = 1L, // Since ID is type long in User, specify integer constant as type Long with "L" suffix
                 FirstName = "Weber",
                 LastName = "CS",
                 UserName = "skram",
+                // This passwordhash is the hash for: M8/iq+W1
+                PasswordHash = "$2a$10$/n.xV7jA5piJOZmfbT270eAKstycJ9WHqfpSttqz25ARWwnyLCyhu",
                 Role = UserRole.ADMIN,
                 Note = "Default user for an empty database",
                 CreatedBy = "Seeded Data",
                 ModifiedBy = "Seeded Data",
-                // Seed Data is inserted using Migrations, so SaveChanges() isn't called
-                // These fields must be manually set:
-                Created = DateTime.UtcNow,
-                Modified = DateTime.UtcNow,
-            };
-
-            PasswordChangeResult r = defaultAdmin.ChangePassword("M8/iq+W1");
-            if (r != PasswordChangeResult.PASSWORD_OK)
-            {
-                throw new Exception("Failure setting password for default user");
-            }
-
-            // Seeding data:
-            modelBuilder.Entity<User>().HasData(defaultAdmin);
+                Created = createdModified,
+                Modified = createdModified,
+            });
         }
 
         public override int SaveChanges()
