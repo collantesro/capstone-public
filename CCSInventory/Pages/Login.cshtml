@@ -1,27 +1,49 @@
 @page
 @model LoginModel
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+
+@{ 
+    ViewBag.Title = "Login";
+}
+
 <div class="container">
-    <div class="row">
-        <div asp-validation-summary="All" class="text-danger"></div>
-    </div>
     <div class="row">
         <form method="post" class="form-horizontal">
             <div class="form-group">
-                <label asp-for="Login.UserName" class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="Login.UserName" paceholder="User Name" class="form-control"/>
-                </div>
+                <label asp-for="Login.UserName" class="control-label"></label>
+                @*
+                    The following if-statement is checking for an error with the Login.UserName model.
+                    If so, it uses the Bootstrap is-invalid class, which will highlight the field in red.
+                    I also include the span with the validation string underneath it
+                *@
+                @if (ModelState["Login.UserName"] != null &&
+                     ModelState["Login.UserName"].ValidationState == ModelValidationState.Invalid)
+                {
+                <input asp-for="Login.UserName" placeholder="User Name" class="form-control is-invalid" />
+                <span asp-validation-for="Login.UserName" class="invalid-feedback"></span>
+                }
+                else
+                {
+                <input asp-for="Login.UserName" placeholder="User Name" class="form-control" />
+                }
             </div>
             <div class="form-group">
-                <label asp-for="Login.Password" class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="Login.Password" paceholder="Password" class="form-control"/>
-                </div>
+                <label asp-for="Login.Password" class="control-label"></label>
+                @* Same logic as above, but for the Login.Password model. *@
+                @if (ModelState["Login.Password"] != null &&
+                     ModelState["Login.Password"].ValidationState == ModelValidationState.Invalid)
+                {
+                    <input asp-for="Login.Password" placeholder="Password" class="form-control is-invalid" />
+                    <span asp-validation-for="Login.Password" class="invalid-feedback"></span>
+                }
+                else
+                {
+                    <input asp-for="Login.Password" placeholder="Password" class="form-control" />
+                }
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <div class="row">
+                <div asp-validation-summary="All" class="invalid-feedback"></div>
             </div>
         </form>
     </div>
