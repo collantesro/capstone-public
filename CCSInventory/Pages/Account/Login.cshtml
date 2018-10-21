@@ -1,4 +1,4 @@
-@page
+@page "{handler?}"
 @model LoginModel
 @using Microsoft.AspNetCore.Mvc.ModelBinding
 
@@ -41,10 +41,10 @@
                     <input asp-for="Login.Password" placeholder="Password" class="form-control" />
                 }
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
             <div class="row">
-                <div asp-validation-summary="All" class="invalid-feedback"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
             </div>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
 </div>
