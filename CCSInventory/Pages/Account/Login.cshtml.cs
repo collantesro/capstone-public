@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.ComponentModel;
 using System.Diagnostics; // for Stopwatch()
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -22,8 +23,12 @@ namespace CCSInventory.Pages
         [BindProperty]
         public UserLogin Login { get; set; }
 
-        private CCSDbContext _context;
-        private ILogger<LoginModel> _log;
+        [BindProperty]
+        [DisplayName("Remember me")]
+        public bool PersistLogin {get; set;}
+
+        private readonly CCSDbContext _context;
+        private readonly ILogger<LoginModel> _log;
 
         public LoginModel(CCSDbContext context, ILogger<LoginModel> logger)
         {
@@ -106,7 +111,11 @@ namespace CCSInventory.Pages
                 // changed from STANDARD to DISABLED, they shouldn't have access anymore.
                 // We can compare the LastModified field with the DB in the Validator.
 
-                await HttpContext.SignInAsync(scheme, claimsPrincipal);
+                await HttpContext.SignInAsync(scheme, claimsPrincipal,
+                    new AuthenticationProperties{
+                        IsPersistent = PersistLogin,
+                    }
+                );
                 return Redirect(returnUrl);
             }
         }
