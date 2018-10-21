@@ -1,14 +1,19 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Diagnostics; // for Stopwatch()
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 using CCSInventory.Models;
 using CCSInventory.Models.ViewModels;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Diagnostics; // for Stopwatch()
-using Microsoft.Extensions.Logging;
+
+// Microsoft API Reference:
+// https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-2.1&tabs=aspnetcore2x
 
 namespace CCSInventory.Pages {
     public class LoginModel : PageModel {
@@ -25,6 +30,15 @@ namespace CCSInventory.Pages {
         public LoginModel(CCSDbContext context, ILogger<LoginModel> logger){
             _context = context;
             _log = logger;
+        }
+
+        public IActionResult OnGet(){
+            // If they're already logged in, just redirect to the index.
+            if(User.Identity.IsAuthenticated){
+                return Redirect("~/");
+            } else {
+                return Page();
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(){
@@ -55,22 +69,35 @@ namespace CCSInventory.Pages {
 
                     return Page();
                 }
+
+                // User and Password matches, but check they're not a disabled user:
+                if(user.Role == UserRole.DISABLED){
+                    return RedirectToPage("DisabledUser");
+                }
                 
                 // Login is successful here.  Add Authentication Cookie now.
-                //TODO: Finish login authentication
-                // From TopsyTurvyCakes project:
-                // var scheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                // var user = new ClaimsPrincipal(new ClaimsIdentity(new[] {
-                //     new Claim(ClaimTypes.Name, EmailAddress)
-                // }, scheme));
-                // return SignIn(user, scheme);
+                var scheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim("UserRole", user.Role.ToString()),
+                    new Claim("LastModified", user.Modified.ToString()),
+                }, scheme));
 
-                return RedirectToPage("Index");
+                // The UserRole claim is used to discriminate app features based on UserRole.
+                //
+                // The LastModified claim is used in the Validation logic to revoke the cookie
+                // if the user was modified in the database since their last login.
+                // For example, say a logged in user leaves the company. When their Role is
+                // changed from STANDARD to DISABLED, they shouldn't have access anymore.
+                // We can compare the LastModified field with the DB in the Validator.
+
+                await HttpContext.SignInAsync(scheme, claimsPrincipal);
+                return Redirect("~/");
             }
         }
 
-        public IActionResult OnGetLogout(){
-            //TODO: Finish logout
+        public async Task<IActionResult> OnGetLogout(){
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("~/");
         }
     }
