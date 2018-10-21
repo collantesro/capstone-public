@@ -13,6 +13,11 @@
         @RenderSection("includes", required: false)
     </head>
     <body>
+        @if(ViewBag.Title != null){
+            <div class="text-center">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        }
         @RenderBody()
     </body>
 </html>

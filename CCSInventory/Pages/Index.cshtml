@@ -1,4 +1,6 @@
 @page
+@{
+    ViewBag.Title = "Home";
+}
 Nothing here, yet.<br/>
-<a asp-page="Account/Login">Login Page</a>
-<a asp-page="Account/Login" asp-page-handler="Logout">Logout</a>
+<a class="btn btn-secondary" asp-page="Account/Login" asp-page-handler="Logout">Logout</a>
