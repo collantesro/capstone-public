@@ -1,6 +1,15 @@
-@page "{handler?}"
+@page "{handler?}" // This is to get a better url for the Logout handler: /Account/Login/Logout
 @model LoginModel
 @using Microsoft.AspNetCore.Mvc.ModelBinding
+
+@*
+    Page description:
+    As the name suggests, this is the Login page for the users.
+    It presents two textboxes: one for UserName and the other for Password.
+    Checkbox for "Remember me" and a login button.
+
+    The PageModel for this page also handles logging out.
+*@
 
 @{ 
     ViewBag.Title = "Login";

@@ -19,7 +19,10 @@ using CCSInventory.Models;
 
 namespace CCSInventory
 {
-
+    /// <summary>
+    /// Custom class extended from CookieAuthenticationEvents.  Used to validate the user's
+    /// login cookie at each request.
+    /// </summary>
     public class LoginValidator : CookieAuthenticationEvents
     {
         private CCSDbContext dbContext;

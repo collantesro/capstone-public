@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CCSInventory.Models
 {
+    /// <summary>
+    /// This class is the Entity Framework Core DbContext for the app's primary data.
+    /// </summary>
     public class CCSDbContext : DbContext
     {
         public CCSDbContext(DbContextOptions<CCSDbContext> options) : base(options)
@@ -14,10 +17,15 @@ namespace CCSInventory.Models
         }
 
         // Annotations cannot mark certain things like Alternate Keys.
+        /// <summary>
+        /// This overridden method is used to define seed data and properties/relationships
+        /// that do not have annotations.
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // https://docs.microsoft.com/en-us/ef/core/modeling/alternate-keys
-            // For Alternate Keys
+            // For Alternate Keys.  A UserName must be unique to allow proper login.
             modelBuilder.Entity<User>().HasAlternateKey(u => u.UserName);
 
             // Seeding data
@@ -41,19 +49,31 @@ namespace CCSInventory.Models
             });
         }
 
+        /// <summary>
+        /// This overridden method updates the Created and Modified timestamps before calling the
+        /// base class' SaveChanges() method.  See DbContext.SaveChanges()
+        /// </summary>
+        /// <returns></returns>
         public override int SaveChanges()
         {
             UpdateModifiedTimestamp();
             return base.SaveChanges();
         }
 
+        /// <summary>
+        /// This overridden method updates the Created and Modified timestamps before calling
+        /// the base class' SaveChangesAsync() method.  See DbContext.SaveChangesAsync()
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)){
             UpdateModifiedTimestamp();
             return base.SaveChangesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// This method updates the Created and Modified timestamps for Entities about to be saved.
+        /// This method updates the Created and Modified timestamps for Entities extending from
+        /// TrackedModel that are about to be saved.
         /// </summary>
         private void UpdateModifiedTimestamp()
         {
@@ -71,6 +91,8 @@ namespace CCSInventory.Models
             }
         }
 
+        // DbSets here:
+        // EF Core implicitly creates DbSets for models referenced by parent models.
         public DbSet<User> Users { get; set; }
     }
 }
