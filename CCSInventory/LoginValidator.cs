@@ -11,9 +11,11 @@ using CCSInventory.Models;
 // Microsoft Documentation
 // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-2.1&tabs=aspnetcore2x#react-to-back-end-changes
 // tl;dr:
-// The user's db record may have changed since they last logged in.
-// Their permissions or password may have changed.  Their old login cookies should not be reusable.
-// This class is used to validate the login cookie.
+// The user's record in the database may change at any time after they have logged in.
+// For example, a user's permissions (role) or password may have changed.  Their old login cookies should not be reusable.
+// This class is used by CookieAuthenticationEvents to validate the login cookie. 
+// The reference to this class is in Startup.ConfigureServices,
+// services.AddAuthentication(...).AddCookie(...)
 
 namespace CCSInventory
 {
@@ -27,15 +29,21 @@ namespace CCSInventory
             dbContext = context;
         }
 
+        /// <summary>
+        /// This method validates a user's login cookie to ensure their record in the database has not changed since they logged in
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override async Task ValidatePrincipal(CookieValidatePrincipalContext context)
         {
+            // I'm not sure exactly why these are named ClaimsPrincipals, but it appears that ClaimsPrincipals are
+            // authorization assertions applied to the user.  These specific claims referenced here were
+            // set in the PageModel for the Login RazorPage.  Refer to Pages/Login.cshtml.cs method OnPostAsync()
             var userPrincipal = context.Principal;
-            string claimsUser = userPrincipal.Claims
-                                    .Where(c => c.Type == ClaimTypes.Name)
-                                    .Select(c => c.Value).FirstOrDefault();
-            var claimsLastModified = userPrincipal.Claims
-                                    .Where(c => c.Type == "LastModified")
-                                    .Select(c => c.Value).FirstOrDefault();
+
+            // This is the username
+            string claimsUser = userPrincipal.FindFirst(ClaimTypes.Name)?.Value;
+            var claimsLastModified = userPrincipal.FindFirst("LastModified")?.Value;
 
             if (String.IsNullOrEmpty(claimsUser) || String.IsNullOrEmpty(claimsLastModified))
             {
@@ -46,7 +54,12 @@ namespace CCSInventory
             }
             else
             {
-                // Check the DB. If this runs on every request, it may make sense to index the user entity
+                // Check with the DbContext.
+                // Since this method will be called with each and every request made by the
+                // end-user, there's a potential bottleneck here with the constant database queries.
+                // According to CCS, the number of simultaneous users is usually around 5,
+                // which shouldn't be too stressful.  If this becomes a bottleneck, consider adding
+                // some kind of caching layer, either around the DbContext or at the server level.
                 DateTime lastModified = await dbContext.Users.AsNoTracking()
                                                 .Where(u => u.UserName == claimsUser)
                                                 .Select(u => u.Modified)
@@ -57,7 +70,8 @@ namespace CCSInventory
                     await context.HttpContext
                         .SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 }
-                // Seems we don't do anything else if it's valid.
+                // According to the example code in the above link, there is nothing to be done
+                // on a valid cookie.  The code simply returns.
             }
         }
     }
