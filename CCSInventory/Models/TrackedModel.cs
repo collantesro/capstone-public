@@ -5,7 +5,7 @@ namespace CCSInventory.Models
     /// <summary>
     /// Base class for Entity models that require tracking of created by and modification.
     /// </summary>
-    public class TrackedModel
+    public abstract class TrackedModel
     {
         /// <summary>
         /// DateTime of when the object was first added to the DbSet
