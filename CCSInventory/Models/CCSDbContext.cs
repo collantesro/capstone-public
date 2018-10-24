@@ -94,5 +94,10 @@ namespace CCSInventory.Models
         // DbSets here:
         // EF Core implicitly creates DbSets for models referenced by parent models.
         public DbSet<User> Users { get; set; }
+        /*
+        public DbSet<Agency> Agencies { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<FoodTransaction> FoodTransactions { get; set; } // The FoodTransactionLineItems will be made automatically.
+         */
     }
 }

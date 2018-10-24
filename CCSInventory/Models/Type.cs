@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CCSInventory.Models
 {
-    public class Type
+    public class Type : TrackedModel
     {
-        public int Id { get; set; }
-        public int ContainerId { get; set; }
-        public int RecipientId { get; set; }
+        public int ID { get; set; }
+        public int ContainerID { get; set; }
         public string TypeName { get; set; }
+        public string Note { get; set; }
+
+        // Navigation Properties for the above Foreign Key
+        public Container Container { get; set; }
     }
 }

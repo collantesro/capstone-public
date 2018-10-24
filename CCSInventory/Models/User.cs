@@ -48,7 +48,7 @@ namespace CCSInventory.Models
         /// <returns>Returns a boolean indicating true of provides password matches the hashed password, but false if not.</returns>
         public bool MatchesPassword(string password)
         {
-            return !String.IsNullOrEmpty(this.PasswordHash) && 
+            return !String.IsNullOrEmpty(this.PasswordHash) &&
                 BCrypt.Net.BCrypt.EnhancedVerify(password, this.PasswordHash);
         }
 
