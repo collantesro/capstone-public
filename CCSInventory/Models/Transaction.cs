@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace CCSInventory.Models
@@ -7,9 +7,8 @@ namespace CCSInventory.Models
     {
         public int ID { get; set; }
         public int AgencyID { get; set; }
-        public int USDACategoryID { get; set; }
-        public int TypeID { get; set; }
-        public DateTime TransactionDate { get; set; }
+        public DateTime Date { get; set; }
+        public bool IsOutgoing { get; set; }
 
         // Navigation Properties for the above Foreign Key and associated LineItems
         public Agency Agency { get; set; }

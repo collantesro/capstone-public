@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace CCSInventory.Models
 {
     public class Agency : TrackedModel
@@ -9,7 +7,7 @@ namespace CCSInventory.Models
         public int? MailingAddressID { get; set; }
         public string PhoneNumber { get; set; }
         public string Note { get; set; }
-        public bool Archived { get; set; } // For "Deleted".  Hidden from view
+        public bool IsArchived { get; set; } // For "Deleted".  Hidden from view
 
         // Navigation Properties for the above Foreign Keys
         public Address Address { get; set; }

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace CCSInventory.Models
@@ -28,13 +29,17 @@ namespace CCSInventory.Models
             // For Alternate Keys.  A UserName must be unique to allow proper login.
             modelBuilder.Entity<User>().HasAlternateKey(u => u.UserName);
 
+            // Indexes:
+            //Index on User.UserName:
+            modelBuilder.Entity<User>().HasIndex(u => u.UserName);
+
             // Seeding data
-            // Add a default user to the table.  Using anonymous type instead of a User
+            // Add a default user to the table.  Using an anonymous type instead of a User
             // object so the passwordHash and all other data is constant across migrations
             DateTime createdModified = DateTime.Parse("2018-10-18T12:30:18.051Z").ToUniversalTime();
             modelBuilder.Entity<User>().HasData(new
             {
-                ID = 1L, // Since ID is type long in User, specify integer constant as type Long with "L" suffix
+                ID = 1,
                 FirstName = "Weber",
                 LastName = "CS",
                 UserName = "skram",
@@ -54,9 +59,9 @@ namespace CCSInventory.Models
         /// base class' SaveChanges() method.  See DbContext.SaveChanges()
         /// </summary>
         /// <returns></returns>
-        public override int SaveChanges()
+        public int SaveChanges(string username = null)
         {
-            UpdateModifiedTimestamp();
+            UpdateModifiedTimestamp(username);
             return base.SaveChanges();
         }
 
@@ -66,8 +71,9 @@ namespace CCSInventory.Models
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)){
-            UpdateModifiedTimestamp();
+        public Task<int> SaveChangesAsync(string username = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateModifiedTimestamp(username);
             return base.SaveChangesAsync(cancellationToken);
         }
 
@@ -75,19 +81,24 @@ namespace CCSInventory.Models
         /// This method updates the Created and Modified timestamps for Entities extending from
         /// TrackedModel that are about to be saved.
         /// </summary>
-        private void UpdateModifiedTimestamp()
+        private void UpdateModifiedTimestamp(string username = null)
         {
             var entities = ChangeTracker.Entries().Where(
                 x => x.Entity is TrackedModel && (x.State == EntityState.Added || x.State == EntityState.Modified)
             );
+
+            username = string.IsNullOrWhiteSpace(username) ? "Unspecified" : username;
 
             foreach (var e in entities)
             {
                 if (e.State == EntityState.Added)
                 {
                     ((TrackedModel)e.Entity).Created = DateTime.UtcNow;
+                    ((TrackedModel)e.Entity).CreatedBy = username;
                 }
                 ((TrackedModel)e.Entity).Modified = DateTime.UtcNow;
+                ((TrackedModel)e.Entity).ModifiedBy = username;
+
             }
         }
 
@@ -97,7 +108,12 @@ namespace CCSInventory.Models
         /*
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<Transaction> Transactions { get; set; } // The FoodTransactionLineItems will be made automatically.
+        public DbSet<Container> Containers { get; set; }
+        public DbSet<Template> Templates { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Subcategory> Subcategories { get; set; }
+        public DbSet<Transaction> Transactions { get; set; } // The TransactionLineItems will be made automatically.
+        public DbSet<PantryPackTransactions> PantryPackTransactions { get; set; }
          */
     }
 }

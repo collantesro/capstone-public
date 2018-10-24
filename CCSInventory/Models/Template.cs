@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CCSInventory.Models
 {
     public class Template : TrackedModel
     {
         public int ID { get; set; }
-        public string TemplateName { get; set; }
-        public DateTime TemplateDate { get; set; }
-        public TemplateType TemplateType { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public TemplateType Type { get; set; }
     }
 
-    public enum TemplateType{
+    public enum TemplateType
+    {
         DEFAULT,
     }
 }

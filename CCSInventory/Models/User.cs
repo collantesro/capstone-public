@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,7 +12,7 @@ namespace CCSInventory.Models
     [BindNever]
     public class User : TrackedModel
     {
-        public long ID { get; set; }
+        public int ID { get; set; }
 
         [Required]
         public string FirstName { get; set; }
