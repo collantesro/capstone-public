@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CCSInventory.Models
 {
-    public class FoodTransaction : TrackedModel
+    public class Transaction : TrackedModel
     {
         public int ID { get; set; }
         public int AgencyID { get; set; }

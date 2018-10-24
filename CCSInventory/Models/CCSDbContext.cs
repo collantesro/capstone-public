@@ -97,7 +97,7 @@ namespace CCSInventory.Models
         /*
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<FoodTransaction> FoodTransactions { get; set; } // The FoodTransactionLineItems will be made automatically.
+        public DbSet<Transaction> Transactions { get; set; } // The FoodTransactionLineItems will be made automatically.
          */
     }
 }

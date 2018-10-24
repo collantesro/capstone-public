@@ -16,7 +16,7 @@ namespace CCSInventory.Models
         public string Note { get; set; }
 
         // Navigation Properties for the above Foreign Keys
-        public FoodTransaction FoodTransaction { get; set; }
+        public Transaction FoodTransaction { get; set; }
         public Type Type { get; set; }
     }
 }
