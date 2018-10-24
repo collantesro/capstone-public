@@ -12,9 +12,21 @@ namespace CCSInventory.Models
     /// </summary>
     public class CCSDbContext : DbContext
     {
+        // DbSets (pluralized names of the Entities):
+        // EF Core implicitly creates DbSets for models referenced by parent models.
+        public DbSet<User> Users { get; set; }
+        public DbSet<Agency> Agencies { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Container> Containers { get; set; }
+        public DbSet<Template> Templates { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Subcategory> Subcategories { get; set; }
+        public DbSet<Transaction> Transactions { get; set; } // The TransactionLineItems will be made automatically.
+        public DbSet<PantryPackTransaction> PantryPackTransactions { get; set; }
+        public DbSet<PantryPackType> PantryPackType { get; set; }
+
         public CCSDbContext(DbContextOptions<CCSDbContext> options) : base(options)
         {
-
         }
 
         // Annotations cannot mark certain things like Alternate Keys.
@@ -25,18 +37,20 @@ namespace CCSInventory.Models
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*** Alternate Keys ***/
             // https://docs.microsoft.com/en-us/ef/core/modeling/alternate-keys
-            // For Alternate Keys.  A UserName must be unique to allow proper login.
             modelBuilder.Entity<User>().HasAlternateKey(u => u.UserName);
+            modelBuilder.Entity<Agency>().HasAlternateKey(a => a.Name);
+            modelBuilder.Entity<Category>().HasAlternateKey(c => c.Name);
+            modelBuilder.Entity<Subcategory>().HasAlternateKey(s => s.Name);
+            modelBuilder.Entity<PantryPackType>().HasAlternateKey(t => t.Name);
 
-            // Indexes:
-            //Index on User.UserName:
-            modelBuilder.Entity<User>().HasIndex(u => u.UserName);
+            /*** Seed Data ***/
+            #region seeddata
+            DateTime oct24 = DateTime.Parse("2018-10-24T12:03:00-06:00").ToUniversalTime();
 
-            // Seeding data
             // Add a default user to the table.  Using an anonymous type instead of a User
             // object so the passwordHash and all other data is constant across migrations
-            DateTime createdModified = DateTime.Parse("2018-10-18T12:30:18.051Z").ToUniversalTime();
             modelBuilder.Entity<User>().HasData(new
             {
                 ID = 1,
@@ -47,11 +61,80 @@ namespace CCSInventory.Models
                 PasswordHash = "$2a$10$/n.xV7jA5piJOZmfbT270eAKstycJ9WHqfpSttqz25ARWwnyLCyhu",
                 Role = UserRole.ADMIN,
                 Note = "Default user for an empty database",
+                Created = DateTime.Parse("2018-10-18T12:30:18.051Z").ToUniversalTime(),
                 CreatedBy = "Seeded Data",
+                Modified = oct24,
                 ModifiedBy = "Seeded Data",
-                Created = createdModified,
-                Modified = createdModified,
             });
+
+            // Default categories:
+            modelBuilder.Entity<Category>().HasData(new Category[]{
+                new Category {
+                    ID = 1,
+                    Name = "Dry Goods",
+                    Created = oct24,
+                    CreatedBy = "Seeded Data",
+                    Modified = oct24,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Category {
+                    ID = 2,
+                    Name = "Perishable",
+                    Created = oct24,
+                    CreatedBy = "Seeded Data",
+                    Modified = oct24,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Category {
+                    ID = 3,
+                    Name = "Non-Food",
+                    Created = oct24,
+                    CreatedBy = "Seeded Data",
+                    Modified = oct24,
+                    ModifiedBy = "Seeded Data"
+                },
+            });
+            // Default subcategories for above categories:
+            modelBuilder.Entity<Subcategory>().HasData(new Subcategory[]{
+                new Subcategory {
+                    ID = 1,
+                    CategoryID = 1,
+                    Name = "Unsorted (Dry Goods)",
+                    Created = oct24,
+                    CreatedBy = "Seeded Data",
+                    Modified = oct24,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    ID = 2,
+                    CategoryID = 2,
+                    Name = "Unsorted (Perishable)",
+                    Created = oct24,
+                    CreatedBy = "Seeded Data",
+                    Modified = oct24,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    ID = 3,
+                    CategoryID = 3,
+                    Name = "Unsorted (Non-Food)",
+                    Created = oct24,
+                    CreatedBy = "Seeded Data",
+                    Modified = oct24,
+                    ModifiedBy = "Seeded Data"
+                },
+            });
+
+            modelBuilder.Entity<PantryPackType>().HasData(new PantryPackType
+            {
+                ID = 1,
+                Name = "Generic",
+                Created = oct24,
+                CreatedBy = "Seeded Data",
+                Modified = oct24,
+                ModifiedBy = "Seeded Data"
+            });
+            #endregion
         }
 
         /// <summary>
@@ -101,19 +184,5 @@ namespace CCSInventory.Models
 
             }
         }
-
-        // DbSets here:
-        // EF Core implicitly creates DbSets for models referenced by parent models.
-        public DbSet<User> Users { get; set; }
-        /*
-        public DbSet<Agency> Agencies { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Container> Containers { get; set; }
-        public DbSet<Template> Templates { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Subcategory> Subcategories { get; set; }
-        public DbSet<Transaction> Transactions { get; set; } // The TransactionLineItems will be made automatically.
-        public DbSet<PantryPackTransactions> PantryPackTransactions { get; set; }
-         */
     }
 }
