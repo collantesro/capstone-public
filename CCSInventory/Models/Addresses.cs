@@ -5,19 +5,14 @@ using System.Threading.Tasks;
 
 namespace CCSInventory.Models
 {
-    public class Addresses
+    public class Address : TrackedModel
     {
-        public long Id { get; set; }
-
+        public int Id { get; set; }
         public string StreetAddress1 { get; set; }
-        public string StreedAddress2 { get; set; }
+        public string StreetAddress2 { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Zip { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
-        public string CreatedBy { get; set; }
-        public string ModifiedBy { get; set; }
     }
 }

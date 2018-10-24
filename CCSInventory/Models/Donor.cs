@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace CCSInventory.Models
 {
-    public class DonationLineItems
+    public class Donor : TrackedModel
     {
         public int Id { get; set; }
         public int DonationId { get; set; }
         public int TypeId { get; set; }
-        public decimal Weight { get; set; }
-        public bool Taxable { get; set; }
-        public bool USDA { get; set; }
-        public String Note { get; set; }
+        public int AddressId { get; set; }
+        public int MailingAddressId { get; set; }
+        public string Note { get; set; }
+        public bool Archived { get; set; }
     }
 }
