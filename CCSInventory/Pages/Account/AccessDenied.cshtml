@@ -1,0 +1,16 @@
+@page
+
+@*
+    Page description:
+    This page is shown when the user does not have permission for the requested resource.
+    By default, authentication errors are routed to /Account/AccessDenied.  This can be changed
+    in Startup.ConfigureServices in setup.UseAuthentication(...).AddCookie(), just like
+    the login and logout paths.
+*@
+
+@{
+    ViewBag.Title = "Access Denied";
+}
+<p>You do not have permission to access the resource at @Request.Query["returnUrl"]</p>
+<p>If this is an error, please contact a system administrator.</p>
+<a asp-page="/Index" class="btn btn-primary">Return home</a>

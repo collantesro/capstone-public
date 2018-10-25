@@ -141,6 +141,7 @@ namespace CCSInventory.Models
         /// This overridden method updates the Created and Modified timestamps before calling the
         /// base class' SaveChanges() method.  See DbContext.SaveChanges()
         /// </summary>
+        /// <param name="username">Username to fill for Created/Modified fields of TrackedModel</param>
         /// <returns></returns>
         public int SaveChanges(string username = null)
         {
@@ -152,6 +153,7 @@ namespace CCSInventory.Models
         /// This overridden method updates the Created and Modified timestamps before calling
         /// the base class' SaveChangesAsync() method.  See DbContext.SaveChangesAsync()
         /// </summary>
+        /// <param name="username">Username to fill for Created/Modified fields of TrackedModel</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public Task<int> SaveChangesAsync(string username = null, CancellationToken cancellationToken = default(CancellationToken))
@@ -164,6 +166,7 @@ namespace CCSInventory.Models
         /// This method updates the Created and Modified timestamps for Entities extending from
         /// TrackedModel that are about to be saved.
         /// </summary>
+        /// <param name="username">Username to fill for Created/Modified fields of TrackedModel</param>
         private void UpdateModifiedTimestamp(string username = null)
         {
             var entities = ChangeTracker.Entries().Where(

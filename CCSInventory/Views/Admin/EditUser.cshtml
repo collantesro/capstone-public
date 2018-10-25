@@ -1,0 +1,80 @@
+@model CCSInventory.Models.ViewModels.UserEdit
+@using CCSInventory.Models;
+
+@*
+    View description:
+    This view is associated with the AdminController.EditUser() actions.  It allows a user 
+    with the ADMIN role to modify an existing user.
+*@
+
+@{
+    ViewBag.Title = "Edit User";
+    bool editingSelf = User.Identity.Name == Model.UserName;
+}
+<div class="container">
+    <div class="row">
+        <form class="form-horizontal col-md-6" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="form-group">
+                <label asp-for="@Model.UserName" class="control-label"></label>
+                <input asp-for="@Model.UserName" class="form-control" disabled="true"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.FirstName" class="control-label"></label>
+                <input asp-for="@Model.FirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.LastName" class="control-label"></label>
+                <input asp-for="@Model.LastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email" class="control-label"></label>
+                <input asp-for="@Model.Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Role" class="control-label"></label>
+                <select asp-for="@Model.Role" class="form-control" asp-items="@Html.GetEnumSelectList<UserRole>()"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Password" class="control-label"></label>
+                <input asp-for="@Model.Password" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ConfirmPassword" class="control-label"></label>
+                <input asp-for="@Model.ConfirmPassword" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Note" class="control-label"></label>
+                <input asp-for="@Model.Note" class="form-control" />
+            </div>
+            <a asp-controller="admin" asp-action="allusers" class="btn btn-secondary">Cancel</a>
+            <input type="submit" class="btn btn-danger" value="Save Changes">
+        </form>
+        <div id="help-text" class="col-md-6">
+            <h3 class="text-center">Help</h3>
+            <p>This page is where an <span title="UserRole.ADMIN">ADMIN</span> can modify an existing user in the database.</p>
+            <p @if(editingSelf){<text>class="text-danger"</text>} >
+                Editing a user will cause them to <strong>immediately</strong> be logged out upon saving, regardless of what is changed.<br/>
+                @if(editingSelf){<strong>This means you, @User.Identity.Name</strong>}
+            </p>
+            <p>Required fields:
+                <ul>
+                    <li>First Name</li>
+                    <li>Last Name</li>
+                    <li>User Role</li>
+                </ul>
+                Email, changes of password, and note are optional.
+            </p>
+            <p>
+                <h4>User Roles</h4>
+                User roles define the available permissions to a user.  The following roles are available:
+                <ul>
+                    <li><strong>DISABLED:</strong> This role is for users that have left the organization or those that may not otherwise log in. Use this instead of deleting a user. Users with a DISABLE role will be told they're disabled upon attempting to log in.</li>
+                    <li><strong>READONLY:</strong> This role is intended for audits.  They cannot insert new data, however they may run pre-existing reports.</li>
+                    <li><strong>STANDARD:</strong> This role is intended for most users.  These uses can create new agencies, create new templates, insert new transactions, and run reports.</li>
+                    <li><strong>ADMIN:</strong> This role is allowed to do anything, including: managing users (including other users with ADMIN roles), viewing system log entries, archiving agencies and old data</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+</div>
