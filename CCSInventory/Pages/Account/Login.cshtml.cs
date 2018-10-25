@@ -156,6 +156,7 @@ namespace CCSInventory.Pages
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim("UserRole", user.Role.ToString()),
+                    new Claim("FullName", user.FullName),
                     new Claim("LastModified", user.Modified.ToString()),
                 }, scheme));
 
