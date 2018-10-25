@@ -14,7 +14,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" asp-page="Index">CCS Inventory</a>
+            <a class="navbar-brand" asp-page="/Index">CCS Inventory</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -22,7 +22,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         @*Have other links here as needed for various pages*@
-                        <a class="nav-link" asp-page="#">Home</a>
+                        <a class="nav-link" asp-page="/Index">Home</a>
                     </li>
                 </ul>
 
@@ -39,11 +39,11 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <a class="dropdown-item" href="#">User Settings</a>
-                            <a class="dropdown-item" asp-page="Account/Login" asp-page-handler="Logout">Logout</a>
+                            <a class="dropdown-item" asp-page="/Account/Login" asp-page-handler="Logout">Logout</a>
                         }
                         else
                         {
-                            <a class="dropdown-item" asp-page="Account/Login">Login</a>
+                            <a class="dropdown-item" asp-page="/Account/Login">Login</a>
                         }
                     </div>
                 </div>
