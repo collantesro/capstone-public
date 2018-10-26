@@ -1,0 +1,16 @@
+﻿@model CCSInventory.Models.ViewModels.PantryPackTransactionType
+@{
+}
+
+<div>
+
+    <h2>New Transaction</h2>
+
+    <div class="form-group has-error" asp-validation-summary="All"></div>
+
+    <form method="post" asp-action="OutGoingTransaction">
+        <input class="form-control" asp-for="Qty" readonly />
+        <input class="form-control" asp-for="PackType" readonly />
+    </form>
+
+</div>

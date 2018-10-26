@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CCSInventory.Models.ViewModels.PantryPackTransactionType>
+@{
+}
+
+
+<div class="form-horizontal">
+
+    <h2>All Transactions</h2>
+
+    <table>
+        <tr>
+            <td>Pack Type</td>
+            <td>Quantity</td>
+            <td>Date</td>
+        </tr>
+
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.PackType</td>
+                <td>@t.Qty</td>
+                <td>@t.Modified</td>
+            </tr>
+        }
+    </table>
+</div>
