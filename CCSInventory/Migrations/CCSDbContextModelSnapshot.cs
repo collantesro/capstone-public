@@ -245,7 +245,8 @@ namespace CCSInventory.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<string>("Data")
+                        .IsRequired();
 
                     b.Property<DateTime>("Modified");
 

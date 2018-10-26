@@ -8,7 +8,9 @@ namespace CCSInventory.Models
         public int ID { get; set; }
         [Required]
         public string Name { get; set; }
-        public DateTime Date { get; set; }
+        
+        [Required]
+        public string Data { get; set; }
         public TemplateType Type { get; set; }
     }
 

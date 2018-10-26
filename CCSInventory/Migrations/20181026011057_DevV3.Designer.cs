@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CCSInventory.Migrations
 {
     [DbContext(typeof(CCSDbContext))]
-    [Migration("20181026010537_V3")]
-    partial class V3
+    [Migration("20181026011057_DevV3")]
+    partial class DevV3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,7 +247,8 @@ namespace CCSInventory.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<string>("Data")
+                        .IsRequired();
 
                     b.Property<DateTime>("Modified");
 
