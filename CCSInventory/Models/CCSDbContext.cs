@@ -13,7 +13,6 @@ namespace CCSInventory.Models
     public class CCSDbContext : DbContext
     {
         // DbSets (pluralized names of the Entities):
-        // EF Core implicitly creates DbSets for models referenced by parent models.
         public DbSet<User> Users { get; set; }
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -21,7 +20,8 @@ namespace CCSInventory.Models
         public DbSet<Template> Templates { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
-        public DbSet<Transaction> Transactions { get; set; } // The TransactionLineItems will be made automatically.
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionLineItem> TransactionLineItems { get; set; }
         public DbSet<PantryPackTransaction> PantryPackTransactions { get; set; }
         public DbSet<PantryPackType> PantryPackType { get; set; }
 
@@ -44,6 +44,9 @@ namespace CCSInventory.Models
             modelBuilder.Entity<Category>().HasAlternateKey(c => c.Name);
             modelBuilder.Entity<Subcategory>().HasAlternateKey(s => s.Name);
             modelBuilder.Entity<PantryPackType>().HasAlternateKey(t => t.Name);
+
+            /*** Indexes (Explicit) ***/
+            modelBuilder.Entity<User>().HasIndex(u => u.UserName);
 
             /*** Seed Data ***/
             #region seeddata
