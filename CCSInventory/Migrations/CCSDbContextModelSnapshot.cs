@@ -287,6 +287,40 @@ namespace CCSInventory.Migrations
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("CCSInventory.Models.TransactionLineItem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<bool>("IsTaxable");
+
+                    b.Property<bool>("IsUSDA");
+
+                    b.Property<DateTime>("Modified");
+
+                    b.Property<string>("ModifiedBy");
+
+                    b.Property<string>("Note");
+
+                    b.Property<int>("SubcategoryID");
+
+                    b.Property<int>("TransactionID");
+
+                    b.Property<decimal>("Weight");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SubcategoryID");
+
+                    b.HasIndex("TransactionID");
+
+                    b.ToTable("TransactionLineItems");
+                });
+
             modelBuilder.Entity("CCSInventory.Models.User", b =>
                 {
                     b.Property<int>("ID")
@@ -320,6 +354,8 @@ namespace CCSInventory.Migrations
                     b.HasKey("ID");
 
                     b.HasAlternateKey("UserName");
+
+                    b.HasIndex("UserName");
 
                     b.ToTable("Users");
 
@@ -369,6 +405,19 @@ namespace CCSInventory.Migrations
                     b.HasOne("CCSInventory.Models.Agency", "Agency")
                         .WithMany()
                         .HasForeignKey("AgencyID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CCSInventory.Models.TransactionLineItem", b =>
+                {
+                    b.HasOne("CCSInventory.Models.Subcategory", "Subcategory")
+                        .WithMany()
+                        .HasForeignKey("SubcategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CCSInventory.Models.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

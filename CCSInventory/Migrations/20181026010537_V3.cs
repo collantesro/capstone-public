@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CCSInventory.Migrations
 {
-    public partial class DevV2 : Migration
+    public partial class V3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -247,6 +247,40 @@ namespace CCSInventory.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TransactionLineItems",
+                columns: table => new
+                {
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TransactionID = table.Column<int>(nullable: false),
+                    SubcategoryID = table.Column<int>(nullable: false),
+                    Weight = table.Column<decimal>(nullable: false),
+                    IsTaxable = table.Column<bool>(nullable: false),
+                    IsUSDA = table.Column<bool>(nullable: false),
+                    Note = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionLineItems", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_TransactionLineItems_Subcategories_SubcategoryID",
+                        column: x => x.SubcategoryID,
+                        principalTable: "Subcategories",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TransactionLineItems_Transactions_TransactionID",
+                        column: x => x.TransactionID,
+                        principalTable: "Transactions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "ID", "Created", "CreatedBy", "Modified", "ModifiedBy", "Name", "Note" },
@@ -313,9 +347,24 @@ namespace CCSInventory.Migrations
                 column: "CategoryID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TransactionLineItems_SubcategoryID",
+                table: "TransactionLineItems",
+                column: "SubcategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionLineItems_TransactionID",
+                table: "TransactionLineItems",
+                column: "TransactionID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_AgencyID",
                 table: "Transactions",
                 column: "AgencyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserName",
+                table: "Users",
+                column: "UserName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -330,22 +379,25 @@ namespace CCSInventory.Migrations
                 name: "Templates");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "TransactionLineItems");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Subcategories");
-
-            migrationBuilder.DropTable(
                 name: "PantryPackType");
 
             migrationBuilder.DropTable(
-                name: "Agencies");
+                name: "Subcategories");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Agencies");
 
             migrationBuilder.DropTable(
                 name: "Addresses");
