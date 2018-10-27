@@ -2,25 +2,13 @@
 @{
 }
 
-
 <div class="form-horizontal">
 
-    <h2>All Transactions</h2>
+    <h2>Past transactions</h2>
 
-    <table>
-        <tr>
-            <td>Pack Type</td>
-            <td>Quantity</td>
-            <td>Date</td>
-        </tr>
-
-        @foreach (var t in Model)
-        {
-            <tr>
-                <td>@t.PackType</td>
-                <td>@t.Qty</td>
-                <td>@t.Modified</td>
-            </tr>
-        }
-    </table>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-2">
+            @await Component.InvokeAsync("PantryPackTransactions", new { inOrOut = 0 })
+        </div>
+    </div>
 </div>

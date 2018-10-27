@@ -13,7 +13,8 @@ namespace CCSInventory.Models.ViewModels
 
         [Required]
         public string Name { get; set; }
-        public string Note { get; set; }
+        public string TransactionNote { get; set; }
+        public string TypeNote { get; set; }
 
         public int Qty { get; set; }
         public int PackTypeID { get; set; }
