@@ -66,7 +66,7 @@ namespace CCSInventory
                 DateTime lastModified = await dbContext.Users.AsNoTracking()
                                                 .Where(u => u.UserName == claimsUser)
                                                 .Select(u => u.Modified)
-                                                .SingleOrDefaultAsync();
+                                                .FirstOrDefaultAsync();
                 if (lastModified.ToString() != claimsLastModified)
                 {
                     context.RejectPrincipal();

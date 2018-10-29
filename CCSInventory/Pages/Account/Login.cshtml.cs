@@ -116,7 +116,7 @@ namespace CCSInventory.Pages
                 // Pull user from DB in a read-only manner (the AsNoTracking()).
                 User user = await _context.Users
                     .AsNoTracking()
-                    .SingleOrDefaultAsync(u => u.UserName.ToLower() == Login.UserName.ToLower());
+                    .FirstOrDefaultAsync(u => u.UserName.ToLower() == Login.UserName.ToLower());
 
                 if (user == null || !user.MatchesPassword(Login.Password))
                 {

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 
 using CCSInventory.Models;
 using CCSInventory.Models.ViewModels;
+using System;
 
 namespace CCSInventory.Controllers
 {
@@ -41,6 +42,63 @@ namespace CCSInventory.Controllers
         }
 
         [HttpGet]
+        [Route("NewUser")]
+        /// <summary>
+        /// This action displays the form to create a new user.
+        /// </summary>
+        /// <returns></returns>
+        public ViewResult NewUser(){
+            return View();
+        }
+
+        [HttpPost]
+        [Route("NewUser")]
+        /// <summary>
+        /// This is the action backing the form to verify and create the new user on POST.
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> NewUser(UserAdd newUser){
+            if(!ModelState.IsValid){
+                return View();
+            } else {
+                newUser.UserName = newUser.UserName.ToLower();
+                User dbUser = await _context.Users.Where(u => u.UserName == newUser.UserName).FirstOrDefaultAsync();
+                if(dbUser != null){
+                    ModelState.AddModelError("", "That User Name is already used");
+                    return View();
+                } else {
+                    User toInsert = new User{
+                        UserName = newUser.UserName,
+                        FirstName = newUser.FirstName,
+                        LastName = newUser.LastName,
+                        Email = newUser.Email,
+                        Role = newUser.Role,
+                        Note = newUser.Note
+                    };
+                    PasswordChangeResult result = toInsert.ChangePassword(newUser.Password);
+                    if(result != PasswordChangeResult.PASSWORD_OK){
+                        ModelState.AddModelError("", "Error setting password");
+                        return View();
+                    }
+
+                    try {
+                        await _context.Users.AddAsync(toInsert);
+                        await _context.SaveChangesAsync(User.Identity.Name);
+                    } catch(Exception e){
+                        _log.LogError("Exception in adding user: " + e.ToString());
+                        _log.LogError($"{User.Identity.Name} attempted to add a user named {toInsert.UserName}");
+                        ModelState.AddModelError("", "Exception thrown in adding user: " + e.ToString());
+                        return View();
+                    }
+                    _log.LogInformation($"{User.Identity.Name} added a new user {toInsert.UserName} with role {toInsert.Role}");
+                    return RedirectToAction("AllUsers");
+                }
+            }
+
+        }
+
+        [HttpGet]
         [Route("AllUsers")]
         /// <summary>
         /// This action displays a view of all users in the database.
@@ -60,7 +118,7 @@ namespace CCSInventory.Controllers
         /// <returns>Returns the /admin/edituser/id view.</returns>
         public async Task<IActionResult> EditUser(int userId)
         {
-            User toEdit = await _context.Users.Where(u => u.ID == userId).SingleOrDefaultAsync();
+            User toEdit = await _context.Users.Where(u => u.ID == userId).FirstOrDefaultAsync();
             if (toEdit == null)
             {
                 return NotFound();
@@ -80,7 +138,7 @@ namespace CCSInventory.Controllers
         {
             if (ModelState.IsValid)
             {
-                User dbUser = await _context.Users.Where(u => u.ID == userId).SingleOrDefaultAsync();
+                User dbUser = await _context.Users.Where(u => u.ID == userId).FirstOrDefaultAsync();
                 if (dbUser == null)
                 {
                     return NotFound();

@@ -24,7 +24,7 @@ When using LibMan for the first time, ensure it is installed:
 Then restore the client-side libraries as defined in `libman.json`:  
 `libman restore`
 
-Visual Studio should handle this for you, if you're using an IDE.
+If you're using Visual Studio, the option to "Restore Client-Side Libraries" is available in the context menu when right clicking the Solution.
 
 The .gitignore file is set to ignore `*/wwwroot/lib` files, since we don't want to track third-party code.
 

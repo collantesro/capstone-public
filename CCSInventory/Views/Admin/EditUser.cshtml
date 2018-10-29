@@ -1,5 +1,4 @@
-@model CCSInventory.Models.ViewModels.UserEdit
-@using CCSInventory.Models;
+@model UserEdit
 
 @*
     View description:
@@ -13,8 +12,7 @@
 }
 <div class="container">
     <div class="row">
-        <form class="form-horizontal col-md-6" method="post">
-            <div asp-validation-summary="All"></div>
+        <form class="col" method="post">
             <div class="form-group">
                 <label asp-for="@Model.UserName" class="control-label"></label>
                 <input asp-for="@Model.UserName" class="form-control" disabled="true"/>
@@ -47,12 +45,15 @@
                 <label asp-for="@Model.Note" class="control-label"></label>
                 <input asp-for="@Model.Note" class="form-control" />
             </div>
-            <a asp-controller="admin" asp-action="allusers" class="btn btn-secondary">Cancel</a>
-            <input type="submit" class="btn btn-danger" value="Save Changes">
+            <div class="d-flex justify-content-around">
+                <a asp-controller="admin" asp-action="allusers" class="btn btn-secondary">Cancel</a>
+                <input type="submit" class="btn btn-danger" value="Save Changes">
+            </div>
         </form>
-        <div id="help-text" class="col-md-6">
+        <div id="help-text" class="col">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <h3 class="text-center">Help</h3>
-            <p>This page is where an <span title="UserRole.ADMIN">ADMIN</span> can modify an existing user in the database.</p>
+            <p>This page is where an <span title="UserRole.ADMIN">ADMIN</span> can modify an existing user.</p>
             <p @if(editingSelf){<text>class="text-danger"</text>} >
                 Editing a user will cause them to <strong>immediately</strong> be logged out upon saving, regardless of what is changed.<br/>
                 @if(editingSelf){<strong>This means you, @User.Identity.Name</strong>}

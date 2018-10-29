@@ -11,6 +11,8 @@
 @{
     ViewBag.Title = "Access Denied";
 }
-<p>You do not have permission to access the resource at @Request.Query["returnUrl"]</p>
-<p>If this is an error, please contact a system administrator.</p>
-<a asp-page="/Index" class="btn btn-primary">Return home</a>
+<div class="container">
+    <p>You do not have permission to access the resource at @Request.Query["returnUrl"]</p>
+    <p>If this is an error, please contact a system administrator.</p>
+    <a asp-page="/Index" class="btn btn-primary">Return home</a>
+</div>
