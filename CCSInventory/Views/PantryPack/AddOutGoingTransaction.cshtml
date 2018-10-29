@@ -1,0 +1,36 @@
+﻿@model CCSInventory.Models.ViewModels.PantryPackTransactionType
+@{
+}
+
+<div class="form-horizontal">
+
+    <h2>New Transaction</h2>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-2">
+
+            <div class="form-group has-error" asp-validation-summary="All"></div>
+
+            <form method="post" asp-action="OutGoingTransaction">
+                <label asp-for="Name">Name: </label>
+                <input class="form-control" asp-for="Name" />
+
+                <label asp-for="Qty">Quantity: </label>
+                <input class="form-control" asp-for="Qty" />
+
+                <label asp-for="PackType">Pack Type: </label>
+                <input class="form-control" asp-for="PackType" />
+
+                <label asp-for="TransactionNote">Transaction Note: </label>
+                <input class="form-control" asp-for="TransactionNote" />
+
+                <label asp-for="TypeNote">Type Note: </label>
+                <input class="form-control" asp-for="TypeNote" />
+
+                <input type="submit" value="submit" />
+            </form>
+
+            <h2>Past in coming transactions</h2>
+            @await Component.InvokeAsync("PantryPackTransactions", new { inOrOut = 1 })
+        </div>
+    </div>
+</div>

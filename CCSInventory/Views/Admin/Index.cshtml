@@ -1,0 +1,15 @@
+@*
+    View description:
+    This is the index view for the AdminController.  It displays the options available for
+    user with the role of ADMIN.  It's not necessary to link to this view's action, if all
+    options will be displayed on the landing page.
+*@
+
+@{
+    ViewBag.Title = "Admin panel";
+}
+
+<div class="container">
+    Admin links:<br/>
+    <a asp-controller="admin" asp-action="allusers">Manage users</a>
+</div>

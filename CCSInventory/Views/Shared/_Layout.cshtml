@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>@ViewBag.Title - CCSInventory</title>
+        <title>CCSInventory</title>
+        @*Common includes here.  Such as CSS and JS*@
+        <link rel="stylesheet" href="~/_common.css"/>
+        <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css"/>
+        <script defer src="~/lib/jquery/jquery.min.js"></script>
+        <script defer src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+        @*Page-Specific styling: *@
+        @RenderSection("includes", required: false)
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" asp-page="/Index">
+                <img src="~/images/ccslogo.png" height="30" class="d-inline-block align-top mr-3" alt="CCS" />CCS Inventory
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @*Have other links here as needed for various pages*@
+                        <a class="nav-link" asp-page="/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        @*Have other links here as needed for various pages*@
+                        <a class="nav-link" asp-page="/Index">Help</a>
+                    </li>
+                </ul>
+
+                @*Need to check if user is logged in and display the appropriate action (login vs logout)*@
+                <div class="navbar-nav dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarUserMenu" role="button" data-toggle="dropdown">
+                        @if(User.Identity.IsAuthenticated){
+                            <span>@User.FindFirst("FullName").Value</span>
+                        } else {
+                            <span>Not Logged In</span>
+                        }
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="dropdown-item" href="#">User Settings</a>
+                            <a class="dropdown-item" asp-page="/Account/Login" asp-page-handler="Logout">Logout</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-page="/Account/Login">Login</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        @if(ViewBag.Title != null){
+            <div class="text-center">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        }
+        @RenderBody()
+    </body>
+</html>
