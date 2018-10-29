@@ -1,5 +1,11 @@
 @model UserAdd
 
+@*
+    View description:
+    This view is associated with the AdminController.NewUser() actions.
+    This view allows a user with the ADMIN role to create a new user.
+*@
+
 @{
     ViewBag.Title = "New User";
 }
@@ -64,8 +70,8 @@
                 <ul>
                     <li><strong>DISABLED:</strong> This role is for users that have left the organization or those that may not otherwise log in. Use this instead of deleting a user. Users with a DISABLE role will be told they're disabled upon attempting to log in.</li>
                     <li><strong>READONLY:</strong> This role is intended for audits.  They cannot insert new data, however they may run pre-existing reports.</li>
-                    <li><strong>STANDARD:</strong> This role is intended for most users.  These uses can create new agencies, create new templates, insert new transactions, and run reports.</li>
-                    <li><strong>ADMIN:</strong> This role is allowed to do anything, including: managing users (including other users with ADMIN roles), viewing system log entries, archiving agencies and old data</li>
+                    <li><strong>STANDARD:</strong> This role is intended for most users.  These users can create new agencies, create new templates, insert new transactions, and run reports.</li>
+                    <li><strong>ADMIN:</strong> This role is allowed to do anything, including: managing users (including other users with ADMIN roles), viewing system log entries, archiving agencies and old data.</li>
                 </ul>
             </p>
         </div>
