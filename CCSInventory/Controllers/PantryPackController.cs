@@ -1,5 +1,6 @@
 ﻿using CCSInventory.Models;
 using CCSInventory.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace CCSInventory.Controllers 
 {
     [Route("PantryPack")]
+    [Authorize("ReadonlyUser")]
     public class PantryPackController : Controller 
     {
 
