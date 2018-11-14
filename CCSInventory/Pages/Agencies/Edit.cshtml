@@ -1,0 +1,80 @@
+@page "{id}"
+@model CCSInventory.Pages.Agencies.EditModel
+
+@{
+    ViewData["Title"] = "Edit Donor/Recipient";
+}
+
+<h4>Donor/Recipient</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Agency.AgencyID" />
+            <div class="form-group">
+                <label asp-for="Agency.AgencyName" class="control-label"></label>
+                <input asp-for="Agency.AgencyName" class="form-control" />
+                <span asp-validation-for="Agency.AgencyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.AddressID" class="control-label"></label>
+                <select asp-for="Agency.AddressID" class="form-control" asp-items="ViewBag.AddressID"></select>
+                <span asp-validation-for="Agency.AddressID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.MailingAddressID" class="control-label"></label>
+                <select asp-for="Agency.MailingAddressID" class="form-control" asp-items="ViewBag.MailingAddressID"></select>
+                <span asp-validation-for="Agency.MailingAddressID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.PhoneNumber" class="control-label"></label>
+                <input asp-for="Agency.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Agency.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.AgencyNote" class="control-label"></label>
+                <input asp-for="Agency.AgencyNote" class="form-control" />
+                <span asp-validation-for="Agency.AgencyNote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Agency.IsArchived" /> Archived (hidden)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.CreatedDate" class="control-label"></label>
+                <input asp-for="Agency.CreatedDate" class="form-control" />
+                <span asp-validation-for="Agency.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.CreatedBy" class="control-label"></label>
+                <input asp-for="Agency.CreatedBy" class="form-control" />
+                <span asp-validation-for="Agency.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.ModifiedBy" class="control-label"></label>
+                <input asp-for="Agency.ModifiedBy" class="form-control" />
+                <span asp-validation-for="Agency.ModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.ModifiedDate" class="control-label"></label>
+                <input asp-for="Agency.ModifiedDate" class="form-control" />
+                <span asp-validation-for="Agency.ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section includes {
+    <partial name="_ValidationScriptsPartial"/>
+}

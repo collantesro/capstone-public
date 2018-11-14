@@ -1,0 +1,69 @@
+﻿@page
+@model CCSInventory.Pages.Transactions.IndexModel
+
+@{
+    ViewData["Title"] = "Transactions";
+}
+
+<p>
+    <a class="btn btn-primary ml-3 btn-sm" asp-page="Incoming">New Incoming</a>
+    <a class="btn btn-secondary ml-3 btn-sm" asp-page="Outgoing">New Outgoing</a>
+
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].TransactionDate)
+            </th>
+            <th>
+                Incoming/Outgoing
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].Agency)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].TransactionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].CreatedBy)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Transaction) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionDate)
+            </td>
+            <td>
+                @if(item.IsOutgoing)
+                {
+                    @:Outgoing
+                }
+                else
+                {
+                    @:Incoming
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Agency.AgencyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionType.TransactionTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.TransactionID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.TransactionID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.TransactionID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

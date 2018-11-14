@@ -8,11 +8,11 @@ namespace CCSInventory.Models
     /// </summary>
     public class Category : TrackedModel
     {
-        public int ID { get; set; }
+        public int CategoryID { get; set; }
         
         [Required]
-        public string Name { get; set; }
-        public string Note { get; set; }
+        public string CategoryName { get; set; }
+        public string CategoryNote { get; set; }
 
         // Navigation Property for EF Core
         public ICollection<Subcategory> Subcategories { get; set; }

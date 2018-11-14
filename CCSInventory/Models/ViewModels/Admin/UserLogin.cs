@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CCSInventory.Models.ViewModels
+namespace CCSInventory.Models.ViewModels.Admin
 {
     /// <summary>
     /// This ViewModel is used in the Login Razor Page to bind to the login form.
@@ -9,8 +9,7 @@ namespace CCSInventory.Models.ViewModels
     public class UserLogin
     {
         [Required]
-        [DisplayName("User Name")]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

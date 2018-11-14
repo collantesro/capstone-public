@@ -5,13 +5,13 @@ namespace CCSInventory.Models
 {
     public class Template : TrackedModel
     {
-        public int ID { get; set; }
+        public int TemplateID { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string TemplateName { get; set; }
         
         [Required]
-        public string Data { get; set; }
-        public TemplateType Type { get; set; }
+        public string TemplateData { get; set; }
+        public TemplateType TemplateType { get; set; }
     }
 
     public enum TemplateType

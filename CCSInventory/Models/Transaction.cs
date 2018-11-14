@@ -5,13 +5,15 @@ namespace CCSInventory.Models
 {
     public class Transaction : TrackedModel
     {
-        public int ID { get; set; }
+        public int TransactionID { get; set; }
         public int AgencyID { get; set; }
-        public DateTime Date { get; set; }
+        public int TransactionTypeID { get; set; }
+        public DateTime TransactionDate { get; set; }
         public bool IsOutgoing { get; set; }
 
         // Navigation Properties for the above Foreign Key and associated LineItems
         public Agency Agency { get; set; }
-        public ICollection<TransactionLineItem> LineItems;
+        public TransactionType TransactionType { get; set; }
+        public List<TransactionLineItem> LineItems;
     }
 }

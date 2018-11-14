@@ -12,7 +12,7 @@ namespace CCSInventory.Models
     [BindNever]
     public class User : TrackedModel
     {
-        public int ID { get; set; }
+        public int UserID { get; set; }
 
         [Required]
         public string FirstName { get; set; }
@@ -24,7 +24,7 @@ namespace CCSInventory.Models
         public string FullNameLastFirst { get => $"{LastName}, {FirstName}"; }
 
         [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         // The Email is informational and optional.  It's not used for authentication.
         [DataType(DataType.EmailAddress)]
@@ -35,8 +35,8 @@ namespace CCSInventory.Models
         /// </summary>
         /// <value></value>
         public string PasswordHash { get; private set; }
-        public string Note { get; set; }
-        public UserRole Role { get; set; } = UserRole.DISABLED;
+        public string UserNote { get; set; }
+        public UserRole UserRole { get; set; } = UserRole.DISABLED;
 
         /// <summary>
         /// Compares the password argument with the PasswordHash using BCrypt.

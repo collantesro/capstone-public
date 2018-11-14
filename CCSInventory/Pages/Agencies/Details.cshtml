@@ -1,0 +1,76 @@
+@page "{id}"
+@model CCSInventory.Pages.Agencies.DetailsModel
+
+@{
+    ViewData["Title"] = "Donor/Recipient Details";
+}
+<div>
+    <h4>Agency</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Agency.AgencyName)
+        </dd>
+        <dt>
+            Phone Number
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Agency.PhoneNumber)
+        </dd>
+        <dt>
+            Note
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Agency.AgencyNote)
+        </dd>
+        <dt>
+            Deleted?
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Agency.IsArchived)
+        </dd>
+        <dt>
+            Address
+        </dt>
+        <dd>
+            @Model.Agency.Address
+        </dd>
+        <dt>
+            Mailing Address
+        </dt>
+        <dd>
+            @Model.Agency.MailingAddress
+        </dd>
+        <dt>
+            Created On
+        </dt>
+        <dd>
+            @Model.Agency.CreatedDate.ToLocalTime()
+        </dd>
+        <dt>
+            Created By
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Agency.CreatedBy)
+        </dd>
+        <dt>
+            Modified By
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Agency.ModifiedBy)
+        </dd>
+        <dt>
+            Last Modified On
+        </dt>
+        <dd>
+            @Model.Agency.ModifiedDate.ToLocalTime()
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Agency.AgencyID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

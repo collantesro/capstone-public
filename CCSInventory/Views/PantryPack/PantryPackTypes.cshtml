@@ -1,0 +1,51 @@
+﻿@model CCSInventory.Models.PantryPackType
+@using CCSInventory.Models
+@{}
+
+<div class="form-horizontal">
+
+    <h2>New Transaction</h2>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-2">
+            <h2>Add New Pantry Pack Type</h2>
+            
+            <form method="post" asp-action="AddNewPantryPackType">
+                <div class="form-group has-error" asp-validation-summary="All"></div>
+
+                <label asp-for="PantryPackTypeName">Pantry Pack Type</label>
+                <input class="form-control" asp-for="PantryPackTypeName" />
+
+                <label asp-for="PantryPackTypeNote">Notes: </label>
+                <input class="form-control" asp-for="PantryPackTypeNote" />
+
+                <br />
+                <input type="submit" value="submit" />
+
+            </form>
+
+        </div>
+
+        <div class="col-sm-6 col-sm-offset-2">
+
+            <label asp-for="PantryPackTypeID">Existing Pack Types: </label>
+            <form method="post" asp-action="EditPantryPackType">
+
+                @*Add more functionality here, 
+                    The ability to edit? Turn each column into a text box and change it?
+                    Or just add delete button here?*@
+                <select>
+                    @foreach (PantryPackType pt in (List<PantryPackType>)ViewData["types"])
+                    {
+
+                        <option value="@pt.PantryPackTypeID">
+                            @pt.PantryPackTypeName
+                        </option>
+                    }
+                </select>
+
+            </form>
+            <br />
+        </div>
+    </div>
+</div>
+

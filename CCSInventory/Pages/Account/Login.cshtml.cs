@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 using CCSInventory.Models;
-using CCSInventory.Models.ViewModels;
+using CCSInventory.Models.ViewModels.Admin;
 
 // Microsoft Documentation reference/tutorial for cookie authentication:
 // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-2.1&tabs=aspnetcore2x
@@ -37,11 +37,11 @@ namespace CCSInventory.Pages
     {
         [BindProperty]
         public UserLogin Login { get; set; }
-        // This is a ViewModel that only has two properties: UserName and Password.
+        // This is a ViewModel that only has two properties: Username and Password.
         // The domain model of User (Models/User.cs) should not be bound, since the Password
 
         [BindProperty]
-        [DisplayName("Remember me")]
+        [DisplayName("Remember Me")]
         public bool PersistLogin {get; set;}
         // This boolean is bound to the "Remember me" checkbox in the login form.
         // In discussing it with the team, this may be removed later after considering the
@@ -95,7 +95,7 @@ namespace CCSInventory.Pages
         {
             // Thanks to [Required] data annotations in the UserLogin ViewModel, 
             // the framework can take care of empty username or passwords.
-            // If UserName or Password are empty, this is false and the page reloads
+            // If Username or Password are empty, this is false and the page reloads
             // with error messages.
             if (!ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace CCSInventory.Pages
                 // Pull user from DB in a read-only manner (the AsNoTracking()).
                 User user = await _context.Users
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(u => u.UserName.ToLower() == Login.UserName.ToLower());
+                    .FirstOrDefaultAsync(u => u.Username.ToLower() == Login.Username.ToLower());
 
                 if (user == null || !user.MatchesPassword(Login.Password))
                 {
@@ -125,7 +125,7 @@ namespace CCSInventory.Pages
                     // it's supposed to be another hurdle for a theoretical attacker.
                     ModelState.AddModelError("", "Login Failed: Invalid username or password");
                     // Log the failed login attempt in the Logger
-                    _log.LogWarning($"Failed login attempt for {user?.UserName ?? "unknown user " + Login.UserName} " +
+                    _log.LogWarning($"Failed login attempt for {user?.Username ?? "unknown user " + Login.Username} " +
                     $"from IP address {HttpContext.Connection.RemoteIpAddress}");
 
                     // Delay the response to the user since the login failed.
@@ -141,23 +141,23 @@ namespace CCSInventory.Pages
                 }
 
                 // User and Password matches, but check they're not a disabled user:
-                if (user.Role == UserRole.DISABLED)
+                if (user.UserRole == UserRole.DISABLED)
                 {
                     // No authentication cookie is set for this user.
-                    _log.LogInformation($"Login attempted for disabled user {user.UserName} " +
+                    _log.LogInformation($"Login attempted for disabled user {user.Username} " +
                         $"from IP address {HttpContext.Connection.RemoteIpAddress}");
                     return RedirectToPage("DisabledUser");
                 }
 
-                _log.LogInformation($"Successful login by user {user.UserName}");
+                _log.LogInformation($"Successful login by user {user.Username}");
 
                 // Login is successful here.  Add Authentication Cookie now.
                 var scheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim("UserRole", user.Role.ToString()),
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim("UserRole", user.UserRole.ToString()),
                     new Claim("FullName", user.FullName),
-                    new Claim("LastModified", user.Modified.ToString()),
+                    new Claim("LastModified", user.ModifiedDate.ToString()),
                 }, scheme));
 
                 // The UserRole claim is used to discriminate app features based on UserRole.
@@ -185,7 +185,7 @@ namespace CCSInventory.Pages
         /// <summary>
         /// This handler is used to log out the user.
         /// </summary>
-        /// <param name="returnUrl">(defaults to "~/") The redirect path after the user is logged out/param>
+        /// <param name="returnUrl">(defaults to "~/") The redirect path after the user is logged out</param>
         /// <returns></returns>
         public async Task<IActionResult> OnGetLogout(string returnUrl = "~/")
         {

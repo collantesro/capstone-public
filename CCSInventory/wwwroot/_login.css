@@ -1,0 +1,20 @@
+﻿.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.login-form {
+    padding: 15px;
+}
+
+.login-form img{
+    max-width: 335px;
+}
+
+.validation-summary-errors ul{
+    list-style: none;
+    padding-left: 0;
+}

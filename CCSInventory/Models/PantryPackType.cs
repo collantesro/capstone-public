@@ -7,10 +7,10 @@ namespace CCSInventory.Models
     /// </summary>
     public class PantryPackType : TrackedModel
     {
-        public int ID { get; set; }
+        public int PantryPackTypeID { get; set; }
 
         [Required]
-        public string Name { get; set; }
-        public string Note { get; set; }
+        public string PantryPackTypeName { get; set; }
+        public string PantryPackTypeNote { get; set; }
     }
 }

@@ -8,14 +8,14 @@
 
 @{
     ViewBag.Title = "Edit User";
-    bool editingSelf = User.Identity.Name == Model.UserName;
+    bool editingSelf = User.Identity.Name == Model.Username;
 }
 <div class="container">
     <div class="row">
         <form class="col" method="post">
             <div class="form-group">
-                <label asp-for="@Model.UserName" class="control-label"></label>
-                <input asp-for="@Model.UserName" class="form-control" disabled="true"/>
+                <label asp-for="@Model.Username" class="control-label"></label>
+                <input asp-for="@Model.Username" class="form-control" disabled="true"/>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.FirstName" class="control-label"></label>
@@ -30,8 +30,8 @@
                 <input asp-for="@Model.Email" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Role" class="control-label"></label>
-                <select asp-for="@Model.Role" class="form-control" asp-items="@Html.GetEnumSelectList<UserRole>()"></select>
+                <label asp-for="@Model.UserRole" class="control-label"></label>
+                <select asp-for="@Model.UserRole" class="form-control" asp-items="@Html.GetEnumSelectList<UserRole>()"></select>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.Password" class="control-label"></label>
@@ -42,8 +42,8 @@
                 <input asp-for="@Model.ConfirmPassword" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Note" class="control-label"></label>
-                <input asp-for="@Model.Note" class="form-control" />
+                <label asp-for="@Model.UserNote" class="control-label"></label>
+                <input asp-for="@Model.UserNote" class="form-control" />
             </div>
             <div class="d-flex justify-content-around">
                 <a asp-controller="admin" asp-action="allusers" class="btn btn-secondary">Cancel</a>

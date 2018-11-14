@@ -1,5 +1,7 @@
-﻿@model CCSInventory.Models.ViewModels.PantryPackTransactionType
+﻿@model CCSInventory.Models.PantryPackTransaction
+@using CCSInventory.Models
 @{
+    ViewData["title"] = "InGoing Transaction";
 }
 
 <div class="form-horizontal">
@@ -13,15 +15,21 @@
                 <label asp-for="Qty">Quantity: </label>
                 <input class="form-control" asp-for="Qty" />
 
-                <label asp-for="PackType">Pack Type: </label>
-                <input class="form-control" asp-for="PackType" />
+                <label asp-for="PantryPackTypeID">Pack Type: </label>
+                <select asp-for="PantryPackTypeID">
+                    @foreach (PantryPackType pt in (List<PantryPackType>)ViewData["types"])
+                    {
+                        <option value="@pt.PantryPackTypeID">
+                            @pt.PantryPackTypeName
+                        </option>
+                    }
+                </select>
+                <br />
 
-                <label asp-for="TransactionNote">Transaction Note: </label>
-                <input class="form-control" asp-for="TransactionNote" />
+                <label asp-for="PantryPackTransactionNote">Transaction Note: </label>
+                <input class="form-control" asp-for="PantryPackTransactionNote" />
 
-                <label asp-for="TypeNote">Type Note: </label>
-                <input class="form-control" asp-for="TypeNote" />
-
+                <br />
                 <input type="submit" value="submit" />
             </form>
 

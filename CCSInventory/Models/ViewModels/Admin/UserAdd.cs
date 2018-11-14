@@ -1,15 +1,14 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CCSInventory.Models.ViewModels
+namespace CCSInventory.Models.ViewModels.Admin
 {
     public class UserAdd : UserEdit
     {
         [Required]
-        [DisplayName("User Name")]
-        [StringLength(20, MinimumLength = 4, ErrorMessage = "User Name must be between 4 and 20 characters long.")]
-        [RegularExpression(@"[a-z0-9_]{4,20}", ErrorMessage = "User Name may only contain lowercase letters, numbers, and underscore.")]
-        public new string UserName { get; set; }
+        [StringLength(20, MinimumLength = 4, ErrorMessage = "Username must be between 4 and 20 characters long.")]
+        [RegularExpression(@"[a-z0-9_]{4,20}", ErrorMessage = "Username may only contain lowercase letters, numbers, and underscore.")]
+        public new string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

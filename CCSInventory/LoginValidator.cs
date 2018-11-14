@@ -64,8 +64,8 @@ namespace CCSInventory
                 // which shouldn't be too stressful.  If this becomes a bottleneck, consider adding
                 // some kind of caching layer, either around the DbContext or at the server level.
                 DateTime lastModified = await dbContext.Users.AsNoTracking()
-                                                .Where(u => u.UserName == claimsUser)
-                                                .Select(u => u.Modified)
+                                                .Where(u => u.Username == claimsUser)
+                                                .Select(u => u.ModifiedDate)
                                                 .FirstOrDefaultAsync();
                 if (lastModified.ToString() != claimsLastModified)
                 {

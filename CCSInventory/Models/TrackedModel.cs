@@ -11,12 +11,7 @@ namespace CCSInventory.Models
         /// DateTime of when the object was first added to the DbSet
         /// </summary>
         /// <value></value>
-        public DateTime Created { get; set; }
-        /// <summary>
-        /// DateTime of when the object was last changed in the DbSet
-        /// </summary>
-        /// <value></value>
-        public DateTime Modified { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// String describing the code or user that created the object.
         /// </summary>
@@ -27,6 +22,11 @@ namespace CCSInventory.Models
         /// </summary>
         /// <value></value>
         public string ModifiedBy { get; set; } = "Unspecified";
+        /// <summary>
+        /// DateTime of when the object was last changed in the DbSet
+        /// </summary>
+        /// <value></value>
+        public DateTime ModifiedDate { get; set; }
 
 
         // For the Seed Data in CCSDbContext for the first user, the Created and Modified

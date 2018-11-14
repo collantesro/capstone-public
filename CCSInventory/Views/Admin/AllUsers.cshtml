@@ -1,14 +1,25 @@
-@model IEnumerable<User>
-
 @*
     View description:
     This view is associated with the AdminController.AllUsers() action.
     It displays all of the system's users in a table.
     This view has button links to actions to edit an existing user and to create a new user.
+
+    Depends on: 
+    wwwroot/admin/allusers.js
+    wwwroot/admin/allusers.css
 *@
 
 @{
     ViewBag.Title = "All Users";
+}
+
+@section includes {
+    <link rel="stylesheet" href="~/admin/allusers.css"/>
+    <script>
+        var listOfUsers = @Html.Raw(ViewData["Users"]);
+    </script>
+    <script defer src="~/lib/lodash/lodash.min.js"></script>
+    <script defer src="~/admin/allusers.js"></script>
 }
 
 <div class="container">
@@ -17,34 +28,40 @@
             <i class="fa fa-user-plus"></i> New User
         </a>
     </div>
-@if(Model.Count() < 1){
-    <p>No users in database... how are you seeing this?</p>
-} else {
-    <table class="table">
-        <thead class="thead-light">
-            <tr>
-                <th></th>
-                <th>User Name</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Note</th>
-                <th>Last Modified</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(User user in Model){
+    <p id="noUsersMsg" class="hidden text-danger">No users in database... how are you seeing this?</p>
+    <div id="filterBar" class="btn-group">
+        <h4>Filter: </h4>
+        <input id="filterUsername" type="text" placeholder="Username"/>
+        <input id="filterName" type="text" placeholder="Name"/>
+        <input id="filterEmail" type="text" placeholder="Email"/>
+        <div id="filterRole" class="dropdown">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">User Role</button>
+            <ul class="dropdown-menu">
+                @foreach(string userRole in Enum.GetNames(typeof(UserRole))){
+                    <li class="dropdown-item"><a href="#" id="@("filter" + userRole)"><i class="fa fa-check-square visible"></i> @userRole</a></li>
+                }
+            </ul>
+        </div>
+        <input id="filterNote" type="text" placeholder="User Note"/>
+        <button id="filterClear" class="btn"><i class="fa fa-times-circle-o"></i> Clear</button>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-light">
                 <tr>
-                    <td><a asp-controller="admin" asp-action="edituser" asp-route-userId="@user.ID" class="btn btn-danger">Edit</a></td>
-                    <td>@user.UserName</td>
-                    <td>@user.FullNameLastFirst</td>
-                    <td>@user.Email</td>
-                    <td>@user.Role</td>
-                    <td>@user.Note</td>
-                    <td>@user.Modified.ToLocalTime().ToString()</td>
+                    <th></th>
+                    <th><a class="sortLink" id="sortUsername"     href="#">Username</a></th>
+                    <th><a class="sortLink" id="sortName"         href="#">Name</a></th>
+                    <th><a class="sortLink" id="sortEmail"        href="#">Email</a></th>
+                    <th><a class="sortLink" id="sortUserRole"     href="#">User Role</a></th>
+                    <th><a class="sortLink" id="sortUserNote"     href="#">User Note</a></th>
+                    <th><a class="sortLink" id="sortModifiedDate" href="#">Last Modified</a></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody id="userList">
+                @* Content filled in by javascript.  File: wwwroot/admin/allusers.js *@
+            </tbody>
+        </table>
+    </div>
+    <p id="userCounts"></p>
 </div>

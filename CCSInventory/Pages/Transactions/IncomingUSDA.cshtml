@@ -1,0 +1,117 @@
+﻿@page
+@model IncomingUSDAModel
+@{
+    ViewData["Title"] = "Incoming Transaction";
+}
+
+
+<hr />
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <form method="post">
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Transaction.AgencyID" class="control-label">Agency</label>
+                    <select asp-for="Transaction.AgencyID" class="form-control" asp-items="ViewBag.AgencyID"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Transaction.TransactionTypeID" class="control-label">Transaction Type</label>
+                    <select id="transactionType" asp-for="Transaction.TransactionTypeID" class="form-control" asp-items="ViewBag.TransactionTypeID"></select>
+                </div>
+            </div>
+            <div id="add" class="col-md">
+                <div class="row form-group">
+                    <div class="col">
+                        <label class="control-label">Category</label>
+                        <select name="categories" class="form-control" asp-items="ViewBag.SubcategoryID"></select>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">Weight</label>
+                        <input type="text" name="weights" class="form-control" placeholder="Weight">
+                    </div>
+                    <div class="col">
+                        <label class="control-label">USDA#</label>
+                        <input type="text" name="usdaNums" class="form-control" placeholder="USDA#">
+                    </div>
+                    <div class="col">
+                        <label class="control-label">Cases</label>
+                        <input type="text" name="cases" class="form-control" placeholder="Cases">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md">
+                <button id="addButton" type="button" class="float-right btn btn-success">Add Line</button>
+                <button id="removeButton" type="button" class="float-right btn mr-2 btn-danger">Remove Line</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@{
+    SelectList sl = ViewBag.SubcategoryID;
+    string options = "'";
+}
+@foreach (var s in sl.ToList())
+{
+    options += "<option value=\"" + s.Value + "\">" + s.Text + "</option> ";
+}
+@{
+    options += "' ";
+}
+
+<script>
+
+    document.getElementById("addButton").addEventListener('click', function () {
+        var parent = document.getElementById("add");
+        var template = document.createElement("template")
+        var lineText = '<div class="row form-group"> ' +
+            '<div class="col" > ' +
+            '<select name="categories" class="form-control"> ' +
+            @Html.Raw(@options) +
+            '</select> ' +
+            '</div> ' +
+            '<div class="col"> ' +
+            '<input type="text" name="weights" class="form-control" placeholder="Weight"> ' +
+            '</div> ' +
+            '<div class="col"> ' +
+            '<input type="text" name="usdaNums" class="form-control" placeholder="USDA#"> ' +
+            '</div> ' +
+            '<div class="col"> ' +
+            '<input type="text" name="cases" class="form-control" placeholder="Cases"> ' +
+            '</div> ' +
+            '</div> ';
+        lineText.trim;
+        template.innerHTML = lineText;
+        var DivToAdd = template.content.firstChild;
+        parent.appendChild(DivToAdd);
+    });
+
+    document.getElementById("removeButton").addEventListener('click', function () {
+        var parent = document.getElementById("add");
+        if (parent.childElementCount > 1) {
+             parent.removeChild(parent.lastChild);
+        }
+    });
+
+    document.getElementById("transactionType").addEventListener('change', function () {
+        if (this.value === '4') {
+            window.location = "IncomingGroceryRescue"
+        }
+        if (this.value !== '4' && this.value !== '3') {
+            window.location = "Incoming"
+        }
+    });
+
+    window.addEventListener('load', function () {
+        document.getElementById("transactionType").value = "3"
+    });
+
+</script>

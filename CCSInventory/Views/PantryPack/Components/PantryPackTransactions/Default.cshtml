@@ -17,9 +17,9 @@
         @foreach (var t in Model)
         {
             <tr>
-                <td>@t.PackType</td>
+                <td>@t.PantryPackType.PantryPackTypeName</td>
                 <td>@t.Qty</td>
-                <td>@t.Modified</td>
+                <td>@t.ModifiedDate</td>
             </tr>
         }
     </table>

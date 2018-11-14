@@ -1,0 +1,17 @@
+@*
+    View description:
+    This is the index view for ContainersController.
+*@
+
+@{
+    ViewBag.Title = "Containers";
+}
+
+<div class="container">
+
+Links:
+
+<a asp-controller="Containers" asp-action="NewBin">Create a new bin</a>
+
+@await Component.InvokeAsync("ContainersRecent")
+</div>

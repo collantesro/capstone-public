@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using CCSInventory.Models;
+using CCSInventory.Middleware;
 
 namespace CCSInventory {
     // https://go.microsoft.com/fwlink/?LinkID=398940
@@ -31,7 +32,6 @@ namespace CCSInventory {
             // CCSLogDbContext: So far unused, this context is for storing logs.  The contents
             //     of this database are not required for the rest of the app.
             services.AddDbContext<CCSDbContext>(o => o.UseSqlite(AppSettings["Databases:Production:SQLiteConnectionString"]));
-            services.AddDbContext<CCSLogDbContext>(o => o.UseSqlite(AppSettings["Databases:Logging:SQLiteConnectionString"]));
             
             // C#, by convention, uses PascalCasing.  By default, urls also have PascalCasing
             // This makes urls lowercase instead.
@@ -79,6 +79,7 @@ namespace CCSInventory {
                     o.Conventions.AuthorizeFolder("/Account");
                     o.Conventions.AllowAnonymousToPage("/Account/Login");
                     o.Conventions.AllowAnonymousToPage("/Account/DisabledUser");
+                    o.Conventions.AllowAnonymousToFolder("/Status");
                 });
 
         }
@@ -89,10 +90,16 @@ namespace CCSInventory {
             {
                 app.UseDeveloperExceptionPage();
             }
-            // Status Code Pages are so the user receives the 404 error code page rather
+            // Status Code Pages are so the user receives the status error code message rather
             // than just a blank page.
             app.UseStatusCodePages();
+            // For custom pages, like our /Status/404 Razor Page
+            app.UseStatusCodePagesWithReExecute("/Status/{0}");
             app.UseStaticFiles();
+
+            // For the barcode generator:
+            // Implemented in Middleware/BarcodeMiddleware.cs
+            app.UseBarcodeGenerator();
 
             // Order matters here.  Authentication needs to be specified before MVC
             app.UseAuthentication();

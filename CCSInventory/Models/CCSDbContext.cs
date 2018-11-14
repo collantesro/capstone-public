@@ -22,6 +22,7 @@ namespace CCSInventory.Models
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionLineItem> TransactionLineItems { get; set; }
+        public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<PantryPackTransaction> PantryPackTransactions { get; set; }
         public DbSet<PantryPackType> PantryPackType { get; set; }
 
@@ -39,104 +40,473 @@ namespace CCSInventory.Models
         {
             /*** Alternate Keys ***/
             // https://docs.microsoft.com/en-us/ef/core/modeling/alternate-keys
-            modelBuilder.Entity<User>().HasAlternateKey(u => u.UserName);
-            modelBuilder.Entity<Agency>().HasAlternateKey(a => a.Name);
-            modelBuilder.Entity<Category>().HasAlternateKey(c => c.Name);
-            modelBuilder.Entity<Subcategory>().HasAlternateKey(s => s.Name);
-            modelBuilder.Entity<PantryPackType>().HasAlternateKey(t => t.Name);
+            modelBuilder.Entity<User>().HasAlternateKey(u => u.Username);
+            modelBuilder.Entity<Agency>().HasAlternateKey(a => a.AgencyName);
+            modelBuilder.Entity<Category>().HasAlternateKey(c => c.CategoryName);
+            modelBuilder.Entity<Subcategory>().HasAlternateKey(s => s.SubcategoryName);
+            modelBuilder.Entity<PantryPackType>().HasAlternateKey(t => t.PantryPackTypeName);
+            modelBuilder.Entity<TransactionType>().HasAlternateKey(t => t.TransactionTypeName);
 
             /*** Indexes (Explicit) ***/
-            modelBuilder.Entity<User>().HasIndex(u => u.UserName);
+            modelBuilder.Entity<User>().HasIndex(u => u.Username);
+            modelBuilder.Entity<Container>().HasIndex(u => u.BinNumber);
+            modelBuilder.Entity<PantryPackType>().HasIndex(t => t.PantryPackTypeName);
+            modelBuilder.Entity<TransactionType>().HasIndex(t => t.TransactionTypeName);
 
             /*** Seed Data ***/
             #region seeddata
-            DateTime oct24 = DateTime.Parse("2018-10-24T12:03:00-06:00").ToUniversalTime();
+            DateTime nov13 = DateTime.Parse("2018-11-13T20:40:00-07:00").ToUniversalTime();
 
             // Add a default user to the table.  Using an anonymous type instead of a User
             // object so the passwordHash and all other data is constant across migrations
             modelBuilder.Entity<User>().HasData(new
             {
-                ID = 1,
+                UserID = 1,
                 FirstName = "Weber",
                 LastName = "CS",
-                UserName = "skram",
+                Username = "skram",
                 // This passwordhash is the hash for: M8/iq+W1
                 PasswordHash = "$2a$10$/n.xV7jA5piJOZmfbT270eAKstycJ9WHqfpSttqz25ARWwnyLCyhu",
-                Role = UserRole.ADMIN,
-                Note = "Default user for an empty database",
-                Created = DateTime.Parse("2018-10-18T12:30:18.051Z").ToUniversalTime(),
+                UserRole = UserRole.ADMIN,
+                UserNote = "Default user for an empty database",
+                CreatedDate = DateTime.Parse("2018-10-18T12:30:18.051Z").ToUniversalTime(),
                 CreatedBy = "Seeded Data",
-                Modified = oct24,
+                ModifiedDate = nov13,
                 ModifiedBy = "Seeded Data",
             });
 
             // Default categories:
             modelBuilder.Entity<Category>().HasData(new Category[]{
                 new Category {
-                    ID = 1,
-                    Name = "Dry Goods",
-                    Created = oct24,
+                    CategoryID = 1,
+                    CategoryName = "Dry Goods",
+                    CreatedDate = nov13,
                     CreatedBy = "Seeded Data",
-                    Modified = oct24,
+                    ModifiedDate = nov13,
                     ModifiedBy = "Seeded Data"
                 },
                 new Category {
-                    ID = 2,
-                    Name = "Perishable",
-                    Created = oct24,
+                    CategoryID = 2,
+                    CategoryName = "Perishable",
+                    CreatedDate = nov13,
                     CreatedBy = "Seeded Data",
-                    Modified = oct24,
+                    ModifiedDate = nov13,
                     ModifiedBy = "Seeded Data"
                 },
                 new Category {
-                    ID = 3,
-                    Name = "Non-Food",
-                    Created = oct24,
+                    CategoryID = 3,
+                    CategoryName = "Non-Food",
+                    CreatedDate = nov13,
                     CreatedBy = "Seeded Data",
-                    Modified = oct24,
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Category {
+                    CategoryID = 4,
+                    CategoryName = "USDA",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Category {
+                    CategoryID = 5,
+                    CategoryName = "Grocery Rescue",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
                     ModifiedBy = "Seeded Data"
                 },
             });
             // Default subcategories for above categories:
             modelBuilder.Entity<Subcategory>().HasData(new Subcategory[]{
                 new Subcategory {
-                    ID = 1,
+                    SubcategoryID = 1,
                     CategoryID = 1,
-                    Name = "Unsorted (Dry Goods)",
-                    Created = oct24,
+                    SubcategoryName = "Unsorted (Dry Goods)",
+                    CreatedDate = nov13,
                     CreatedBy = "Seeded Data",
-                    Modified = oct24,
+                    ModifiedDate = nov13,
                     ModifiedBy = "Seeded Data"
                 },
                 new Subcategory {
-                    ID = 2,
+                    SubcategoryID = 2,
                     CategoryID = 2,
-                    Name = "Unsorted (Perishable)",
-                    Created = oct24,
+                    SubcategoryName = "Unsorted (Perishable)",
+                    CreatedDate = nov13,
                     CreatedBy = "Seeded Data",
-                    Modified = oct24,
+                    ModifiedDate = nov13,
                     ModifiedBy = "Seeded Data"
                 },
                 new Subcategory {
-                    ID = 3,
+                    SubcategoryID = 3,
                     CategoryID = 3,
-                    Name = "Unsorted (Non-Food)",
-                    Created = oct24,
+                    SubcategoryName = "Unsorted (Non-Food)",
+                    CreatedDate = nov13,
                     CreatedBy = "Seeded Data",
-                    Modified = oct24,
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 4,
+                    CategoryID = 4,
+                    SubcategoryName = "Unsorted (USDA)",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 5,
+                    CategoryID = 4,
+                    SubcategoryName = "Beans",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 6,
+                    CategoryID = 4,
+                    SubcategoryName = "Milk",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 7,
+                    CategoryID = 4,
+                    SubcategoryName = "Rice",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 8,
+                    CategoryID = 4,
+                    SubcategoryName = "Fruit",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 9,
+                    CategoryID = 5,
+                    SubcategoryName = "Bakery",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 10,
+                    CategoryID = 5,
+                    SubcategoryName = "Dairy",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 11,
+                    CategoryID = 5,
+                    SubcategoryName = "Produce",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 12,
+                    CategoryID = 5,
+                    SubcategoryName = "Deli",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 13,
+                    CategoryID = 5,
+                    SubcategoryName = "Meat",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 14,
+                    CategoryID = 5,
+                    SubcategoryName = "Frozen",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 15,
+                    CategoryID = 5,
+                    SubcategoryName = "Dry Grocery",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data"
+                },
+                new Subcategory {
+                    SubcategoryID = 16,
+                    CategoryID = 5,
+                    SubcategoryName = "Non-Food",
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
                     ModifiedBy = "Seeded Data"
                 },
             });
 
             modelBuilder.Entity<PantryPackType>().HasData(new PantryPackType
             {
-                ID = 1,
-                Name = "Generic",
-                Created = oct24,
+                PantryPackTypeID = 1,
+                PantryPackTypeName = "Generic",
+                CreatedDate = nov13,
                 CreatedBy = "Seeded Data",
-                Modified = oct24,
+                ModifiedDate = nov13,
                 ModifiedBy = "Seeded Data"
             });
+
+            modelBuilder.Entity<TransactionType>().HasData(new TransactionType[]{
+                new TransactionType{
+                    TransactionTypeID = 1,
+                    TransactionTypeName = "In-Kind",
+                    TransactionTypeNote = "Donations with where the items have not been taxed.",
+                    IsOutgoing = false,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+                new TransactionType{
+                    TransactionTypeID = 2,
+                    TransactionTypeName = "Taxed",
+                    TransactionTypeNote = "Donations with where the items have been taxed.",
+                    IsOutgoing = false,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+                new TransactionType{
+                    TransactionTypeID = 3,
+                    TransactionTypeName = "USDA",
+                    TransactionTypeNote = "Donations by the Utah Food Bank.",
+                    IsOutgoing = false,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+                new TransactionType{
+                    TransactionTypeID = 4,
+                    TransactionTypeName = "Grocery Rescue",
+                    TransactionTypeNote = "Donations from Grocery Rescue.",
+                    IsOutgoing = false,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+                new TransactionType{
+                    TransactionTypeID = 5,
+                    TransactionTypeName = "Spoiled",
+                    TransactionTypeNote = "Outgoing food due to spoilage.",
+                    IsOutgoing = true,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+                new TransactionType{
+                    TransactionTypeID = 6,
+                    TransactionTypeName = "On-The-Line",
+                    TransactionTypeNote = "Outgoing items to the pantry.",
+                    IsOutgoing = true,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+                new TransactionType{
+                    TransactionTypeID = 7,
+                    TransactionTypeName = "Pantry Pack",
+                    TransactionTypeNote = "Outgoing items for pantry packs.",
+                    IsOutgoing = true,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+                new TransactionType{
+                    TransactionTypeID = 8,
+                    TransactionTypeName = "Organization Transfer",
+                    TransactionTypeNote = "Outgoing items to other organizations.",
+                    IsOutgoing = true,
+                    CreatedDate = nov13,
+                    CreatedBy = "Seeded Data",
+                    ModifiedDate = nov13,
+                    ModifiedBy = "Seeded Data",
+                },
+            });
+
+            modelBuilder.Entity<Address>().HasData(new Address{
+                AddressID = 1,
+                StreetAddress1 = "2504 F Ave",
+                City = "Ogden",
+                State = "UT",
+                Zip = "84401",
+                AddressNote = "Catholic Community Services Ogden",
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+            modelBuilder.Entity<Agency>().HasData(new Agency{
+                AgencyID = 1,
+                AgencyName = "Catholic Community Services Ogden",
+                AddressID = 1,
+                MailingAddressID = 1,
+                PhoneNumber = "+18013945944",
+                AgencyNote = null,
+                IsArchived = false,
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+
+            #region demo_data
+            modelBuilder.Entity<Address>().HasData(new Address
+            {
+                AddressID = 2,
+                StreetAddress1 = "123 Memory Lane",
+                City = "Ogden",
+                State = "UT",
+                Zip = "84401",
+                AddressNote = "Walmart",
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+            modelBuilder.Entity<Agency>().HasData(new Agency
+            {
+                AgencyID = 2,
+                AgencyName = "Walmart",
+                AddressID = 2,
+                MailingAddressID = 2,
+                PhoneNumber = "+18013551243",
+                AgencyNote = null,
+                IsArchived = false,
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+
+            modelBuilder.Entity<Address>().HasData(new Address
+            {
+                AddressID = 3,
+                StreetAddress1 = "543 n 250 e ",
+                City = "Ogden",
+                State = "UT",
+                Zip = "84401",
+                AddressNote = "Smiths",
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+            modelBuilder.Entity<Agency>().HasData(new Agency
+            {
+                AgencyID = 3,
+                AgencyName = "Smiths",
+                AddressID = 3,
+                MailingAddressID = 3,
+                PhoneNumber = "+18017231598",
+                AgencyNote = null,
+                IsArchived = false,
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+
+            modelBuilder.Entity<Address>().HasData(new Address
+            {
+                AddressID = 4,
+                StreetAddress1 = "635 s 400 w",
+                City = "Ogden",
+                State = "UT",
+                Zip = "84401",
+                AddressNote = "Mark",
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+            modelBuilder.Entity<Agency>().HasData(new Agency
+            {
+                AgencyID = 4,
+                AgencyName = "Mark",
+                AddressID = 4,
+                MailingAddressID = 4,
+                PhoneNumber = "+18013665201",
+                AgencyNote = null,
+                IsArchived = false,
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+
+            modelBuilder.Entity<Address>().HasData(new Address
+            {
+                AddressID = 5,
+                StreetAddress1 = "4567 washington blvd",
+                City = "Ogden",
+                State = "UT",
+                Zip = "84401",
+                AddressNote = "Kelly Vasquez",
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+
+            modelBuilder.Entity<Agency>().HasData(new Agency
+            {
+                AgencyID = 5,
+                AgencyName = "Kelly Vasquez",
+                AddressID = 5,
+                MailingAddressID = 5,
+                PhoneNumber = "+180139918034",
+                AgencyNote = null,
+                IsArchived = false,
+                CreatedDate = nov13,
+                CreatedBy = "Seeded Data",
+                ModifiedDate = nov13,
+                ModifiedBy = "Seeded Data"
+            });
+            #endregion
             #endregion
         }
 
@@ -182,10 +552,10 @@ namespace CCSInventory.Models
             {
                 if (e.State == EntityState.Added)
                 {
-                    ((TrackedModel)e.Entity).Created = DateTime.UtcNow;
+                    ((TrackedModel)e.Entity).CreatedDate = DateTime.UtcNow;
                     ((TrackedModel)e.Entity).CreatedBy = username;
                 }
-                ((TrackedModel)e.Entity).Modified = DateTime.UtcNow;
+                ((TrackedModel)e.Entity).ModifiedDate = DateTime.UtcNow;
                 ((TrackedModel)e.Entity).ModifiedBy = username;
 
             }

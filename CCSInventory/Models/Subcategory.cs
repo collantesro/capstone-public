@@ -7,12 +7,12 @@ namespace CCSInventory.Models
     /// </summary>
     public class Subcategory : TrackedModel
     {
-        public int ID { get; set; }
+        public int SubcategoryID { get; set; }
         public int CategoryID { get; set; }
 
         [Required]
-        public string Name { get; set; }
-        public string Note { get; set; }
+        public string SubcategoryName { get; set; }
+        public string SubcategoryNote { get; set; }
 
         // Navigation Properties for the above Foreign Key
         public Category Category { get; set; }

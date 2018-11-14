@@ -18,21 +18,21 @@ namespace CCSInventory.Migrations
 
             modelBuilder.Entity("CCSInventory.Models.Address", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("AddressID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AddressNote");
 
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<DateTime>("Created");
-
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Note");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("State")
                         .IsRequired();
@@ -45,101 +45,131 @@ namespace CCSInventory.Migrations
                     b.Property<string>("Zip")
                         .IsRequired();
 
-                    b.HasKey("ID");
+                    b.HasKey("AddressID");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new { AddressID = 1, AddressNote = "Catholic Community Services Ogden", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "2504 F Ave", Zip = "84401" },
+                        new { AddressID = 2, AddressNote = "Walmart", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "123 Memory Lane", Zip = "84401" },
+                        new { AddressID = 3, AddressNote = "Smiths", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "543 n 250 e ", Zip = "84401" },
+                        new { AddressID = 4, AddressNote = "Mark", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "635 s 400 w", Zip = "84401" },
+                        new { AddressID = 5, AddressNote = "Kelly Vasquez", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "4567 washington blvd", Zip = "84401" }
+                    );
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Agency", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("AgencyID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AddressID");
+                    b.Property<int?>("AddressID");
 
-                    b.Property<DateTime>("Created");
+                    b.Property<string>("AgencyName")
+                        .IsRequired();
+
+                    b.Property<string>("AgencyNote");
 
                     b.Property<string>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<bool>("IsArchived");
 
                     b.Property<int?>("MailingAddressID");
 
-                    b.Property<DateTime>("Modified");
-
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<string>("Note");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("PhoneNumber");
 
-                    b.HasKey("ID");
+                    b.HasKey("AgencyID");
 
-                    b.HasAlternateKey("Name");
+                    b.HasAlternateKey("AgencyName");
 
                     b.HasIndex("AddressID");
 
                     b.HasIndex("MailingAddressID");
 
                     b.ToTable("Agencies");
+
+                    b.HasData(
+                        new { AgencyID = 1, AddressID = 1, AgencyName = "Catholic Community Services Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 1, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18013945944" },
+                        new { AgencyID = 2, AddressID = 2, AgencyName = "Walmart", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 2, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18013551243" },
+                        new { AgencyID = 3, AddressID = 3, AgencyName = "Smiths", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 3, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18017231598" },
+                        new { AgencyID = 4, AddressID = 4, AgencyName = "Mark", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 4, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18013665201" },
+                        new { AgencyID = 5, AddressID = 5, AgencyName = "Kelly Vasquez", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 5, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+180139918034" }
+                    );
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Category", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("CategoryID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Created");
+                    b.Property<string>("CategoryName")
+                        .IsRequired();
+
+                    b.Property<string>("CategoryNote");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<string>("Note");
+                    b.HasKey("CategoryID");
 
-                    b.HasKey("ID");
-
-                    b.HasAlternateKey("Name");
+                    b.HasAlternateKey("CategoryName");
 
                     b.ToTable("Categories");
 
                     b.HasData(
-                        new { ID = 1, Created = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), CreatedBy = "Seeded Data", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Name = "Dry Goods" },
-                        new { ID = 2, Created = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), CreatedBy = "Seeded Data", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Name = "Perishable" },
-                        new { ID = 3, Created = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), CreatedBy = "Seeded Data", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Name = "Non-Food" }
+                        new { CategoryID = 1, CategoryName = "Dry Goods", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
+                        new { CategoryID = 2, CategoryName = "Perishable", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
+                        new { CategoryID = 3, CategoryName = "Non-Food", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
+                        new { CategoryID = 4, CategoryName = "USDA", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
+                        new { CategoryID = 5, CategoryName = "Grocery Rescue", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) }
                     );
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Container", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ContainerID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("BinNumber");
 
-                    b.Property<DateTime>("Created");
+                    b.Property<int>("Cases");
+
+                    b.Property<string>("ContainerNote");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("ExpirationDate");
+
+                    b.Property<bool>("IsArchived");
+
+                    b.Property<bool>("IsUSDA");
+
+                    b.Property<string>("Location");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Note");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<int>("SubcategoryID");
 
                     b.Property<decimal>("Weight");
 
-                    b.HasKey("ID");
+                    b.HasKey("ContainerID");
+
+                    b.HasIndex("BinNumber");
 
                     b.HasIndex("SubcategoryID");
 
@@ -148,172 +178,191 @@ namespace CCSInventory.Migrations
 
             modelBuilder.Entity("CCSInventory.Models.PantryPackTransaction", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("PantryPackTransactionID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Created");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Note");
+                    b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<int>("PackTypeID");
+                    b.Property<string>("PantryPackTransactionNote");
+
+                    b.Property<int>("PantryPackTypeID");
 
                     b.Property<int>("Qty");
 
-                    b.HasKey("ID");
+                    b.HasKey("PantryPackTransactionID");
 
-                    b.HasIndex("PackTypeID");
+                    b.HasIndex("PantryPackTypeID");
 
                     b.ToTable("PantryPackTransactions");
                 });
 
             modelBuilder.Entity("CCSInventory.Models.PantryPackType", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("PantryPackTypeID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Created");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Name")
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("PantryPackTypeName")
                         .IsRequired();
 
-                    b.Property<string>("Note");
+                    b.Property<string>("PantryPackTypeNote");
 
-                    b.HasKey("ID");
+                    b.HasKey("PantryPackTypeID");
 
-                    b.HasAlternateKey("Name");
+                    b.HasAlternateKey("PantryPackTypeName");
+
+                    b.HasIndex("PantryPackTypeName");
 
                     b.ToTable("PantryPackType");
 
                     b.HasData(
-                        new { ID = 1, Created = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), CreatedBy = "Seeded Data", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Name = "Generic" }
+                        new { PantryPackTypeID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PantryPackTypeName = "Generic" }
                     );
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Subcategory", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("SubcategoryID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CategoryID");
 
-                    b.Property<DateTime>("Created");
-
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Name")
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("SubcategoryName")
                         .IsRequired();
 
-                    b.Property<string>("Note");
+                    b.Property<string>("SubcategoryNote");
 
-                    b.HasKey("ID");
+                    b.HasKey("SubcategoryID");
 
-                    b.HasAlternateKey("Name");
+                    b.HasAlternateKey("SubcategoryName");
 
                     b.HasIndex("CategoryID");
 
                     b.ToTable("Subcategories");
 
                     b.HasData(
-                        new { ID = 1, CategoryID = 1, Created = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), CreatedBy = "Seeded Data", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Name = "Unsorted (Dry Goods)" },
-                        new { ID = 2, CategoryID = 2, Created = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), CreatedBy = "Seeded Data", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Name = "Unsorted (Perishable)" },
-                        new { ID = 3, CategoryID = 3, Created = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), CreatedBy = "Seeded Data", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Name = "Unsorted (Non-Food)" }
+                        new { SubcategoryID = 1, CategoryID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (Dry Goods)" },
+                        new { SubcategoryID = 2, CategoryID = 2, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (Perishable)" },
+                        new { SubcategoryID = 3, CategoryID = 3, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (Non-Food)" },
+                        new { SubcategoryID = 4, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (USDA)" },
+                        new { SubcategoryID = 5, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Beans" },
+                        new { SubcategoryID = 6, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Milk" },
+                        new { SubcategoryID = 7, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Rice" },
+                        new { SubcategoryID = 8, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Fruit" },
+                        new { SubcategoryID = 9, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Bakery" },
+                        new { SubcategoryID = 10, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Dairy" },
+                        new { SubcategoryID = 11, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Produce" },
+                        new { SubcategoryID = 12, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Deli" },
+                        new { SubcategoryID = 13, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Meat" },
+                        new { SubcategoryID = 14, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Frozen" },
+                        new { SubcategoryID = 15, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Dry Grocery" },
+                        new { SubcategoryID = 16, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Non-Food" }
                     );
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Template", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("TemplateID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Created");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<string>("Data")
-                        .IsRequired();
-
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Name")
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("TemplateData")
                         .IsRequired();
 
-                    b.Property<int>("Type");
+                    b.Property<string>("TemplateName")
+                        .IsRequired();
 
-                    b.HasKey("ID");
+                    b.Property<int>("TemplateType");
+
+                    b.HasKey("TemplateID");
 
                     b.ToTable("Templates");
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Transaction", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("TransactionID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AgencyID");
 
-                    b.Property<DateTime>("Created");
-
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<bool>("IsOutgoing");
 
-                    b.Property<DateTime>("Modified");
-
                     b.Property<string>("ModifiedBy");
 
-                    b.HasKey("ID");
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<DateTime>("TransactionDate");
+
+                    b.Property<int>("TransactionTypeID");
+
+                    b.HasKey("TransactionID");
 
                     b.HasIndex("AgencyID");
+
+                    b.HasIndex("TransactionTypeID");
 
                     b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("CCSInventory.Models.TransactionLineItem", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("TransactionLineItemID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Created");
+                    b.Property<int?>("Cases");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<bool>("IsTaxable");
-
-                    b.Property<bool>("IsUSDA");
-
-                    b.Property<DateTime>("Modified");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Note");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<int>("SubcategoryID");
 
                     b.Property<int>("TransactionID");
 
+                    b.Property<string>("TransactionLineItemNote");
+
+                    b.Property<string>("USDANumber");
+
                     b.Property<decimal>("Weight");
 
-                    b.HasKey("ID");
+                    b.HasKey("TransactionLineItemID");
 
                     b.HasIndex("SubcategoryID");
 
@@ -322,14 +371,54 @@ namespace CCSInventory.Migrations
                     b.ToTable("TransactionLineItems");
                 });
 
-            modelBuilder.Entity("CCSInventory.Models.User", b =>
+            modelBuilder.Entity("CCSInventory.Models.TransactionType", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("TransactionTypeID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Created");
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsOutgoing");
+
+                    b.Property<string>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("TransactionTypeName")
+                        .IsRequired();
+
+                    b.Property<string>("TransactionTypeNote");
+
+                    b.HasKey("TransactionTypeID");
+
+                    b.HasAlternateKey("TransactionTypeName");
+
+                    b.HasIndex("TransactionTypeName");
+
+                    b.ToTable("TransactionTypes");
+
+                    b.HasData(
+                        new { TransactionTypeID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "In-Kind", TransactionTypeNote = "Donations with where the items have not been taxed." },
+                        new { TransactionTypeID = 2, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Taxed", TransactionTypeNote = "Donations with where the items have been taxed." },
+                        new { TransactionTypeID = 3, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "USDA", TransactionTypeNote = "Donations by the Utah Food Bank." },
+                        new { TransactionTypeID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Grocery Rescue", TransactionTypeNote = "Donations from Grocery Rescue." },
+                        new { TransactionTypeID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Spoiled", TransactionTypeNote = "Outgoing food due to spoilage." },
+                        new { TransactionTypeID = 6, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "On-The-Line", TransactionTypeNote = "Outgoing items to the pantry." },
+                        new { TransactionTypeID = 7, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Pantry Pack", TransactionTypeNote = "Outgoing items for pantry packs." },
+                        new { TransactionTypeID = 8, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Organization Transfer", TransactionTypeNote = "Outgoing items to other organizations." }
+                    );
+                });
+
+            modelBuilder.Entity("CCSInventory.Models.User", b =>
+                {
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Email");
 
@@ -339,29 +428,29 @@ namespace CCSInventory.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
-                    b.Property<DateTime>("Modified");
-
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<string>("Note");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("PasswordHash");
 
-                    b.Property<int>("Role");
+                    b.Property<string>("UserNote");
 
-                    b.Property<string>("UserName")
+                    b.Property<int>("UserRole");
+
+                    b.Property<string>("Username")
                         .IsRequired();
 
-                    b.HasKey("ID");
+                    b.HasKey("UserID");
 
-                    b.HasAlternateKey("UserName");
+                    b.HasAlternateKey("Username");
 
-                    b.HasIndex("UserName");
+                    b.HasIndex("Username");
 
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { ID = 1, Created = new DateTime(2018, 10, 18, 12, 30, 18, 51, DateTimeKind.Utc), CreatedBy = "Seeded Data", FirstName = "Weber", LastName = "CS", Modified = new DateTime(2018, 10, 24, 18, 3, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", Note = "Default user for an empty database", PasswordHash = "$2a$10$/n.xV7jA5piJOZmfbT270eAKstycJ9WHqfpSttqz25ARWwnyLCyhu", Role = 3, UserName = "skram" }
+                        new { UserID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 10, 18, 12, 30, 18, 51, DateTimeKind.Utc), FirstName = "Weber", LastName = "CS", ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PasswordHash = "$2a$10$/n.xV7jA5piJOZmfbT270eAKstycJ9WHqfpSttqz25ARWwnyLCyhu", UserNote = "Default user for an empty database", UserRole = 3, Username = "skram" }
                     );
                 });
 
@@ -369,8 +458,7 @@ namespace CCSInventory.Migrations
                 {
                     b.HasOne("CCSInventory.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AddressID");
 
                     b.HasOne("CCSInventory.Models.Address", "MailingAddress")
                         .WithMany()
@@ -387,9 +475,9 @@ namespace CCSInventory.Migrations
 
             modelBuilder.Entity("CCSInventory.Models.PantryPackTransaction", b =>
                 {
-                    b.HasOne("CCSInventory.Models.PantryPackType", "PackType")
+                    b.HasOne("CCSInventory.Models.PantryPackType", "PantryPackType")
                         .WithMany()
-                        .HasForeignKey("PackTypeID")
+                        .HasForeignKey("PantryPackTypeID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -406,6 +494,11 @@ namespace CCSInventory.Migrations
                     b.HasOne("CCSInventory.Models.Agency", "Agency")
                         .WithMany()
                         .HasForeignKey("AgencyID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CCSInventory.Models.TransactionType", "TransactionType")
+                        .WithMany()
+                        .HasForeignKey("TransactionTypeID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

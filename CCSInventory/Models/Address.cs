@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace CCSInventory.Models
 {
     public class Address : TrackedModel
     {
-        public int ID { get; set; }
+        public int AddressID { get; set; }
 
         [Required]
         public string StreetAddress1 { get; set; }
@@ -18,6 +19,16 @@ namespace CCSInventory.Models
 
         [Required]
         public string Zip { get; set; }
-        public string Note { get; set; }
+        public string AddressNote { get; set; }
+
+        public override string ToString(){
+            var sb = new StringBuilder();
+            sb.Append(StreetAddress1);
+            if(!string.IsNullOrEmpty(StreetAddress2)){
+                sb.Append(' ').Append(StreetAddress2);
+            }
+            sb.Append(", ").Append(City).Append(", ").Append(State).Append(" ").Append(Zip);
+            return sb.ToString();
+        }
     }
 }

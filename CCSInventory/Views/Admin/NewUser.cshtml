@@ -14,12 +14,12 @@
     <div class="row">
         <form asp-action="NewUser" method="post" class="col">
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" pattern="[a-z0-9_]{4,20}"/>
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" pattern="[a-z0-9_]{4,20}"/>
             </div>
             <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <select asp-for="Role" class="form-control" asp-items="@Html.GetEnumSelectList<UserRole>()"></select>
+                <label asp-for="UserRole" class="control-label"></label>
+                <select asp-for="UserRole" class="form-control" asp-items="@Html.GetEnumSelectList<UserRole>()"></select>
             </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -42,8 +42,8 @@
                 <input asp-for="ConfirmPassword" class="form-control"/>
             </div>
             <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control"/>
+                <label asp-for="UserNote" class="control-label"></label>
+                <input asp-for="UserNote" class="form-control"/>
             </div>
             <div class="d-flex justify-content-around">
                 <a class="btn btn-secondary" asp-controller="Admin" asp-action="Index">Cancel</a>
@@ -56,11 +56,11 @@
             <p>This page is where an <span title="UserRole.ADMIN">ADMIN</span> can add a new user.</p>
             <p>Required fields:
                 <ul>
-                    <li><strong>User Name:</strong> Must be unique.  Between 4 and 20 characters.  Only lowercase letters, numbers, and the underscore are allowed.</li>
+                    <li><strong>Username: </strong>Must be unique.  Between 4 and 20 characters.  Only lowercase letters, numbers, and the underscore are allowed.</li>
                     <li><strong>First Name</strong></li>
                     <li><strong>Last Name</strong></li>
                     <li><strong>User Role</strong></li>
-                    <li><strong>Password:</strong> Between 5 and 64 characters.</li>
+                    <li><strong>Password: </strong>Between 5 and 64 characters.</li>
                 </ul>
                 Email and note are optional.
             </p>
@@ -68,10 +68,10 @@
                 <h4>User Roles</h4>
                 User roles define the available permissions to a user.  The following roles are available:
                 <ul>
-                    <li><strong>DISABLED:</strong> This role is for users that have left the organization or those that may not otherwise log in. Use this instead of deleting a user. Users with a DISABLE role will be told they're disabled upon attempting to log in.</li>
-                    <li><strong>READONLY:</strong> This role is intended for audits.  They cannot insert new data, however they may run pre-existing reports.</li>
-                    <li><strong>STANDARD:</strong> This role is intended for most users.  These users can create new agencies, create new templates, insert new transactions, and run reports.</li>
-                    <li><strong>ADMIN:</strong> This role is allowed to do anything, including: managing users (including other users with ADMIN roles), viewing system log entries, archiving agencies and old data.</li>
+                    <li><strong>DISABLED: </strong>This role is for users that have left the organization or those that may not otherwise log in. Use this instead of deleting a user. Users with a DISABLE role will be told they're disabled upon attempting to log in.</li>
+                    <li><strong>READONLY: </strong>This role is intended for audits.  They cannot insert new data, however they may run pre-existing reports.</li>
+                    <li><strong>STANDARD: </strong>This role is intended for most users.  These users can create new agencies, create new templates, insert new transactions, and run reports.</li>
+                    <li><strong>ADMIN: </strong>This role is allowed to do anything, including: managing users (including other users with ADMIN roles), viewing system log entries, archiving agencies and old data.</li>
                 </ul>
             </p>
         </div>

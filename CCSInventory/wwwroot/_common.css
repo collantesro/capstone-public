@@ -2,3 +2,11 @@
     box-sizing: border-box;
     margin: 0;
 }
+
+.navbar-brand img{
+    height: 30px;
+}
+
+#main-content {
+    background-color: #f6f6f6;
+}

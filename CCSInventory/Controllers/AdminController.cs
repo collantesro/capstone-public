@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 using CCSInventory.Models;
-using CCSInventory.Models.ViewModels;
+using CCSInventory.Models.ViewModels.Admin;
 using System;
 
 namespace CCSInventory.Controllers
@@ -47,7 +48,8 @@ namespace CCSInventory.Controllers
         /// This action displays the form to create a new user.
         /// </summary>
         /// <returns></returns>
-        public ViewResult NewUser(){
+        public ViewResult NewUser()
+        {
             return View();
         }
 
@@ -58,40 +60,52 @@ namespace CCSInventory.Controllers
         /// </summary>
         /// <param name="newUser"></param>
         /// <returns></returns>
-        public async Task<IActionResult> NewUser(UserAdd newUser){
-            if(!ModelState.IsValid){
+        public async Task<IActionResult> NewUser(UserAdd newUser)
+        {
+            if (!ModelState.IsValid)
+            {
                 return View();
-            } else {
-                newUser.UserName = newUser.UserName.ToLower();
-                User dbUser = await _context.Users.Where(u => u.UserName == newUser.UserName).FirstOrDefaultAsync();
-                if(dbUser != null){
+            }
+            else
+            {
+                newUser.Username = newUser.Username.ToLower();
+                User dbUser = await _context.Users.Where(u => u.Username == newUser.Username).FirstOrDefaultAsync();
+                if (dbUser != null)
+                {
                     ModelState.AddModelError("", "That User Name is already used");
                     return View();
-                } else {
-                    User toInsert = new User{
-                        UserName = newUser.UserName,
+                }
+                else
+                {
+                    User toInsert = new User
+                    {
+                        Username = newUser.Username,
                         FirstName = newUser.FirstName,
                         LastName = newUser.LastName,
                         Email = newUser.Email,
-                        Role = newUser.Role,
-                        Note = newUser.Note
+                        UserRole = newUser.UserRole,
+                        UserNote = newUser.UserNote
                     };
                     PasswordChangeResult result = toInsert.ChangePassword(newUser.Password);
-                    if(result != PasswordChangeResult.PASSWORD_OK){
+                    if (result != PasswordChangeResult.PASSWORD_OK)
+                    {
                         ModelState.AddModelError("", "Error setting password");
                         return View();
                     }
 
-                    try {
+                    try
+                    {
                         await _context.Users.AddAsync(toInsert);
                         await _context.SaveChangesAsync(User.Identity.Name);
-                    } catch(Exception e){
+                    }
+                    catch (Exception e)
+                    {
                         _log.LogError("Exception in adding user: " + e.ToString());
-                        _log.LogError($"{User.Identity.Name} attempted to add a user named {toInsert.UserName}");
+                        _log.LogError($"{User.Identity.Name} attempted to add a user named {toInsert.Username}");
                         ModelState.AddModelError("", "Exception thrown in adding user: " + e.ToString());
                         return View();
                     }
-                    _log.LogInformation($"{User.Identity.Name} added a new user {toInsert.UserName} with role {toInsert.Role}");
+                    _log.LogInformation($"{User.Identity.Name} added a new user {toInsert.Username} with role {toInsert.UserRole}");
                     return RedirectToAction("AllUsers");
                 }
             }
@@ -106,7 +120,23 @@ namespace CCSInventory.Controllers
         /// <returns></returns>
         public async Task<ViewResult> AllUsers()
         {
-            return View(await _context.Users.AsNoTracking().ToListAsync());
+            // The front-end displays the users using JavaScript.  This is passed as a
+            // string of JSON to the ViewData, so the view can insert it in the
+            // <script> tag in the head.
+            ViewData["Users"] = JsonConvert.SerializeObject(
+                await _context.Users.AsNoTracking().Select(u => new
+                {
+                    UserID = u.UserID,
+                    Username = u.Username,
+                    FullNameLastFirst = u.FullNameLastFirst,
+                    Email = u.Email,
+                    UserRole = u.UserRole.ToString(),
+                    UserNote = u.UserNote,
+                    ModifiedDateVisible = u.ModifiedDate.ToLocalTime().ToString(),
+                    ModifiedDateInt = u.ModifiedDate.ToFileTime(),
+                }).ToListAsync()
+            );
+            return View();
         }
 
         [HttpGet]
@@ -118,7 +148,7 @@ namespace CCSInventory.Controllers
         /// <returns>Returns the /admin/edituser/id view.</returns>
         public async Task<IActionResult> EditUser(int userId)
         {
-            User toEdit = await _context.Users.Where(u => u.ID == userId).FirstOrDefaultAsync();
+            User toEdit = await _context.Users.Where(u => u.UserID == userId).FirstOrDefaultAsync();
             if (toEdit == null)
             {
                 return NotFound();
@@ -138,7 +168,7 @@ namespace CCSInventory.Controllers
         {
             if (ModelState.IsValid)
             {
-                User dbUser = await _context.Users.Where(u => u.ID == userId).FirstOrDefaultAsync();
+                User dbUser = await _context.Users.Where(u => u.UserID == userId).FirstOrDefaultAsync();
                 if (dbUser == null)
                 {
                     return NotFound();
@@ -164,10 +194,10 @@ namespace CCSInventory.Controllers
                 dbUser.FirstName = toEdit.FirstName;
                 dbUser.LastName = toEdit.LastName;
                 dbUser.Email = toEdit.Email;
-                dbUser.Note = toEdit.Note;
-                dbUser.Role = toEdit.Role;
+                dbUser.UserNote = toEdit.UserNote;
+                dbUser.UserRole = toEdit.UserRole;
                 await _context.SaveChangesAsync(User.Identity.Name);
-                _log.LogInformation($"Admin user {User.Identity.Name} changed user {dbUser.UserName}.");
+                _log.LogInformation($"Admin user {User.Identity.Name} changed user {dbUser.Username}.");
                 return RedirectToAction("AllUsers");
             }
             else

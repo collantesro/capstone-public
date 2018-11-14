@@ -1,10 +1,12 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CCSInventory.Models.ViewModels {
-    public class UserEdit {
-        [DisplayName("User Name")]
-        public string UserName { get; set; }
+namespace CCSInventory.Models.ViewModels.Admin
+{
+    public class UserEdit
+    {
+
+        public string Username { get; set; }
 
         [Required]
         [DisplayName("First Name")]
@@ -26,20 +28,23 @@ namespace CCSInventory.Models.ViewModels {
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        public string Note { get; set; }
+        [DisplayName("User Note")]
+        public string UserNote { get; set; }
 
         [Required]
-        public UserRole Role { get; set; }
+        [DisplayName("User Role")]
+        public UserRole UserRole { get; set; }
 
-        public UserEdit(){}
+        public UserEdit() { }
 
-        public UserEdit(User user){
-            UserName = user.UserName;
+        public UserEdit(User user)
+        {
+            Username = user.Username;
             FirstName = user.FirstName;
             LastName = user.LastName;
             Email = user.Email;
-            Note = user.Note;
-            Role = user.Role;
+            UserNote = user.UserNote;
+            UserRole = user.UserRole;
         }
     }
 }

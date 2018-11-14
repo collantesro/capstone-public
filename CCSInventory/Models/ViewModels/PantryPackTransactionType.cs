@@ -16,6 +16,10 @@ namespace CCSInventory.Models.ViewModels
         public string TransactionNote { get; set; }
         public string TypeNote { get; set; }
 
+        //if it is a 0, it will be in going, 
+        //if it is a 1, it will be out going
+        public int TransactionType { get; set; }
+
         public int Qty { get; set; }
         public int PackTypeID { get; set; }
         public PantryPackType PackType { get; set; }

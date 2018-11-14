@@ -1,0 +1,33 @@
+@media print {
+    @page{
+        margin: 0;
+    }
+
+    :not(.printable){
+        display: none;
+        visibility: hidden;
+    }
+
+    /* escape the above for the parents of what I do want to print */
+
+    html, body, #body-row, #main-content, #main-content > .container, .printable > *{
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .container {
+        text-align: center;
+        border: 1mm solid #000;
+        padding: 1em;
+        color: #000;
+    }
+
+    body{
+        background-color: #fff;
+        padding: 1in;
+    }
+
+    .barcode {
+        margin: 0 auto;
+    }
+}
