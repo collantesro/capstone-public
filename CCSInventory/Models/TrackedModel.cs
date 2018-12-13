@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace CCSInventory.Models
 {
@@ -11,21 +13,25 @@ namespace CCSInventory.Models
         /// DateTime of when the object was first added to the DbSet
         /// </summary>
         /// <value></value>
+        [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
         /// <summary>
         /// String describing the code or user that created the object.
         /// </summary>
         /// <value></value>
+        [Display(Name = "Created By")]
         public string CreatedBy { get; set; } = "Unspecified";
         /// <summary>
         /// String describing the code or user that modified the object.
         /// </summary>
         /// <value></value>
+        [Display(Name = "Modified By")]
         public string ModifiedBy { get; set; } = "Unspecified";
         /// <summary>
         /// DateTime of when the object was last changed in the DbSet
         /// </summary>
         /// <value></value>
+        [Display(Name = "Modified Date")]
         public DateTime ModifiedDate { get; set; }
 
 

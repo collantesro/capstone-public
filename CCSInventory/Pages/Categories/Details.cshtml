@@ -1,0 +1,58 @@
+﻿@page
+@model CCSInventory.Pages.Categories.DetailsModel
+
+@{
+    ViewData["Title"] = "Subcategory Details";
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Category
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subcategory.Category.CategoryName)
+        </dd>
+        <dt>
+            Subcategory name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subcategory.SubcategoryName)
+        </dd>
+        <dt>
+            Subcategory Note
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subcategory.SubcategoryNote)
+        </dd>
+        <dt>
+            Created date:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CbDate)
+        </dd>
+        <dt>
+            Created by:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subcategory.CreatedBy)
+        </dd>
+        <dt>
+            Modified by:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subcategory.ModifiedBy)
+        </dd>
+        <dt>
+            Last modified on:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MbDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Subcategory.SubcategoryID" class="btn btn-info"><i class="fa fa-pencil mr-2"></i>Edit</a>
+    <a asp-page="./Index" class="btn btn-outline-primary"><i class="fa fa-chevron-left mr-2"></i>Back to List</a>
+</div>

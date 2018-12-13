@@ -3,10 +3,30 @@
     margin: 0;
 }
 
-.navbar-brand img{
+.navbar-brand img {
     height: 30px;
 }
 
-#main-content {
+#content {
     background-color: #f6f6f6;
+    padding: 50px;
 }
+
+.table {
+    white-space: nowrap;
+}
+
+    .table .row-details-icon {
+        padding: 0;
+        text-align: center;
+        width: 2.5em;
+    }
+
+        .table td.row-details-icon a {
+            display: inline-block;
+            padding: .75rem;
+        }
+
+        .table td.row-details-icon:hover i {
+            color: #000;
+        }

@@ -1,0 +1,34 @@
+@model Container
+
+@*
+    View description:
+    This view displays a single container and gives the user an option to edit it.
+*@
+
+@{
+    ViewBag.Title = "View Bin";
+}
+
+@section includes {
+    <link rel="stylesheet" media="print" href="~/containers/details_print.css"/>
+}
+
+<div class="container">
+    <div class="text-center printable">
+        <img class="barcode" src="/barcode?code=@Model.BinNumber" alt="Barcode image for bin @Model.BinNumber" title="Barcode for: @Model.BinNumber"/>
+    </div>
+    <div class="printable binNumber"><span class="font-weight-bold">Bin Number:</span> @Model.BinNumber</div>
+    <div class="printable"><span class="font-weight-bold">Category:</span> @Model.Subcategory.Category.CategoryName &gt; @Model.Subcategory.SubcategoryName @Model.Subcategory.SubcategoryNote</div>
+    <div><span class="font-weight-bold">@(Model.Subcategory.Category.CategoryName.Contains("Pantry Pack", StringComparison.CurrentCultureIgnoreCase) ? "Quantity:" : "Cases:")</span> @Model.Units</div>
+    <div><span class="font-weight-bold">Weight:</span> @Model.Weight</div>
+    <div class=@(Model.ExpirationDate == null ? "" : "printable")><span class="font-weight-bold">Expiration Date:</span> @Model.ExpirationDate?.ToString("MM/dd/yyyy")</div>
+    <div class="printable"><span class="font-weight-bold">Storage Location:</span> @Model.Location.LocationName</div>
+    <div class=@(string.IsNullOrWhiteSpace(Model.ContainerNote) ? "" : "printable")><span class="font-weight-bold">Note:</span> @Model.ContainerNote</div>
+    <div><span class="font-weight-bold">Created On:</span> @Model.CreatedDate.ToLocalTime()</div>
+    <div><span class="font-weight-bold">Created By:</span> @Model.CreatedBy</div>
+    <div><span class="font-weight-bold">Modified On:</span> @Model.ModifiedDate.ToLocalTime()</div>
+    <div><span class="font-weight-bold">Modified By:</span> @Model.ModifiedBy</div>
+    <a href="javascript:window.print()" class="btn btn-secondary"><i class="fa fa-print"></i> Print Label</a>
+    <a asp-controller="Containers" asp-action="Edit" asp-route-containerID="@Model.ContainerID" class="btn btn-danger"><i class="fa fa-pencil"></i> Edit Container</a>
+    <a asp-controller="Containers" asp-action="Delete" asp-route-containerID="@Model.ContainerID" class="btn btn-danger"><i class="fa fa-trash"></i> Delete Container</a>
+</div>

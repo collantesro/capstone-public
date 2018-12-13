@@ -16,6 +16,8 @@ namespace CCSInventory.Pages.Agencies
     {
         private readonly CCSInventory.Models.CCSDbContext _context;
 
+        private static int id;
+
         public EditModel(CCSInventory.Models.CCSDbContext context)
         {
             _context = context;
@@ -31,16 +33,17 @@ namespace CCSInventory.Pages.Agencies
                 return NotFound();
             }
 
+            EditModel.id = (int)id;
+
             Agency = await _context.Agencies
                 .Include(a => a.Address)
-                .Include(a => a.MailingAddress).FirstOrDefaultAsync(m => m.AgencyID == id);
+                .FirstOrDefaultAsync(m => m.AgencyID == id);
 
             if (Agency == null)
             {
                 return NotFound();
             }
            ViewData["AddressID"] = new SelectList(_context.Addresses, "AddressID", "City");
-           ViewData["MailingAddressID"] = new SelectList(_context.Addresses, "AddressID", "City");
             return Page();
         }
 
@@ -51,11 +54,12 @@ namespace CCSInventory.Pages.Agencies
                 return Page();
             }
 
+            this.Agency.AgencyID = EditModel.id;
             _context.Attach(Agency).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(User.Identity.Name);
             }
             catch (DbUpdateConcurrencyException)
             {

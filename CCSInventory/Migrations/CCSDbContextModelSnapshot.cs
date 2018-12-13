@@ -14,7 +14,7 @@ namespace CCSInventory.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
             modelBuilder.Entity("CCSInventory.Models.Address", b =>
                 {
@@ -50,12 +50,19 @@ namespace CCSInventory.Migrations
                     b.ToTable("Addresses");
 
                     b.HasData(
-                        new { AddressID = 1, AddressNote = "Catholic Community Services Ogden", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "2504 F Ave", Zip = "84401" },
-                        new { AddressID = 2, AddressNote = "Walmart", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "123 Memory Lane", Zip = "84401" },
-                        new { AddressID = 3, AddressNote = "Smiths", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "543 n 250 e ", Zip = "84401" },
-                        new { AddressID = 4, AddressNote = "Mark", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "635 s 400 w", Zip = "84401" },
-                        new { AddressID = 5, AddressNote = "Kelly Vasquez", City = "Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), State = "UT", StreetAddress1 = "4567 washington blvd", Zip = "84401" }
-                    );
+                        new
+                        {
+                            AddressID = 1,
+                            AddressNote = "Catholic Community Services Ogden",
+                            City = "Ogden",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            State = "UT",
+                            StreetAddress1 = "2504 F Ave",
+                            Zip = "84401"
+                        });
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Agency", b =>
@@ -74,9 +81,11 @@ namespace CCSInventory.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<bool>("IsArchived");
+                    b.Property<string>("EmailAddress");
 
-                    b.Property<int?>("MailingAddressID");
+                    b.Property<bool>("HasAddress");
+
+                    b.Property<bool>("IsArchived");
 
                     b.Property<string>("ModifiedBy");
 
@@ -90,17 +99,35 @@ namespace CCSInventory.Migrations
 
                     b.HasIndex("AddressID");
 
-                    b.HasIndex("MailingAddressID");
-
                     b.ToTable("Agencies");
 
                     b.HasData(
-                        new { AgencyID = 1, AddressID = 1, AgencyName = "Catholic Community Services Ogden", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 1, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18013945944" },
-                        new { AgencyID = 2, AddressID = 2, AgencyName = "Walmart", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 2, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18013551243" },
-                        new { AgencyID = 3, AddressID = 3, AgencyName = "Smiths", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 3, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18017231598" },
-                        new { AgencyID = 4, AddressID = 4, AgencyName = "Mark", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 4, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+18013665201" },
-                        new { AgencyID = 5, AddressID = 5, AgencyName = "Kelly Vasquez", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsArchived = false, MailingAddressID = 5, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PhoneNumber = "+180139918034" }
-                    );
+                        new
+                        {
+                            AgencyID = 1,
+                            AddressID = 1,
+                            AgencyName = "Catholic Community Services Ogden",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            HasAddress = true,
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 12, 3, 0, 0, 0, DateTimeKind.Utc),
+                            PhoneNumber = "+18013945944"
+                        },
+                        new
+                        {
+                            AgencyID = 2,
+                            AgencyName = "Anonymous",
+                            AgencyNote = "This is a catch-all Agency for anonymous donations.",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            HasAddress = false,
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 12, 3, 0, 0, 0, DateTimeKind.Utc),
+                            PhoneNumber = "+10000000000"
+                        });
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Category", b =>
@@ -128,12 +155,60 @@ namespace CCSInventory.Migrations
                     b.ToTable("Categories");
 
                     b.HasData(
-                        new { CategoryID = 1, CategoryName = "Dry Goods", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
-                        new { CategoryID = 2, CategoryName = "Perishable", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
-                        new { CategoryID = 3, CategoryName = "Non-Food", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
-                        new { CategoryID = 4, CategoryName = "USDA", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) },
-                        new { CategoryID = 5, CategoryName = "Grocery Rescue", CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc) }
-                    );
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Dry Goods",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Perishable",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Non-Food",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "USDA",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Grocery Rescue",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Pantry Pack",
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Container", b =>
@@ -142,8 +217,6 @@ namespace CCSInventory.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("BinNumber");
-
-                    b.Property<int>("Cases");
 
                     b.Property<string>("ContainerNote");
 
@@ -155,9 +228,7 @@ namespace CCSInventory.Migrations
 
                     b.Property<bool>("IsArchived");
 
-                    b.Property<bool>("IsUSDA");
-
-                    b.Property<string>("Location");
+                    b.Property<int>("LocationID");
 
                     b.Property<string>("ModifiedBy");
 
@@ -165,72 +236,158 @@ namespace CCSInventory.Migrations
 
                     b.Property<int>("SubcategoryID");
 
+                    b.Property<int>("Units");
+
                     b.Property<decimal>("Weight");
 
                     b.HasKey("ContainerID");
 
                     b.HasIndex("BinNumber");
 
+                    b.HasIndex("LocationID");
+
                     b.HasIndex("SubcategoryID");
 
                     b.ToTable("Containers");
                 });
 
-            modelBuilder.Entity("CCSInventory.Models.PantryPackTransaction", b =>
+            modelBuilder.Entity("CCSInventory.Models.Location", b =>
                 {
-                    b.Property<int>("PantryPackTransactionID")
+                    b.Property<int>("LocationID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("PantryPackTransactionNote");
-
-                    b.Property<int>("PantryPackTypeID");
-
-                    b.Property<int>("Qty");
-
-                    b.HasKey("PantryPackTransactionID");
-
-                    b.HasIndex("PantryPackTypeID");
-
-                    b.ToTable("PantryPackTransactions");
-                });
-
-            modelBuilder.Entity("CCSInventory.Models.PantryPackType", b =>
-                {
-                    b.Property<int>("PantryPackTypeID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("PantryPackTypeName")
+                    b.Property<string>("LocationName")
                         .IsRequired();
 
-                    b.Property<string>("PantryPackTypeNote");
+                    b.Property<string>("LocationNote");
 
-                    b.HasKey("PantryPackTypeID");
+                    b.Property<string>("ModifiedBy");
 
-                    b.HasAlternateKey("PantryPackTypeName");
+                    b.Property<DateTime>("ModifiedDate");
 
-                    b.HasIndex("PantryPackTypeName");
+                    b.HasKey("LocationID");
 
-                    b.ToTable("PantryPackType");
+                    b.HasAlternateKey("LocationName");
+
+                    b.HasIndex("LocationName");
+
+                    b.ToTable("Locations");
 
                     b.HasData(
-                        new { PantryPackTypeID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PantryPackTypeName = "Generic" }
-                    );
+                        new
+                        {
+                            LocationID = 1,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "East Room",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 2,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "Main Room",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 3,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "South Room",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "(NONE)",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "USDA Room",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 6,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "Offsite Storage 1",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 7,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "South East",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 8,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "New Warehouse",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 9,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "Refrigerator 1",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            LocationID = 10,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc),
+                            LocationName = "Refrigerator 2",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 12, 5, 4, 27, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("CCSInventory.Models.Log", b =>
+                {
+                    b.Property<int>("LogID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("IsArchived");
+
+                    b.Property<int>("UserID");
+
+                    b.HasKey("LogID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Subcategory", b =>
@@ -243,6 +400,8 @@ namespace CCSInventory.Migrations
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsArchived");
 
                     b.Property<string>("ModifiedBy");
 
@@ -262,23 +421,1805 @@ namespace CCSInventory.Migrations
                     b.ToTable("Subcategories");
 
                     b.HasData(
-                        new { SubcategoryID = 1, CategoryID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (Dry Goods)" },
-                        new { SubcategoryID = 2, CategoryID = 2, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (Perishable)" },
-                        new { SubcategoryID = 3, CategoryID = 3, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (Non-Food)" },
-                        new { SubcategoryID = 4, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Unsorted (USDA)" },
-                        new { SubcategoryID = 5, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Beans" },
-                        new { SubcategoryID = 6, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Milk" },
-                        new { SubcategoryID = 7, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Rice" },
-                        new { SubcategoryID = 8, CategoryID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Fruit" },
-                        new { SubcategoryID = 9, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Bakery" },
-                        new { SubcategoryID = 10, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Dairy" },
-                        new { SubcategoryID = 11, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Produce" },
-                        new { SubcategoryID = 12, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Deli" },
-                        new { SubcategoryID = 13, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Meat" },
-                        new { SubcategoryID = 14, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Frozen" },
-                        new { SubcategoryID = 15, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Dry Grocery" },
-                        new { SubcategoryID = 16, CategoryID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), SubcategoryName = "Non-Food" }
-                    );
+                        new
+                        {
+                            SubcategoryID = 1,
+                            CategoryID = 1,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Unsorted (Dry Goods)"
+                        },
+                        new
+                        {
+                            SubcategoryID = 2,
+                            CategoryID = 2,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Unsorted (Perishable)"
+                        },
+                        new
+                        {
+                            SubcategoryID = 3,
+                            CategoryID = 3,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Unsorted (Non-Food)"
+                        },
+                        new
+                        {
+                            SubcategoryID = 4,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Unsorted (USDA)"
+                        },
+                        new
+                        {
+                            SubcategoryID = 9,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Bakery"
+                        },
+                        new
+                        {
+                            SubcategoryID = 10,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Dairy"
+                        },
+                        new
+                        {
+                            SubcategoryID = 11,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Produce"
+                        },
+                        new
+                        {
+                            SubcategoryID = 12,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Deli"
+                        },
+                        new
+                        {
+                            SubcategoryID = 13,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Meat"
+                        },
+                        new
+                        {
+                            SubcategoryID = 14,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Frozen"
+                        },
+                        new
+                        {
+                            SubcategoryID = 15,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Dry Grocery"
+                        },
+                        new
+                        {
+                            SubcategoryID = 16,
+                            CategoryID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Non-Food"
+                        },
+                        new
+                        {
+                            SubcategoryID = 17,
+                            CategoryID = 6,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "Pantry Pack"
+                        },
+                        new
+                        {
+                            SubcategoryID = 18,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110361",
+                            SubcategoryNote = "Applesauce"
+                        },
+                        new
+                        {
+                            SubcategoryID = 19,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100210",
+                            SubcategoryNote = "Apricot Halves"
+                        },
+                        new
+                        {
+                            SubcategoryID = 20,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100363",
+                            SubcategoryNote = "Beans(vegetarian)"
+                        },
+                        new
+                        {
+                            SubcategoryID = 21,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100435",
+                            SubcategoryNote = "Whole Grain Rotini"
+                        },
+                        new
+                        {
+                            SubcategoryID = 22,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100321",
+                            SubcategoryNote = "Vegetable Soup"
+                        },
+                        new
+                        {
+                            SubcategoryID = 23,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100328",
+                            SubcategoryNote = "Tomatoes, diced"
+                        },
+                        new
+                        {
+                            SubcategoryID = 24,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100333",
+                            SubcategoryNote = "Tomato Sauce"
+                        },
+                        new
+                        {
+                            SubcategoryID = 25,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100322",
+                            SubcategoryNote = "Tomato Soup"
+                        },
+                        new
+                        {
+                            SubcategoryID = 26,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100316",
+                            SubcategoryNote = "Sweet Potatoes"
+                        },
+                        new
+                        {
+                            SubcategoryID = 27,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100323",
+                            SubcategoryNote = "Spinach"
+                        },
+                        new
+                        {
+                            SubcategoryID = 28,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100335",
+                            SubcategoryNote = "Spaghetti Sauce"
+                        },
+                        new
+                        {
+                            SubcategoryID = 29,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100426",
+                            SubcategoryNote = "Spaghetti, Noodles"
+                        },
+                        new
+                        {
+                            SubcategoryID = 30,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100050",
+                            SubcategoryNote = "Shelf Milk 1%"
+                        },
+                        new
+                        {
+                            SubcategoryID = 31,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100526",
+                            SubcategoryNote = "Beef stew"
+                        },
+                        new
+                        {
+                            SubcategoryID = 32,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100491",
+                            SubcategoryNote = "Rice, Long Grain"
+                        },
+                        new
+                        {
+                            SubcategoryID = 33,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100293",
+                            SubcategoryNote = "Raisins"
+                        },
+                        new
+                        {
+                            SubcategoryID = 34,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100319",
+                            SubcategoryNote = "Pumpkin"
+                        },
+                        new
+                        {
+                            SubcategoryID = 35,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100139",
+                            SubcategoryNote = "Pork"
+                        },
+                        new
+                        {
+                            SubcategoryID = 36,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100290",
+                            SubcategoryNote = "Plums Pitted Dried"
+                        },
+                        new
+                        {
+                            SubcategoryID = 37,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110178",
+                            SubcategoryNote = "Pistachios"
+                        },
+                        new
+                        {
+                            SubcategoryID = 38,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110021",
+                            SubcategoryNote = "Pinto Beans"
+                        },
+                        new
+                        {
+                            SubcategoryID = 39,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100223",
+                            SubcategoryNote = "Pears"
+                        },
+                        new
+                        {
+                            SubcategoryID = 40,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100395",
+                            SubcategoryNote = "Peanut Butter"
+                        },
+                        new
+                        {
+                            SubcategoryID = 41,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100218",
+                            SubcategoryNote = "Peaches # 300"
+                        },
+                        new
+                        {
+                            SubcategoryID = 42,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100219",
+                            SubcategoryNote = "Peaches"
+                        },
+                        new
+                        {
+                            SubcategoryID = 43,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100314",
+                            SubcategoryNote = "Peas"
+                        },
+                        new
+                        {
+                            SubcategoryID = 44,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100897",
+                            SubcategoryNote = "Orange Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 45,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100211",
+                            SubcategoryNote = "Mixed Fruit"
+                        },
+                        new
+                        {
+                            SubcategoryID = 46,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100306",
+                            SubcategoryNote = "Green Beans"
+                        },
+                        new
+                        {
+                            SubcategoryID = 47,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100896",
+                            SubcategoryNote = "Grapefruit Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 48,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100589",
+                            SubcategoryNote = "Fig Pieces"
+                        },
+                        new
+                        {
+                            SubcategoryID = 49,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100433",
+                            SubcategoryNote = "Egg Noodles"
+                        },
+                        new
+                        {
+                            SubcategoryID = 50,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100213",
+                            SubcategoryNote = "Cranberry Sauce"
+                        },
+                        new
+                        {
+                            SubcategoryID = 51,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100899",
+                            SubcategoryNote = "Cranberry Apple Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 52,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100311",
+                            SubcategoryNote = "Corn Kernel"
+                        },
+                        new
+                        {
+                            SubcategoryID = 53,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100308",
+                            SubcategoryNote = "Carrots"
+                        },
+                        new
+                        {
+                            SubcategoryID = 54,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100372",
+                            SubcategoryNote = "Red Kidney Beans"
+                        },
+                        new
+                        {
+                            SubcategoryID = 55,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100287",
+                            SubcategoryNote = "Dates"
+                        },
+                        new
+                        {
+                            SubcategoryID = 56,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100182",
+                            SubcategoryNote = "Ham, water added"
+                        },
+                        new
+                        {
+                            SubcategoryID = 57,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100145",
+                            SubcategoryNote = "Pork Patties"
+                        },
+                        new
+                        {
+                            SubcategoryID = 58,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110301",
+                            SubcategoryNote = "Catfish Fillets"
+                        },
+                        new
+                        {
+                            SubcategoryID = 59,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110092",
+                            SubcategoryNote = "Chix Leg Quarters"
+                        },
+                        new
+                        {
+                            SubcategoryID = 60,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100241",
+                            SubcategoryNote = "peach cups"
+                        },
+                        new
+                        {
+                            SubcategoryID = 61,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110094",
+                            SubcategoryNote = "chicken legs"
+                        },
+                        new
+                        {
+                            SubcategoryID = 62,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110332",
+                            SubcategoryNote = "USDA Turkey Whole Bagged"
+                        },
+                        new
+                        {
+                            SubcategoryID = 63,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100898",
+                            SubcategoryNote = "Tomato Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 64,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100337",
+                            SubcategoryNote = "Dehydrated Potatoes"
+                        },
+                        new
+                        {
+                            SubcategoryID = 65,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100277",
+                            SubcategoryNote = "Orange Juice singles"
+                        },
+                        new
+                        {
+                            SubcategoryID = 66,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100263",
+                            SubcategoryNote = "Blueberry F Cult"
+                        },
+                        new
+                        {
+                            SubcategoryID = 67,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100310",
+                            SubcategoryNote = "Corn Cream 24"
+                        },
+                        new
+                        {
+                            SubcategoryID = 68,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100105",
+                            SubcategoryNote = "Chicken, Leg Qrts 40 lb"
+                        },
+                        new
+                        {
+                            SubcategoryID = 69,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100297",
+                            SubcategoryNote = "Fruit and Nut Mix"
+                        },
+                        new
+                        {
+                            SubcategoryID = 70,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100367",
+                            SubcategoryNote = "Beans, Blackeye"
+                        },
+                        new
+                        {
+                            SubcategoryID = 71,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100242",
+                            SubcategoryNote = "Blueberries, Frozen"
+                        },
+                        new
+                        {
+                            SubcategoryID = 72,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100375",
+                            SubcategoryNote = "Red Beans"
+                        },
+                        new
+                        {
+                            SubcategoryID = 73,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100342",
+                            SubcategoryNote = "Tomatoes-perishable"
+                        },
+                        new
+                        {
+                            SubcategoryID = 74,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100324",
+                            SubcategoryNote = "Diced tomatoes"
+                        },
+                        new
+                        {
+                            SubcategoryID = 75,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "101017",
+                            SubcategoryNote = "Fresh Potatoes-perishable"
+                        },
+                        new
+                        {
+                            SubcategoryID = 76,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100125",
+                            SubcategoryNote = "Turkey Roasts-perishable"
+                        },
+                        new
+                        {
+                            SubcategoryID = 77,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110290",
+                            SubcategoryNote = "Lamb Leg Roast"
+                        },
+                        new
+                        {
+                            SubcategoryID = 78,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100382",
+                            SubcategoryNote = "Beans, pinto 2lb. bags"
+                        },
+                        new
+                        {
+                            SubcategoryID = 79,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100356",
+                            SubcategoryNote = "Potatoes, Wedges"
+                        },
+                        new
+                        {
+                            SubcategoryID = 80,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "101020",
+                            SubcategoryNote = "Garbanzo Beans"
+                        },
+                        new
+                        {
+                            SubcategoryID = 81,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100361",
+                            SubcategoryNote = "Refried Beans"
+                        },
+                        new
+                        {
+                            SubcategoryID = 82,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100275",
+                            SubcategoryNote = "Cranberry Juice Concentrate"
+                        },
+                        new
+                        {
+                            SubcategoryID = 83,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100256",
+                            SubcategoryNote = "Strawberry Frozen Cup"
+                        },
+                        new
+                        {
+                            SubcategoryID = 84,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100895",
+                            SubcategoryNote = "Grape Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 85,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110163",
+                            SubcategoryNote = "Cream of Chicken Soup"
+                        },
+                        new
+                        {
+                            SubcategoryID = 86,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110440",
+                            SubcategoryNote = "Turkey Sliced Frozen"
+                        },
+                        new
+                        {
+                            SubcategoryID = 87,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110431",
+                            SubcategoryNote = "Turkey Breast Frozen"
+                        },
+                        new
+                        {
+                            SubcategoryID = 88,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100331",
+                            SubcategoryNote = "Potatoes, sliced"
+                        },
+                        new
+                        {
+                            SubcategoryID = 89,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110164",
+                            SubcategoryNote = "Cream of Mushroom Soup"
+                        },
+                        new
+                        {
+                            SubcategoryID = 90,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100295",
+                            SubcategoryNote = "Raisins"
+                        },
+                        new
+                        {
+                            SubcategoryID = 91,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100380",
+                            SubcategoryNote = "Beans Great North'"
+                        },
+                        new
+                        {
+                            SubcategoryID = 92,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100880",
+                            SubcategoryNote = "Chicken, Whole, Bagged"
+                        },
+                        new
+                        {
+                            SubcategoryID = 93,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100123",
+                            SubcategoryNote = "Turkey, Consumer Whole"
+                        },
+                        new
+                        {
+                            SubcategoryID = 94,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100320",
+                            SubcategoryNote = "Mix Veg"
+                        },
+                        new
+                        {
+                            SubcategoryID = 95,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100894",
+                            SubcategoryNote = "Cherry Apple Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 96,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100893",
+                            SubcategoryNote = "Apple Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 97,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100198",
+                            SubcategoryNote = "Salmon, canned"
+                        },
+                        new
+                        {
+                            SubcategoryID = 98,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100300",
+                            SubcategoryNote = "Dried Cranberries"
+                        },
+                        new
+                        {
+                            SubcategoryID = 99,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100298",
+                            SubcategoryNote = "Cherries, dried"
+                        },
+                        new
+                        {
+                            SubcategoryID = 100,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100207",
+                            SubcategoryNote = "Applesauce #300"
+                        },
+                        new
+                        {
+                            SubcategoryID = 101,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100315",
+                            SubcategoryNote = "Sweet Peas"
+                        },
+                        new
+                        {
+                            SubcategoryID = 102,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100466",
+                            SubcategoryNote = "Oats"
+                        },
+                        new
+                        {
+                            SubcategoryID = 103,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100313",
+                            SubcategoryNote = "Corn, whole kernel"
+                        },
+                        new
+                        {
+                            SubcategoryID = 104,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110470",
+                            SubcategoryNote = "Frozen Sliced Apples"
+                        },
+                        new
+                        {
+                            SubcategoryID = 105,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100469",
+                            SubcategoryNote = "Grits"
+                        },
+                        new
+                        {
+                            SubcategoryID = 106,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100929",
+                            SubcategoryNote = "Oat Circles"
+                        },
+                        new
+                        {
+                            SubcategoryID = 107,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110260",
+                            SubcategoryNote = "Beef Fine Ground"
+                        },
+                        new
+                        {
+                            SubcategoryID = 108,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100441",
+                            SubcategoryNote = "Vegetable Oil"
+                        },
+                        new
+                        {
+                            SubcategoryID = 109,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110481",
+                            SubcategoryNote = "Frozen Carrots"
+                        },
+                        new
+                        {
+                            SubcategoryID = 110,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110450",
+                            SubcategoryNote = "Pasta Spaghetti"
+                        },
+                        new
+                        {
+                            SubcategoryID = 111,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100918",
+                            SubcategoryNote = "Bakery flour mix"
+                        },
+                        new
+                        {
+                            SubcategoryID = 112,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100514",
+                            SubcategoryNote = "Red Apples"
+                        },
+                        new
+                        {
+                            SubcategoryID = 113,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100236",
+                            SubcategoryNote = "Cherries, rtp"
+                        },
+                        new
+                        {
+                            SubcategoryID = 114,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100512",
+                            SubcategoryNote = "Apples Granny Smith"
+                        },
+                        new
+                        {
+                            SubcategoryID = 115,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110652",
+                            SubcategoryNote = "Salmom canned"
+                        },
+                        new
+                        {
+                            SubcategoryID = 116,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100521",
+                            SubcategoryNote = "Gala Apples Fresh"
+                        },
+                        new
+                        {
+                            SubcategoryID = 117,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110560",
+                            SubcategoryNote = "Pears, Fresh"
+                        },
+                        new
+                        {
+                            SubcategoryID = 118,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100523",
+                            SubcategoryNote = "Apples Braeburn"
+                        },
+                        new
+                        {
+                            SubcategoryID = 119,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110672",
+                            SubcategoryNote = "Lamb Shoulder Roast"
+                        },
+                        new
+                        {
+                            SubcategoryID = 120,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110651",
+                            SubcategoryNote = "Orange Juice"
+                        },
+                        new
+                        {
+                            SubcategoryID = 121,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110556",
+                            SubcategoryNote = "Raisins unsweetened"
+                        },
+                        new
+                        {
+                            SubcategoryID = 122,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100908",
+                            SubcategoryNote = "Walnut Pieces"
+                        },
+                        new
+                        {
+                            SubcategoryID = 123,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110390",
+                            SubcategoryNote = "Catfish fillets, Unbreaded"
+                        },
+                        new
+                        {
+                            SubcategoryID = 124,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100227",
+                            SubcategoryNote = "Canned Cherries"
+                        },
+                        new
+                        {
+                            SubcategoryID = 125,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110511",
+                            SubcategoryNote = "Elbow Macaroni"
+                        },
+                        new
+                        {
+                            SubcategoryID = 126,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100046",
+                            SubcategoryNote = "Whole Eggs Frozen"
+                        },
+                        new
+                        {
+                            SubcategoryID = 127,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100194",
+                            SubcategoryNote = "Tuna Canned"
+                        },
+                        new
+                        {
+                            SubcategoryID = 128,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100936",
+                            SubcategoryNote = "Eggs"
+                        },
+                        new
+                        {
+                            SubcategoryID = 129,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110623",
+                            SubcategoryNote = "Blueberries, High Bush"
+                        },
+                        new
+                        {
+                            SubcategoryID = 130,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110580",
+                            SubcategoryNote = "Kosher Salmon, Canned"
+                        },
+                        new
+                        {
+                            SubcategoryID = 131,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110845",
+                            SubcategoryNote = "Whole Eggs Frozen"
+                        },
+                        new
+                        {
+                            SubcategoryID = 132,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "101035",
+                            SubcategoryNote = "Whole Grain Spaghetti"
+                        },
+                        new
+                        {
+                            SubcategoryID = 133,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110478",
+                            SubcategoryNote = "Boned chicken canned"
+                        },
+                        new
+                        {
+                            SubcategoryID = 134,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100003",
+                            SubcategoryNote = "Shredded Yellow Cheddar"
+                        },
+                        new
+                        {
+                            SubcategoryID = 135,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110741",
+                            SubcategoryNote = "Whole Wheat Tortillas"
+                        },
+                        new
+                        {
+                            SubcategoryID = 136,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100487",
+                            SubcategoryNote = "Rice, Medium"
+                        },
+                        new
+                        {
+                            SubcategoryID = 137,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110610",
+                            SubcategoryNote = "KH Tomato Sauce"
+                        },
+                        new
+                        {
+                            SubcategoryID = 138,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "101024",
+                            SubcategoryNote = "Macaroni and cheese"
+                        },
+                        new
+                        {
+                            SubcategoryID = 139,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100233",
+                            SubcategoryNote = "Plums"
+                        },
+                        new
+                        {
+                            SubcategoryID = 140,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110561",
+                            SubcategoryNote = "Apples Fresh"
+                        },
+                        new
+                        {
+                            SubcategoryID = 141,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100492",
+                            SubcategoryNote = "Rice, Long (heavy bag)"
+                        },
+                        new
+                        {
+                            SubcategoryID = 142,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110777",
+                            SubcategoryNote = "Whole Grain Pasta Rotini "
+                        },
+                        new
+                        {
+                            SubcategoryID = 143,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100384",
+                            SubcategoryNote = "Dark Red Kidney Beans"
+                        },
+                        new
+                        {
+                            SubcategoryID = 144,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110345",
+                            SubcategoryNote = "Fish AK Plck Fillets"
+                        },
+                        new
+                        {
+                            SubcategoryID = 145,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110903",
+                            SubcategoryNote = "Turkey Breast Deli Sliced"
+                        },
+                        new
+                        {
+                            SubcategoryID = 146,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110154",
+                            SubcategoryNote = "Chicken Consumer Split Breast"
+                        },
+                        new
+                        {
+                            SubcategoryID = 147,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100289",
+                            SubcategoryNote = "Fig Pieces 24 1lb"
+                        },
+                        new
+                        {
+                            SubcategoryID = 148,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110904",
+                            SubcategoryNote = "Turkey Breast Smoked Sliced"
+                        },
+                        new
+                        {
+                            SubcategoryID = 149,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110990",
+                            SubcategoryNote = "Potatoes Red Fresh"
+                        },
+                        new
+                        {
+                            SubcategoryID = 150,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110980",
+                            SubcategoryNote = "Pork Pulled CKD"
+                        },
+                        new
+                        {
+                            SubcategoryID = 151,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110880",
+                            SubcategoryNote = "Farina Wheat Cereal"
+                        },
+                        new
+                        {
+                            SubcategoryID = 152,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110380",
+                            SubcategoryNote = "Pork Chops Boneless"
+                        },
+                        new
+                        {
+                            SubcategoryID = 153,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "100376",
+                            SubcategoryNote = "Split Pea Dry"
+                        },
+                        new
+                        {
+                            SubcategoryID = 154,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "110843",
+                            SubcategoryNote = "Cheese Ched Yei Shred"
+                        },
+                        new
+                        {
+                            SubcategoryID = 155,
+                            CategoryID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsArchived = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            SubcategoryName = "111008",
+                            SubcategoryNote = "1% Milk Fresh"
+                        });
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Template", b =>
@@ -318,6 +2259,8 @@ namespace CCSInventory.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<bool>("IsArchived");
+
                     b.Property<bool>("IsOutgoing");
 
                     b.Property<string>("ModifiedBy");
@@ -326,13 +2269,11 @@ namespace CCSInventory.Migrations
 
                     b.Property<DateTime>("TransactionDate");
 
-                    b.Property<int>("TransactionTypeID");
+                    b.Property<string>("TransactionNote");
 
                     b.HasKey("TransactionID");
 
                     b.HasIndex("AgencyID");
-
-                    b.HasIndex("TransactionTypeID");
 
                     b.ToTable("Transactions");
                 });
@@ -342,11 +2283,11 @@ namespace CCSInventory.Migrations
                     b.Property<int>("TransactionLineItemID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("Cases");
-
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsPantryPack");
 
                     b.Property<string>("ModifiedBy");
 
@@ -358,7 +2299,9 @@ namespace CCSInventory.Migrations
 
                     b.Property<string>("TransactionLineItemNote");
 
-                    b.Property<string>("USDANumber");
+                    b.Property<int>("TransactionTypeID");
+
+                    b.Property<int>("Units");
 
                     b.Property<decimal>("Weight");
 
@@ -367,6 +2310,8 @@ namespace CCSInventory.Migrations
                     b.HasIndex("SubcategoryID");
 
                     b.HasIndex("TransactionID");
+
+                    b.HasIndex("TransactionTypeID");
 
                     b.ToTable("TransactionLineItems");
                 });
@@ -400,15 +2345,94 @@ namespace CCSInventory.Migrations
                     b.ToTable("TransactionTypes");
 
                     b.HasData(
-                        new { TransactionTypeID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "In-Kind", TransactionTypeNote = "Donations with where the items have not been taxed." },
-                        new { TransactionTypeID = 2, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Taxed", TransactionTypeNote = "Donations with where the items have been taxed." },
-                        new { TransactionTypeID = 3, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "USDA", TransactionTypeNote = "Donations by the Utah Food Bank." },
-                        new { TransactionTypeID = 4, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = false, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Grocery Rescue", TransactionTypeNote = "Donations from Grocery Rescue." },
-                        new { TransactionTypeID = 5, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Spoiled", TransactionTypeNote = "Outgoing food due to spoilage." },
-                        new { TransactionTypeID = 6, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "On-The-Line", TransactionTypeNote = "Outgoing items to the pantry." },
-                        new { TransactionTypeID = 7, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Pantry Pack", TransactionTypeNote = "Outgoing items for pantry packs." },
-                        new { TransactionTypeID = 8, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), IsOutgoing = true, ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), TransactionTypeName = "Organization Transfer", TransactionTypeNote = "Outgoing items to other organizations." }
-                    );
+                        new
+                        {
+                            TransactionTypeID = 1,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "In-Kind",
+                            TransactionTypeNote = "Donations with where the items have not been taxed."
+                        },
+                        new
+                        {
+                            TransactionTypeID = 2,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "Taxed",
+                            TransactionTypeNote = "Donations with where the items have been taxed."
+                        },
+                        new
+                        {
+                            TransactionTypeID = 3,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "USDA",
+                            TransactionTypeNote = "Donations by the Utah Food Bank."
+                        },
+                        new
+                        {
+                            TransactionTypeID = 4,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "Grocery Rescue",
+                            TransactionTypeNote = "Donations from Grocery Rescue."
+                        },
+                        new
+                        {
+                            TransactionTypeID = 5,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = true,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "Spoiled",
+                            TransactionTypeNote = "Outgoing food due to spoilage."
+                        },
+                        new
+                        {
+                            TransactionTypeID = 6,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = true,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "On-The-Line",
+                            TransactionTypeNote = "Outgoing items to the pantry."
+                        },
+                        new
+                        {
+                            TransactionTypeID = 7,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = true,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "Organization Transfer",
+                            TransactionTypeNote = "Outgoing items to other organizations."
+                        },
+                        new
+                        {
+                            TransactionTypeID = 8,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            IsOutgoing = false,
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            TransactionTypeName = "Non-Taxable",
+                            TransactionTypeNote = "Donations with where the items are not taxed"
+                        });
                 });
 
             modelBuilder.Entity("CCSInventory.Models.User", b =>
@@ -450,8 +2474,20 @@ namespace CCSInventory.Migrations
                     b.ToTable("Users");
 
                     b.HasData(
-                        new { UserID = 1, CreatedBy = "Seeded Data", CreatedDate = new DateTime(2018, 10, 18, 12, 30, 18, 51, DateTimeKind.Utc), FirstName = "Weber", LastName = "CS", ModifiedBy = "Seeded Data", ModifiedDate = new DateTime(2018, 11, 14, 3, 40, 0, 0, DateTimeKind.Utc), PasswordHash = "$2a$10$/n.xV7jA5piJOZmfbT270eAKstycJ9WHqfpSttqz25ARWwnyLCyhu", UserNote = "Default user for an empty database", UserRole = 3, Username = "skram" }
-                    );
+                        new
+                        {
+                            UserID = 1,
+                            CreatedBy = "Seeded Data",
+                            CreatedDate = new DateTime(2018, 10, 18, 12, 30, 18, 51, DateTimeKind.Utc),
+                            FirstName = "Weber",
+                            LastName = "CS",
+                            ModifiedBy = "Seeded Data",
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
+                            PasswordHash = "$2a$10$/n.xV7jA5piJOZmfbT270eAKstycJ9WHqfpSttqz25ARWwnyLCyhu",
+                            UserNote = "Default user for an empty database",
+                            UserRole = 3,
+                            Username = "skram"
+                        });
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Agency", b =>
@@ -459,25 +2495,26 @@ namespace CCSInventory.Migrations
                     b.HasOne("CCSInventory.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressID");
-
-                    b.HasOne("CCSInventory.Models.Address", "MailingAddress")
-                        .WithMany()
-                        .HasForeignKey("MailingAddressID");
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Container", b =>
                 {
+                    b.HasOne("CCSInventory.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("CCSInventory.Models.Subcategory", "Subcategory")
                         .WithMany()
                         .HasForeignKey("SubcategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("CCSInventory.Models.PantryPackTransaction", b =>
+            modelBuilder.Entity("CCSInventory.Models.Log", b =>
                 {
-                    b.HasOne("CCSInventory.Models.PantryPackType", "PantryPackType")
+                    b.HasOne("CCSInventory.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("PantryPackTypeID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -495,11 +2532,6 @@ namespace CCSInventory.Migrations
                         .WithMany()
                         .HasForeignKey("AgencyID")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CCSInventory.Models.TransactionType", "TransactionType")
-                        .WithMany()
-                        .HasForeignKey("TransactionTypeID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CCSInventory.Models.TransactionLineItem", b =>
@@ -510,8 +2542,13 @@ namespace CCSInventory.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CCSInventory.Models.Transaction", "Transaction")
-                        .WithMany()
+                        .WithMany("LineItems")
                         .HasForeignKey("TransactionID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CCSInventory.Models.TransactionType", "TransactionType")
+                        .WithMany()
+                        .HasForeignKey("TransactionTypeID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CCSInventory.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CCSInventory.Pages.Transactions
 {
+    [Authorize("StandardUser")]
     public class DeleteModel : PageModel
     {
         private readonly CCSInventory.Models.CCSDbContext _context;
@@ -30,7 +32,8 @@ namespace CCSInventory.Pages.Transactions
 
             Transaction = await _context.Transactions
                 .Include(t => t.Agency)
-                .Include(t => t.TransactionType).FirstOrDefaultAsync(m => m.TransactionID == id);
+                .Include(t => t.LineItems)
+                .FirstOrDefaultAsync(m => m.TransactionID == id);
 
             if (Transaction == null)
             {
@@ -50,11 +53,14 @@ namespace CCSInventory.Pages.Transactions
 
             if (Transaction != null)
             {
-                _context.Transactions.Remove(Transaction);
-                await _context.SaveChangesAsync();
+                Transaction.IsArchived = true;
+                await _context.SaveChangesAsync(User.Identity.Name);
             }
 
             return RedirectToPage("./Index");
         }
+
+        public DateTime CbDate { get => Transaction.CreatedDate.ToLocalTime(); }
+        public DateTime MbDate { get => Transaction.ModifiedDate.ToLocalTime(); }
     }
 }

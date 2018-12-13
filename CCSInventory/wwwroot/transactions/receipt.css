@@ -1,0 +1,58 @@
+﻿@media print {
+    @page {
+        margin: 0;
+    }
+
+        body > *, body > div > *, nav, #content > h1 {
+            display: none;
+        }
+
+    .noPrint {
+        display: none;
+    }
+
+
+    .wrapper, #report {
+        display: block;
+    }
+
+    #content {
+        display: flex;
+        align-content: center;
+    }
+}
+
+#printarea {
+    padding: 5px;
+    border: 2px solid #000;
+    width: 1015px;
+}
+
+p {
+    margin: 0px;
+}
+
+.label {
+    font-weight: bold;
+    text-align: left;
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+}
+
+.underline {
+    border-bottom: 2px solid #000;
+    width: 100%;
+    white-space: pre;
+    text-align: center;
+}
+
+td {
+    border: 1px solid black;
+}
+
+.textArea {
+    font-size: 26px;
+}

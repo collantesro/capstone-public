@@ -1,0 +1,67 @@
+﻿@model List<IGrouping<string, TransactionLineItem>>
+@using System.Linq
+@*
+    View description:
+    This view displays a list of transactions that have been grouped by the category name.
+*@
+@{
+    ViewData["Title"] = "Report Display";
+    ViewData["ReportTitle"] = "Incoming Report";
+}
+
+@section includes {
+    <link rel="stylesheet" href="~/reports/display.css" />
+}
+<div class="container" id="report">
+    <partial name="~/Views/Shared/Reports/PartialHeader.cshtml" />
+    <table class="resultsTable" style="min-width:1000px">
+        <tbody>
+            @foreach (var group in @Model)
+            {
+                <tr><th colspan="6">@(group.Key + $"({group.First().Transaction.Agency.Address.StreetAddress1} {group.First().Transaction.Agency.Address.StreetAddress2}  {group.First().Transaction.Agency.Address.City}  {group.First().Transaction.Agency.Address.State} {group.First().Transaction.Agency.Address.Zip})")</th></tr>
+                <tr><th>Date In</th><th>Transaction Type</th><th>Category</th><th>Count</th><th>Weight</th></tr>
+                @foreach (var lineItem in group)
+                {
+                    <tr>
+                        <td>@lineItem.Transaction.TransactionDate</td>
+                        <td>@lineItem.TransactionType.TransactionTypeName</td>
+                        <td>@(lineItem.Subcategory.SubcategoryName + " " + lineItem.Subcategory.SubcategoryNote)</td>
+                        <td>@lineItem.Units</td>
+                        <td>@lineItem.Weight</td>
+                    </tr>
+
+
+                }
+                <tr>
+                    <td colspan="2"></td>
+                    <td><strong>Total:</strong></td>
+                    <td>
+                        <strong>
+                            @group.Select(c => c.Units).Sum()
+                        </strong>
+                    </td>
+                    <td>
+                        <strong>
+                            @group.Select(c => c.Weight).Sum()
+                        </strong>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2"></td>
+                <td><strong>Grand Totals:</strong></td>
+                <td>
+                    <strong>
+                        @ViewData["Units"]
+                    </strong>
+                </td>
+                <td>
+                    <strong>
+                        @ViewData["Weight"]
+                    </strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <partial name="~/Views/Shared/Reports/PartialFooter.cshtml" />
+</div>

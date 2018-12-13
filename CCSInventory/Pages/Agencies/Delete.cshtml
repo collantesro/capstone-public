@@ -4,10 +4,9 @@
 @{
     ViewData["Title"] = "Delete Donor/Recipient";
 }
+
 <h3>Are you sure you want to archive and hide this?</h3>
 <div>
-    <h4>Donor/Recipient</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             Name
@@ -22,6 +21,12 @@
             @Model.Agency.PhoneNumber
         </dd>
         <dt>
+            Email Address
+        </dt>
+        <dd>
+            @Model.Agency.EmailAddress
+        </dd>
+        <dt>
             Note
         </dt>
         <dd>
@@ -32,12 +37,6 @@
         </dt>
         <dd>
             @Model.Agency.Address
-        </dd>
-        <dt>
-            Mailing Address
-        </dt>
-        <dd>
-            @Model.Agency.MailingAddress
         </dd>
         <dt>
             Created On

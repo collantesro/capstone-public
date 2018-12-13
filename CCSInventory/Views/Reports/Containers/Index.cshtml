@@ -1,0 +1,23 @@
+@model List<Template>
+@*
+    View description:
+    This is the Index view of the Reports/ContainersController's Index action.
+*@
+@{
+    ViewData["Title"] = "Containers Report Templates";
+}
+<div class="container">
+    <div class="text-right">
+        <a asp-action="NewReport" class="btn btn-outline-success">New Report</a>
+    </div>
+    <div id="reportList">
+        @if(Model.Count < 1){
+            <h5>No saved templates</h5>
+        } else {
+            foreach(var t in Model){
+                <dt><a asp-action="RunExisting" asp-route-templateID="@t.TemplateID">@t.TemplateName</a></dt>
+                <dd>Last modified on @t.ModifiedDate.ToLocalTime().ToString()</dd>
+            }
+        }
+    </div>
+</div>

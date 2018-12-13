@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 using CCSInventory.Models;
-using CCSInventory.Models.ViewModels.Admin;
+using CCSInventory.ViewModels.Account;
 
 // Microsoft Documentation reference/tutorial for cookie authentication:
 // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-2.1&tabs=aspnetcore2x
@@ -33,6 +33,7 @@ namespace CCSInventory.Pages
     /// provided to logged-out users to create a new account.  Please ask an administrator
     /// user to create an account through the admin console.
     /// </summary>
+    [ValidateAntiForgeryToken]
     public class LoginModel : PageModel
     {
         [BindProperty]
@@ -90,7 +91,6 @@ namespace CCSInventory.Pages
         /// <param name="returnUrl">This parameter is used after a successful login.  The user is
         /// redirected to this value on a successful login.</param>
         /// <returns></returns>
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> OnPostAsync(string returnUrl = "~/")
         {
             // Thanks to [Required] data annotations in the UserLogin ViewModel, 

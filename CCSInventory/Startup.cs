@@ -1,3 +1,6 @@
+using CCSInventory.Middleware;
+using CCSInventory.Models;
+using CCSInventory.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,11 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using CCSInventory.Models;
-using CCSInventory.Middleware;
+namespace CCSInventory
+{
 
-namespace CCSInventory {
-    // https://go.microsoft.com/fwlink/?LinkID=398940
     public class Startup
     {
         /// <summary>
@@ -19,7 +20,7 @@ namespace CCSInventory {
         /// </summary>
         /// <value></value>
         private IConfiguration AppSettings { get; }
-        
+
         public Startup(IConfiguration config)
         {
             AppSettings = config;
@@ -27,12 +28,11 @@ namespace CCSInventory {
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Configuration of the two DbContext (Connection strings are defined in appsettings.json):
-            // CCSDbContext: The app's primary data.
-            // CCSLogDbContext: So far unused, this context is for storing logs.  The contents
-            //     of this database are not required for the rest of the app.
-            services.AddDbContext<CCSDbContext>(o => o.UseSqlite(AppSettings["Databases:Production:SQLiteConnectionString"]));
-            
+            // Configuration of the DbContext (Connection strings are defined in appsettings.json):
+            // CCSDbContext: The app's primary data, and likely only Db.  Logging may be folded into this DB
+            //services.AddDbContext<CCSDbContext>(o => o.UseSqlServer(AppSettings["Databases:Production:TitanConnectionString"]));
+            services.AddDbContext<CCSDbContext>(o => o.UseSqlite(AppSettings["Databases:Development:SQLiteConnectionString"]));
+
             // C#, by convention, uses PascalCasing.  By default, urls also have PascalCasing
             // This makes urls lowercase instead.
             services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
@@ -41,7 +41,8 @@ namespace CCSInventory {
             // The Login/Logout paths below are so that the framework can automatically redirect
             // users to the proper pages.
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o => {
+                .AddCookie(o =>
+                {
                     o.EventsType = typeof(LoginValidator); // To validate the user's session against the database
                     o.LoginPath = "/account/login";
                     o.LogoutPath = "/account/login/logout";
@@ -64,7 +65,8 @@ namespace CCSInventory {
             // For Razor Pages, put the [Authorize()] attribute on the PageModel.
             // Users that try to access a page without proper authorization will be redirected
             // to /account/accessdenied.
-            services.AddAuthorization(o => {
+            services.AddAuthorization(o =>
+            {
                 o.AddPolicy("ReadonlyUser", policy => policy.RequireClaim("UserRole", UserRole.READONLY.ToString(), UserRole.STANDARD.ToString(), UserRole.ADMIN.ToString()));
                 o.AddPolicy("StandardUser", policy => policy.RequireClaim("UserRole", UserRole.STANDARD.ToString(), UserRole.ADMIN.ToString()));
                 o.AddPolicy("AdminUser", policy => policy.RequireClaim("UserRole", UserRole.ADMIN.ToString()));
@@ -74,14 +76,15 @@ namespace CCSInventory {
             // attribute like in the MVC controllers.
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) // For backwards compatibility in later versions?
-                .AddRazorPagesOptions(o => {
+                .AddRazorPagesOptions(o =>
+                {
                     o.Conventions.AuthorizePage("/Index");
+                    o.Conventions.AuthorizePage("/Help");
                     o.Conventions.AuthorizeFolder("/Account");
                     o.Conventions.AllowAnonymousToPage("/Account/Login");
                     o.Conventions.AllowAnonymousToPage("/Account/DisabledUser");
                     o.Conventions.AllowAnonymousToFolder("/Status");
                 });
-
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -1,0 +1,84 @@
+@model NewBin
+
+@*
+    View description:
+    This view is for creating a new Container.
+    Depends on:
+    wwwroot/containers/create.js
+*@
+
+@{
+    ViewData["Title"] = "Create New Bin";
+}
+
+@section includes {
+    @* Must use Html.Raw(), otherwise it escapes the special symbols in the JSON string *@
+    @* This is to allow the usda checkbox to hide non-usda options in the <select> for subcategory *@
+    <script>
+        var categories = @Html.Raw(ViewData["Categories"]);
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+    <script defer src="~/lib/lodash/lodash.min.js"></script>
+    @* This script enables/disables the BinNumber input when AutoGenerate is unchecked *@
+    @* It also inserts the <select> options for Subcategory based on the state of the USDA checkbox *@
+    <script defer src="~/containers/create.js"></script>
+}
+
+
+<div class="container">
+    <div class="row">
+        <form method="post" asp-action="NewBin" class="col">
+            <input asp-for="@Model.SubcategoryID" id="subcategoryHidden" type="hidden" />
+            <div class="form-group">
+                <label for="categorySelect" class="form-label">Category</label>
+                <select id="categorySelect" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="subcategorySelect" class="control-label">Subcategory</label>
+                <select id="subcategorySelect" class="form-control"></select>
+                <span asp-validation-for="@Model.SubcategoryID" class="text-danger"></span>
+            </div>
+            <div class="form-check">
+                <input asp-for="@Model.AutoGenerate" id="autogenCheckbox" class="form-check-input"/>
+                <label asp-for="@Model.AutoGenerate" for="autogenCheckbox" class="form-check-label"></label>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.BinNumber" class="control-label"></label>
+                <input id="binNumberInput" asp-for="@Model.BinNumber" class="form-control"/>
+                <span asp-validation-for="@Model.BinNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Weight" class="control-label"></label>
+                <input asp-for="@Model.Weight" class="form-control"/>
+                <span asp-validation-for="@Model.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Units" id="unitsLabel" class="control-label">Cases</label>
+                <input asp-for="@Model.Units" class="form-control"/>
+                <span asp-validation-for="@Model.Units" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.LocationID" class="control-label"></label>
+                <select asp-for="@Model.LocationID" class="form-control" asp-items="@ViewBag.Locations"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ExpirationDate" class="control-label"></label>
+                <input asp-for="@Model.ExpirationDate"  class="form-control"/>
+                <span asp-validation-for="@Model.ExpirationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ContainerNote" class="control-label"></label>
+                <input asp-for="@Model.ContainerNote" class="form-control"/>
+            </div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-primary"/>
+            </div>
+            <a asp-controller="Containers" asp-action="Index">Back to List</a>
+        </form>
+        <div class="col-md-8">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @await Component.InvokeAsync("ContainersRecent")
+        </div>
+    </div>
+</div>

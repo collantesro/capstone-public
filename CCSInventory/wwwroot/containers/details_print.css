@@ -1,0 +1,44 @@
+@media print {
+    @page{
+        margin: 0;
+    }
+
+    :not(.printable){
+        display: none;
+        visibility: hidden;
+    }
+
+    /* escape the above for the parents of what I do want to print */
+
+    html, body, #body-row, #content, #content > .container, .printable > *{
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .container {
+        text-align: center;
+        color: #000;
+    }
+
+    .container span {
+        display: inline !important;
+    }
+
+    body{
+        background-color: #fff;
+    }
+
+    .barcode {
+        margin: 0 auto;
+    }
+
+    .binNumber span{
+        display: none !important;
+    }
+
+    .binNumber {
+        font-size: 2in;
+        font-weight: bold;
+        margin: -0.5in 0;
+    }
+}

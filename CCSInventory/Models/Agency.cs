@@ -7,14 +7,19 @@ namespace CCSInventory.Models
         public int AgencyID { get; set; }
         [Required]
         public string AgencyName { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
+
         public int? AddressID { get; set; }
-        public int? MailingAddressID { get; set; }
+        public bool HasAddress { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         public string AgencyNote { get; set; }
         public bool IsArchived { get; set; } // For "Deleted".  Hidden from view
 
-        // Navigation Properties for the above Foreign Keys
+        // Navigation Properties for the above Foreign Key
         public Address Address { get; set; }
-        public Address MailingAddress { get; set; }
     }
 }

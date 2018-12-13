@@ -1,0 +1,16 @@
+@*
+    View description:
+    This is the Index view to the Index action of ReportsController.
+    It displays the available report categories.
+*@
+
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="container">
+    <dl>
+        <dt><a asp-controller="ContainersReport" asp-action="Index">Containers</a></dt>
+        <dd>The containers report pulls data about bins.</dd>
+    </dl>
+</div>

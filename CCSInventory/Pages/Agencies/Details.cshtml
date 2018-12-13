@@ -4,9 +4,8 @@
 @{
     ViewData["Title"] = "Donor/Recipient Details";
 }
+
 <div>
-    <h4>Agency</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             Name
@@ -21,28 +20,28 @@
             @Html.DisplayFor(model => model.Agency.PhoneNumber)
         </dd>
         <dt>
+            Email Address
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Agency.EmailAddress)
+        </dd>
+        <dt>
             Note
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Agency.AgencyNote)
         </dd>
         <dt>
-            Deleted?
+            Archived
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Agency.IsArchived)
+            @(Model.Agency.IsArchived ? "Yes" : "No")
         </dd>
         <dt>
             Address
         </dt>
         <dd>
             @Model.Agency.Address
-        </dd>
-        <dt>
-            Mailing Address
-        </dt>
-        <dd>
-            @Model.Agency.MailingAddress
         </dd>
         <dt>
             Created On
@@ -71,6 +70,6 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Agency.AgencyID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Agency.AgencyID" class="btn btn-info"><i class="fa fa-pencil mr-2"></i>Edit</a>
+    <a asp-page="./Index" class="btn btn-outline-primary"><i class="fa fa-chevron-left mr-2"></i>Back to List</a>
 </div>

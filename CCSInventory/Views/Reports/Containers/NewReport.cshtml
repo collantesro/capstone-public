@@ -1,0 +1,89 @@
+@model ContainerOptions
+@*
+    View description:
+    This view is for action NewReport of Reports/ContainersReportController.
+    It displays options to run a new report.
+
+    Required: Input fields for specific Categories, Subcategories, or Locations.
+*@
+@{
+    ViewData["Title"] = "New Containers Report";
+}
+
+@section includes {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<div class="col-md-6" style="margin-top:20px;">
+    <div class="row">
+       
+        <form asp-action="NewReport" method="post" class="col">
+
+            <div class="form-group" id="dateRanges">
+                <div class="row">
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.Start" class="form-label"></label></div>
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.End" class="form-label"></label></div>
+                    <div class="w-100 d-none d-md-block"></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.Start" class="form-control" /></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.End" class="form-control" /></div>
+                </div>
+            </div>
+            <div class="form-check">
+                <input asp-for="@Model.ExcelFormat" class="form-check-input" />
+                <label asp-for="@Model.ExcelFormat" class="form-check-label"></label>
+            </div>
+
+            <hr />
+            @* The options below are the template, the above is for the current report *@
+            <h5>Template Options:</h5>
+            <div class="form-group">
+                <label asp-for="@Model.ReportName" class="form-label"></label>
+                <input asp-for="@Model.ReportName" class="form-control" />
+            </div>
+            <div class="form-group" id="expirationRanges">
+                <div class="row">
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.ExpirationStart" class="form-label"></label></div>
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.ExpirationEnd" class="form-label"></label></div>
+                    <div class="w-100 d-none d-md-block"></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.ExpirationStart" class="form-control" /></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.ExpirationEnd" class="form-control" /></div>
+                </div>
+            </div>
+            <div class="from-group" id="weightRanges">
+                <div class="row">
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.WeightLowerBound" class="form-label"></label></div>
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.WeightUpperBound" class="form-label"></label></div>
+                    <div class="w-100 d-none d-md-block"></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.WeightLowerBound" class="form-control" /></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.WeightUpperBound" class="form-control" /></div>
+                </div>
+            </div>
+            <div class="form-group" id="unitsRanges" style="margin-top:15px;">
+                <div class="row">
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.UnitsLowerBound" class="form-label"></label></div>
+                    <div class="col-6 col-sm-6"><label asp-for="@Model.UnitsUpperBound" class="form-label"></label></div>
+                    <div class="w-100 d-none d-md-block"></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.UnitsLowerBound" class="form-control" /></div>
+                    <div class="col-6 col-sm-6"><input asp-for="@Model.UnitsUpperBound" class="form-control" /></div>
+                </div>
+            </div>
+            @*<div class="form-group" id="flags">
+            <label><input asp-for="@Model.IncludeArchived"/>  Include archived containers</label>
+        </div>*@
+
+            <div class="form-group" id="formButtons">
+
+                <div class="form-check" id="flags">
+                    <input asp-for="@Model.IncludeArchived" class="form-check-input" id="archived" />
+                    <label class="form-check-label" for="archived">Include archived containers</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" name="save" id="saveCheck" class="form-check-input">
+                    <label class="form-check-label" for="saveCheck">Save template</label>
+                </div>
+
+                <input type="submit" value="Run Report" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

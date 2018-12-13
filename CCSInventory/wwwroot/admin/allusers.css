@@ -4,40 +4,12 @@
     Important styles are .sortAsc and .sortDesc as they display the carets.
 */
 
-.hidden {
-    display: none;
+thead th a {
+    color: #495057; /* from bootstrap's styling when it's not a link */
+    text-decoration: none;
 }
 
-#filterBar h4{
-    display: inline;
-}
-
-.filterChecked:before {
-    font-family: FontAwesome;
-    content: "\f14a";
-}
-
-.faded {
-    font-weight: lighter;
-    font-style: italic;
-    color: #ccc;
-}
-
-.sortLink {
-    padding-right: 1em;
-}
-
-.sortAsc, .sortDesc {
-    padding-right: 0;
+thead th a:hover {
+    color: #495057;
     text-decoration: underline;
-}
-
-.sortAsc::after {
-    font-family: FontAwesome;
-    content: " \f0d8";
-}
-
-.sortDesc::after {
-    font-family: FontAwesome;
-    content: " \f0d7";
 }

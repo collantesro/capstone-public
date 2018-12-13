@@ -1,0 +1,23 @@
+<div class="reportHeader text-center">
+    <img src="~/images/ccslogo-name.png" alt="Catholic Community Services Logo"/>
+    @if(!string.IsNullOrWhiteSpace(ViewData["ReportTitle"] as string)){
+        <h1>@ViewData["ReportTitle"]</h1>
+    } else {
+        <h1>Inventory Report</h1>
+    }
+    
+    <h2>
+    @if(ViewData["Start"] != null && ViewData["End"] != null){
+        <text>@(((DateTime)ViewData["Start"]).ToString("MM/dd/yyyy")) - @(((DateTime)ViewData["End"]).ToString("MM/dd/yyyy"))</text>
+    } else {
+        <text>@DateTime.Today.ToString("MM/dd/yyyy")</text>
+    }
+    </h2>
+    <h3>
+        @if (ViewData["Filter"] != null)
+        {
+            <text>@ViewData["Filter"]</text>
+        }
+    </h3>
+    <hr>
+</div>

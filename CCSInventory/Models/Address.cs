@@ -18,13 +18,16 @@ namespace CCSInventory.Models
         public string State { get; set; }
 
         [Required]
+        [DataType(DataType.PostalCode)]
         public string Zip { get; set; }
         public string AddressNote { get; set; }
 
-        public override string ToString(){
+        public override string ToString()
+        {
             var sb = new StringBuilder();
             sb.Append(StreetAddress1);
-            if(!string.IsNullOrEmpty(StreetAddress2)){
+            if (!string.IsNullOrEmpty(StreetAddress2))
+            {
                 sb.Append(' ').Append(StreetAddress2);
             }
             sb.Append(", ").Append(City).Append(", ").Append(State).Append(" ").Append(Zip);

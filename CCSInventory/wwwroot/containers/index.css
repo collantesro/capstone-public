@@ -1,0 +1,9 @@
+thead th a {
+    color: #495057; /* from bootstrap's styling when it's not a link */
+    text-decoration: none;
+}
+
+thead th a:hover {
+    color: #495057;
+    text-decoration: underline;
+}

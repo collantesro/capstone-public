@@ -1,14 +1,16 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives; // For Query below
+using System.IO; // For MemoryStream
+using System.Threading.Tasks;
+
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.PixelFormats;
 using ZXing;
 using ZXing.Common; // To generate the barcode
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using System.IO; // For MemoryStream
-using Microsoft.Extensions.Primitives; // For Query below
 
 // Kinda following from: https://www.paddo.org/asp-net-core-image-resizing-middleware/
 
@@ -72,7 +74,14 @@ namespace CCSInventory.Middleware
                 using (MemoryStream pngStream = new MemoryStream())
                 using (Image<Bgra32> bitmap = Image.LoadPixelData<Bgra32>(pixelData.Pixels, pixelData.Width, pixelData.Height))
                 {
-                    bitmap.SaveAsPng(pngStream);
+                    // Encoding options for PNG: Grayscale 8bit depth (8bit is lowest right now)
+                    // This should make the barcode image smaller.
+                    PngEncoder encoder = new PngEncoder();
+                    encoder.CompressionLevel = 9;
+                    encoder.ColorType = PngColorType.Grayscale;
+                    encoder.BitDepth = PngBitDepth.Bit8;
+
+                    bitmap.Save(pngStream, encoder);
 
                     pngStream.Seek(0, SeekOrigin.Begin);
                     context.Response.ContentType = "image/png";

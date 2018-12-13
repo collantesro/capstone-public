@@ -1,0 +1,34 @@
+.resultsTable {
+    margin: 0;
+}
+
+tr {
+    border-bottom: 1px solid #000;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e5e5e5;
+}
+
+@media print {
+    @page {
+        margin: 0;
+    }
+    body {
+        margin: 1in;
+    }
+    body > *, body > div > *, nav, #content > h1{
+        display: none;
+    }
+    .wrapper, #report {
+        display: block;
+    }
+    #content {
+        display: flex;
+        align-content: center;
+    }
+    hr {
+        width: 4in;
+        margin: 0 auto;
+    }
+}

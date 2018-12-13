@@ -5,64 +5,88 @@
     ViewData["Title"] = "Edit Donor/Recipient";
 }
 
-<h4>Donor/Recipient</h4>
-<hr />
+@section includes {
+    <partial name="_ValidationScriptsPartial" />
+}
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Agency.AgencyID" />
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Agency.AgencyName" class="control-label"></label>
+                <label asp-for="Agency.AgencyName" class="control-label">Agency Name</label>
                 <input asp-for="Agency.AgencyName" class="form-control" />
                 <span asp-validation-for="Agency.AgencyName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Agency.AddressID" class="control-label"></label>
-                <select asp-for="Agency.AddressID" class="form-control" asp-items="ViewBag.AddressID"></select>
-                <span asp-validation-for="Agency.AddressID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Agency.MailingAddressID" class="control-label"></label>
-                <select asp-for="Agency.MailingAddressID" class="form-control" asp-items="ViewBag.MailingAddressID"></select>
-                <span asp-validation-for="Agency.MailingAddressID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Agency.PhoneNumber" class="control-label"></label>
+                <label asp-for="Agency.PhoneNumber" class="control-label">Phone Number (optional)</label>
                 <input asp-for="Agency.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Agency.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Agency.AgencyNote" class="control-label"></label>
+                <label asp-for="Agency.EmailAddress" class="control-label">Email Address (optional)</label>
+                <input asp-for="Agency.EmailAddress" class="form-control" />
+                <span asp-validation-for="Agency.EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agency.AgencyNote" class="control-label">Agency Note (optional)</label>
                 <input asp-for="Agency.AgencyNote" class="form-control" />
                 <span asp-validation-for="Agency.AgencyNote" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="Agency.IsArchived" /> Archived (hidden)
+                        <input type="checkbox" asp-for="Agency.HasAddress" checked id="hasAddress" onclick="toggle_visibility('addressFields')">
+                        Add an Address
                     </label>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Agency.CreatedDate" class="control-label"></label>
-                <input asp-for="Agency.CreatedDate" class="form-control" />
-                <span asp-validation-for="Agency.CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Agency.CreatedBy" class="control-label"></label>
-                <input asp-for="Agency.CreatedBy" class="form-control" />
-                <span asp-validation-for="Agency.CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Agency.ModifiedBy" class="control-label"></label>
-                <input asp-for="Agency.ModifiedBy" class="form-control" />
-                <span asp-validation-for="Agency.ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Agency.ModifiedDate" class="control-label"></label>
-                <input asp-for="Agency.ModifiedDate" class="form-control" />
-                <span asp-validation-for="Agency.ModifiedDate" class="text-danger"></span>
+
+            <script>
+                function toggle_visibility(id) {
+                    var e = document.getElementById(id);
+                    if (e.style.display == 'block')
+                        e.style.display = 'block';
+                    if (e.style.display == 'none')
+                        e.style.display = 'block';
+                    else
+                        e.style.display = 'none';
+
+                }
+            </script>
+
+            <div id="addressFields">
+                <h3>Address</h3>
+                <div class="form-group">
+                    <label asp-for="Agency.Address.StreetAddress1" class="control-label">Street Address 1</label>
+                    <input asp-for="Agency.Address.StreetAddress1" class="form-control" />
+                    <span asp-validation-for="Agency.Address.StreetAddress1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Agency.Address.StreetAddress2" class="control-label">Street Address 2</label>
+                    <input asp-for="Agency.Address.StreetAddress2" class="form-control" />
+                    <span asp-validation-for="Agency.Address.StreetAddress2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Agency.Address.City" class="control-label">City</label>
+                    <input asp-for="Agency.Address.City" class="form-control" />
+                    <span asp-validation-for="Agency.Address.City" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Agency.Address.State" class="control-label">State</label>
+                    <select asp-for="Agency.Address.State" value="UT" class="form-control" asp-items="@ViewBag.States">
+                        <option selected="selected" value="UT">Utah</option>
+                    </select>
+                    <span asp-validation-for="Agency.Address.State" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Agency.Address.Zip" class="control-label">Zip</label>
+                    <input asp-for="Agency.Address.Zip" class="form-control" />
+                    <span asp-validation-for="Agency.Address.Zip" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -72,9 +96,5 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="Index">Back to List</a>
 </div>
-
-@section includes {
-    <partial name="_ValidationScriptsPartial"/>
-}

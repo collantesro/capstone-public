@@ -8,12 +8,16 @@
 *@
 
 @{
-    ViewBag.Title = "Main Menu";
+    ViewBag.Title = "Dashboard";
     bool isAdmin = User.FindFirst("UserRole").Value == UserRole.ADMIN.ToString();
 }
 
-<div class="container">
-    <p>
-        To get started, select a menu option from the menu.
-    </p>
+@section includes {
+    <link rel="stylesheet" href="~/css/dashboard.css"/>
+}
+
+<div class="text-center mb-4">
+    <img alt="Catholic Community Services logo" class="largeLogo img-fluid" src="~/images/ccslogo-mainmenu.png" />
 </div>
+@await Component.InvokeAsync("ContainersRecent")
+@await Component.InvokeAsync("TransactionsRecent")

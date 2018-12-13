@@ -1,8 +1,40 @@
 @page
+@*
+    Page description:
+    This page is our customized HTTP Status 404 Not Found page.
+*@
 @{
-    ViewData["Title"] = "Resource Not Found";
+    Layout = null; // Since this page can be hit when the user isn't logged in.
 }
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Resource Not Found - CCS Inventory</title>
+        <link rel="icon" href="~/favicon.ico" />
+        <style>
+            html {
+                box-sizing: border-box;
+            }
 
-<p>
-    Error, the resource you're trying to view cannot be found.
-</p>
+            *, *:before, *:after{
+                box-sizing: inherit;
+            }
+            body {
+                background-color: #f5f5f5;
+                color: #212529;
+                font-family: sans-serif;
+                margin: 4em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Resource Not Found</h1>
+        <p>
+            Error: the resource you're trying to view cannot be found.
+        </p>
+        <a asp-page="/Index">Go back home</a>
+    </body>
+</html>

@@ -1,0 +1,65 @@
+@model List<IGrouping<string, Container>>
+@using System.Linq
+@*
+    View description: 
+    This view displays a list of containers that have been grouped by the category name.
+*@
+@{
+    ViewData["Title"] = "Report Display";
+    ViewData["ReportTitle"] = "Containers Report";
+}
+
+@section includes {
+    <link rel="stylesheet" href="~/reports/containers/display.css" />
+}
+<div class="container" id="report">
+    <partial name="~/Views/Shared/Reports/PartialHeader.cshtml" />
+    <table class="resultsTable">
+        <thead>
+            <tr><th>Bin #</th><th>Subcategory</th><th>Note</th><th>Location</th><th>Weight</th><th>Units</th></tr>
+        </thead>
+        <tbody>
+        @foreach(var group in @Model){
+            <tr><th colspan="6">@group.Key</th></tr>
+            @foreach(var container in group){
+            <tr>
+                @if(container.IsArchived){
+                    <td>@container.BinNumber (archived)</td>
+                } else {
+                    <td>@container.BinNumber</td>
+                }
+                <td>@container.Subcategory.SubcategoryName @container.Subcategory.SubcategoryNote</td>
+                <td>@container.ContainerNote</td>
+                <td>@container.Location.LocationName</td>
+                <td>@container.Weight</td>
+                <td>@container.Units</td>
+            </tr>
+            }
+            <tr>
+                <td colspan="3"></td>
+                <td><strong>Total:</strong></td>
+                <td>
+                @(
+                    group.Select(c => c.Weight).Sum()
+                )
+                </td>
+                <td>
+                @(
+                    group.Select(c => c.Units).Sum()
+                )
+                </td>
+            </tr>
+        }
+            <tr>
+                <td colspan="3"></td><td><strong>Grand Totals:</strong></td>
+                <td>
+                    @(Model.SelectMany(group => group).Select(c => c.Weight).Sum())
+                </td>
+                <td>
+                    @(Model.SelectMany(group => group).Select(c => c.Units).Sum())
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <partial name="~/Views/Shared/Reports/PartialFooter.cshtml" />
+</div>

@@ -5,94 +5,262 @@
     ViewData["Title"] = "Outgoing Transaction";
 }
 
-<hr />
-<div class="row">
-    <div class="col-md-6 offset-3">
-        <form method="post">
-            <div class="col-md-8">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Transaction.AgencyID" class="control-label">Agency</label>
-                    <select asp-for="Transaction.AgencyID" class="form-control" asp-items="ViewBag.AgencyID"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Transaction.TransactionTypeID" class="control-label">Transaction Type</label>
-                    <select id="transactionType" asp-for="Transaction.TransactionTypeID" class="form-control" asp-items="ViewBag.TransactionTypeID"></select>
-                </div>
-            </div>
-            <div id="add" class="col-md">
-                <div class="row form-group">
-                    <div class="col">
-                        <label class="control-label">Category</label>
-                        <select name="categories" class="form-control" asp-items="ViewBag.CategoryID"></select>
+<div class="container mt-4">
+    <form method="post">
+        @if (!ModelState.IsValid)
+        {
+            <div asp-validation-summary="All"></div>
+        }
+
+        <div class="border border-secondary rounded bg-white p-3 m-2">
+            <div class="row">
+                <div class="form-group col-sm-12 col-xl-6">
+                    <div class="d-flex">
+                        <label class="font-weight-bold mr-auto">Donor</label>
+                        <div>
+                            <a asp-page="/Agencies/Create" class="btn btn-sm btn-primary"><i class="fa fa-user-plus mr-2"></i>Add Donor</a>
+                        </div>
                     </div>
-                    <div class="col">
-                        <label class="control-label">Weight</label>
-                        <input type="text" name="weights" class="form-control" placeholder="Weight">
+                    <div>
+                        <input asp-for="Transaction.Agency" autocomplete="off" list="partnerId" class="form-control mt-2" required>
+                        <datalist id="partnerId">
+                            @foreach (var item in OutgoingModel.Agencies)
+                            {
+                                var address = OutgoingModel.Addresses.FirstOrDefault(a => a.AddressID == item.AddressID);
+                                if (address != null)
+                                {
+                                    <option value="@item.AgencyID - @item.AgencyName: @address.StreetAddress1 @address.StreetAddress2 @address.City @address.State @address.Zip"></option>
+                                }
+                                else
+                                {
+                                    <option value="@item.AgencyID - @item.AgencyName" />
+                                }
+                            }
+                        </datalist>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12 col-xl-6">
+                    <div>
+                        <label class="font-weight-bold">Date</label>
+                    </div>
+                    <input asp-for="Date" autocomplete="off" class="form-control mt-2" id="currentDateBar" required />
+                </div>
+            </div>
+        </div>
+
+        <div class="border border-secondary rounded bg-white p-3 m-2">
+            <div class="row mb-3">
+                <div class="col text-center">
+                    <label class="font-weight-bold w-100">Form Type</label>
+                    @{
+                        foreach (var item in Model.FormTypesList)
+                        {
+                            <div class="form-check form-type-button btn btn-info p-0" id="@item.ToString()-btn">
+                                <input class="form-check-input FormType d-none" type="radio" name="TypeIndex" id="@item.ToString()" value="@Model.FormTypesList.IndexOf(item)" />
+                                <label class="form-check-label py-1 px-3" for="@item.ToString()">
+                                    @item.ToString()
+                                </label>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive border rounded">
+                        <table id="myTable" class="table table-borderless order-list">
+                            <thead>
+                                <tr>
+                                    <th id="lineItemType">Line Item Type</th>
+                                    <th id="foodCategoryLabelTop">Food Category</th>
+                                    <th id="USDALabelTop" style="visibility: hidden; display: none;">USDA Number</th>
+                                    <th>Weight</th>
+                                    <th id="quantityLabelTop" style="visibility: hidden;">Quantity</th>
+                                    <th id="casesLabelTop" style="visibility: hidden;">Cases</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @*JavaScript code inserts rows right here*@
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-inline-flex my-2">
+                        <input type="button" class="btn btn-block btn-primary mr-2" id="addrow" value="Add Line Item(s)" />
+                        <input type="number" min="1" max="9" value="1" id="addRowAmount" class="form-control w-50" />
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-lg btn-success" id="submitBtn" value="Submit" />
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md">
-                <button id="addButton" type="button" class="float-right btn btn-success">Add Line</button>
-                <button id="removeButton" type="button" class="float-right btn mr-2 btn-danger">Remove Line</button>
-                <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
-@{
-    SelectList sl = ViewBag.CategoryID;
-    string options = "'";
-}
-@foreach (var s in sl.ToList())
-{
-    options += "<option value=\"" + s.Value + "\">" + s.Text + "</option> ";
-}
-@{
-    options += "' ";
-}
-
+<script src="~/lib/jquery/jquery.min.js"></script>
 <script>
+    var counter = 0; // Global that counts every time a row is added.
+    var quantityCount = 0; // Counts rows that are pantry-pack.
+    var pantryCount = 0;
+    var value = $(this).filter(':checked').val();
+    const maxLineItems = 20;  //the maximum number of allowed rows of line items
 
-    document.getElementById("addButton").addEventListener('click', function () {
-        var parent = document.getElementById("add");
-        var template = document.createElement('template')
-        var lineText = '<div class="row form-group"> ' +
-            '<div class="col"> ' +
-            '<select name="categories" class="form-control"> ' +
-            @Html.Raw(@options) +
-            '</select> ' +
-            '</div> ' +
-            '<div class="col"> ' +
-            '<input type="text" name="weights" class="form-control" placeholder="Weight"> ' +
-            '</div> ' +
-            '</div> ';
-        lineText.trim;
-        template.innerHTML = lineText;
-        var DivToAdd = template.content.firstChild;
-        parent.appendChild(DivToAdd);
-    });
-
-    document.getElementById("removeButton").addEventListener('click', function () {
-        var parent = document.getElementById("add");
-        if (parent.childElementCount > 1) {
-            parent.removeChild(parent.lastChild);
+    $('.FormType').change(function () {
+            var oldVal = localStorage.getItem("outFormType");
+            var check = confirm("Are you sure you would like to change the Form Type?\nThis will refresh the page and cause any entered data to be lost.");
+        if (check) {
+            value = $(this).filter(':checked').val();
+            localStorage.setItem("outFormType", value);
+            location.reload();
+        }
+        else {
+            if (oldVal !== null) {
+                if (oldVal === '0') {
+                    document.getElementById("Regular").checked = true;
+                    $('#Regular-btn').addClass("active");
+                }
+                else if (oldVal === '1') {
+                    document.getElementById("USDA").checked = true;
+                    $('#USDA-btn').addClass("active");
+                }
+                else if (oldVal === '2') {
+                    document.getElementById("GroceryRescue").checked = true;
+                    $('#GroceryRescue-btn').addClass("active");
+                }
+            }
         }
     });
 
-    document.getElementById("transactionType").addEventListener('change', function() {
-        if (this.value === '3') {
-            window.location = "OutgoingUSDA"
+    function pantryPackChecked(eventsender) {
+        var myNewState = "hidden";
+        let checkbox = eventsender;
+        if (checkbox.checked === true) {
+            myNewState = "visible";
+            pantryCount++;
+        }
+        else {
+            pantryCount--;
+        }
+
+        let quantityInput = checkbox.parentNode.previousElementSibling.firstChild;
+        quantityInput.style.visibility = myNewState;
+
+        if (pantryCount !== 0) {
+            document.getElementById("quantityLabelTop").style.visibility = "visible";
+        }
+        else {
+            document.getElementById("quantityLabelTop").style.visibility = "hidden";
+        }
+    }
+
+    function addRowMethod() {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        if (value === '1') //USDA
+        {
+            document.getElementById("foodCategoryLabelTop").style.display = "none"; //Removes the element so it doesn't take up space
+            document.getElementById("lineItemType").style.display = "none";
+            document.getElementById("quantityLabelTop").innerText = "Cases";
+
+            cols += '<td class="col-md-3" style="width:20%">';
+            cols += '<input autocomplete="off" list="foodCategory" name="categories" class="form-control" required/>';
+            cols += '<datalist id = "foodCategory">';
+            cols += '<%=@foreach (var item in OutgoingModel.USDASubcategories) { <option value="@item.SubcategoryName  @item.SubcategoryNote"/>}%> ';
+            cols += '</datalist ></td > ';
+            cols += '<td class="col-md-3" style="width:20%"><input type="number" min="0" class="form-control" name="weights" required/></td>';
+            cols += '<td class="col-md-3" style="width:20%"><input type="number" min="0" class="form-control" name="casesList"/></td>';
+            cols += '<input type="hidden" name="lineCount"/>';
+
+            document.getElementById("quantityLabelTop").style.visibility = "visible";
+            document.getElementById("USDALabelTop").style.visibility = "visible";
+            document.getElementById("USDALabelTop").style.display = "block";
+            document.getElementById("casesLabelTop").style.display = "none";
+        }
+        else if (value === '0') { //Regular
+            document.getElementById("quantityLabelTop").innerText = "Quantity";
+            document.getElementById("casesLabelTop").style.visibility = "hidden";
+
+            cols += '<td class="col-md-3" style="width:20%">';
+            cols += '<input autocomplete="off" list="lineItemTypes" name="lineItemTypes" class="form-control" required/>';
+            cols += '<datalist id = "lineItemTypes">';
+            cols += '<%=@foreach (var item in OutgoingModel.TransactionTypes) { <option value="@item.TransactionTypeName"/>}%> ';
+            cols += '<td class="col-md-3" style="width:20%">';
+            cols += '<input autocomplete="off" list="foodCategory" name="categories" class="form-control" required/>';
+            cols += '<datalist id = "foodCategory">';
+            cols += '<%=@foreach (var item in OutgoingModel.Categories) { <option value="@item.CategoryName"/>}%> ';
+            cols += '</datalist ></td > ';
+            cols += '<td class="col-md-3" style="width:20%"><input type="number" min="0" class="form-control" name="weights" required/></td>';
+            cols += '<td class="col-md-3" style="width:20%"><input type="number" min="0" style="visibility: hidden" class="form-control" name="quantities" style="display:none"/></td>';
+            cols += '<td class="col-md-3" style="width:15%"><label class="pantryPackLabel">Pantry Pack</label><input style="margin:10px 5px 5px 5px" type = "checkbox" id = "checkBox" onclick="pantryPackChecked(this)"/></td>';
+            cols += '<input type="hidden" name="lineCount"/>';
+        }
+        else if (value === '2') { //Grocery Rescue
+            document.getElementById("quantityLabelTop").style.visibility = "hidden";
+            document.getElementById("casesLabelTop").style.visibility = "hidden";
+            document.getElementById("lineItemType").style.display = "none";
+
+            cols += '<td class="col-md-3" style="width:20%">';
+            cols += '<input autocomplete="off" list="foodCategory" name="categories" class="form-control" required />';
+            cols += '<datalist id = "foodCategory">';
+            cols += '<%=@foreach (var item in OutgoingModel.GroceryRescueSubcategories) { <option value="@item.SubcategoryName"/>}%> ';
+            cols += '</datalist ></td > ';
+            cols += '<td class="col-md-3" style="width:20%"><input type="number" min="0" class="form-control" name="weights" required/></td>';
+            cols += '<input type="hidden" name="lineCount"/>';
+        }
+        cols += '<td class="col-md-3" style="width:20%"><button type="button" class="ibtnDel btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+
+    }
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();
+        counter--;
+        if (counter == 0) {
+            addRowMethod();
         }
     });
 
+
+    $(document).ready(function () {
+        value = localStorage.getItem("outFormType");
+        //alert(value);
+        if (value !== null) {
+            if (value === '0') {
+                document.getElementById("Regular").checked = true;
+                $('#Regular-btn').addClass("active");
+            }
+            else if (value === '1') {
+                document.getElementById("USDA").checked = true;
+                $('#USDA-btn').addClass("active");
+            }
+            else if (value === '2') {
+                document.getElementById("GroceryRescue").checked = true;
+                $('#GroceryRescue-btn').addClass("active");
+            }
+            value = $(".FormType").filter(':checked').val();
+        }
+        else {
+            $('#Regular').checked = true;
+            $('#Regular-btn').addClass("active");
+            value = $('#Regular').val();
+        }
+
+        addRowMethod();
+
+        $("#addrow").on("click", function () {
+            let addRowAmount = parseInt(document.querySelector('#addRowAmount').value);
+            for (let i = 0; i < addRowAmount; i++) {
+                if (counter >= maxLineItems) { // don't add lines if at max
+                    return;
+                }
+                addRowMethod();
+            }
+        });
+    });
 </script>
-
-@*@section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }*@

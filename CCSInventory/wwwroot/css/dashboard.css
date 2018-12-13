@@ -1,0 +1,7 @@
+#content > h1 {
+    display: none;
+}
+
+.largeLogo {
+    max-height: 230px;
+}

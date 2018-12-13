@@ -1,0 +1,55 @@
+﻿@model IncomingOptions
+@*
+    View description:
+    This view is for running a report fron an existing template.
+    This form displays the dates for the user to enter.
+*@
+<h1>Incoming Report</h1>
+
+<div class="col-md-5">
+    
+    <form method="post">
+        <div class="row">
+            <div class="col-6 col-sm-6"><label asp-for=@Model.Start class="form-label"></label></div>
+            <div class="col-6 col-sm-6"><label asp-for=@Model.End class="form-label"></label></div>
+            <div class="w-100 d-none d-md-block"></div>
+            <div class="col-6 col-sm-6"><input asp-for=@Model.Start class="form-control" /></div>
+            <div class="col-6 col-sm-6"><input asp-for=@Model.End class="form-control" /></div>
+        </div>
+        <div class="form-check" style="margin-top:20px;">
+            <input asp-for="@Model.CSVDesired" class="form-check-input" />
+            <label asp-for="@Model.CSVDesired" class="form-check-label"></label>
+        </div>
+
+        <hr />
+        <fieldset disabled>
+            @* For display only: *@
+            <h4 style="margin-bottom:20px;">Template Options:</h4>
+
+            <div class="form-group">
+                <label asp-for="@Model.ReportName" class="form-label"></label>
+                <input asp-for="@Model.ReportName" class="form-control" />
+            </div>
+            @*<div class="row" id="expirationRanges">*@
+            <label asp-for="@Model.CategoryID" class="control-label">Category</label>
+            <select multiple="multiple" id="multiselect" onchange="myFunction()" asp-for="@Model.CategoryID" class="multiselect form-control" style="height:180px;">
+                <option value="-1">All</option>
+                @foreach (var item in Model.CategoryList)
+                {
+                    if (Model.CategoryID.Contains(item.CategoryID))
+                    {
+                        <option value="@item.CategoryID" selected="selected">@item.CategoryName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.CategoryID">@item.CategoryName</option>
+                    }
+                }
+            </select>
+            @*</div>*@
+
+        </fieldset>
+
+        <input type="submit" value="Run Report" class="btn btn-primary" style="margin-top:10px;" />
+    </form>
+</div>

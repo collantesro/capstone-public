@@ -1,0 +1,38 @@
+@page
+@model SelfModel
+
+@{
+    ViewData["Title"] = "User Settings";
+}
+
+<div class="container">
+    <dl>
+        <dt>
+            Full Name
+        </dt>
+        <dd>
+            @Model.U.FullName
+        </dd>
+        <dt>
+            Username
+        </dt>
+        <dd>
+            @Model.U.Username
+        </dd>
+        <dt>
+            Email
+        </dt>
+        <dd>
+            @Model.U.Email
+        </dd>
+        <dt>
+            User Role
+        </dt>
+        <dd>
+            @Model.U.UserRole
+        </dd>
+    </dl>
+    <div>
+        <a asp-controller="Admin" asp-action="EditUser" asp-route-userID="@Model.U.UserID" class="btn btn-info" title="View Details"><i class="fa fa-pencil mr-2"></i>Edit User</a>
+    </div>
+</div>

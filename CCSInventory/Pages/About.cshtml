@@ -1,0 +1,21 @@
+@page
+@model AboutModel
+
+@*
+    Page description:
+    This page lists the authors of the project.  It randomly sorts the list of authors before presenting it.
+*@
+
+@{
+    ViewData["Title"] = "About the developers";
+}
+
+<div class="container">
+    <p>This application was a capstone project for Weber State University CS 4790 Fall 2018.</p>
+    <h2>Authors:</h2>
+    <ul class="credits">
+        @foreach(var a in @Model.Authors){
+            <li>@a</li>
+        }
+    </ul>
+</div>

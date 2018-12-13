@@ -1,0 +1,39 @@
+﻿@page
+@model CCSInventory.Pages.Categories.EditModel
+
+@{
+    ViewData["Title"] = "Edit Subcategory";
+}
+
+<h4>Subcategory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Subcategory.SubcategoryID" />
+            <div class="form-group">
+                <label asp-for="Subcategory.CategoryID" class="control-label">Category:</label>
+                <select asp-for="Subcategory.CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                <span asp-validation-for="Subcategory.CategoryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subcategory.SubcategoryName" class="control-label">Subcategory name:</label>
+                <input asp-for="Subcategory.SubcategoryName" class="form-control" />
+                <span asp-validation-for="Subcategory.SubcategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subcategory.SubcategoryNote" class="control-label">Subcategory note:</label>
+                <input asp-for="Subcategory.SubcategoryNote" class="form-control" />
+                <span asp-validation-for="Subcategory.SubcategoryNote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>

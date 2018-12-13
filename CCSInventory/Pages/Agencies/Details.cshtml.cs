@@ -31,7 +31,7 @@ namespace CCSInventory.Pages.Agencies
 
             Agency = await _context.Agencies
                 .Include(a => a.Address)
-                .Include(a => a.MailingAddress).FirstOrDefaultAsync(m => m.AgencyID == id);
+                .FirstOrDefaultAsync(m => m.AgencyID == id);
 
             if (Agency == null)
             {

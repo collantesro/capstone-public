@@ -5,12 +5,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
 
 <h4>Transaction</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Transaction.TransactionID" />
@@ -20,13 +19,15 @@
                 <span asp-validation-for="Transaction.AgencyID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @*
                 <label asp-for="Transaction.TransactionTypeID" class="control-label"></label>
                 <select asp-for="Transaction.TransactionTypeID" class="form-control" asp-items="ViewBag.TransactionTypeID"></select>
                 <span asp-validation-for="Transaction.TransactionTypeID" class="text-danger"></span>
+                *@
             </div>
             <div class="form-group">
                 <label asp-for="Transaction.TransactionDate" class="control-label"></label>
-                <input asp-for="Transaction.TransactionDate" class="form-control" />
+                <input asp-for="Transaction.TransactionDate" class="form-control" disabled/>
                 <span asp-validation-for="Transaction.TransactionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,27 +38,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Transaction.CreatedDate" class="control-label"></label>
-                <input asp-for="Transaction.CreatedDate" class="form-control" />
+                <label asp-for="Transaction.CreatedDate" class="control-label">Created date:</label>
+                <input asp-for="CbDate" class="form-control" disabled />
                 <span asp-validation-for="Transaction.CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Transaction.CreatedBy" class="control-label"></label>
+                <label asp-for="Transaction.CreatedBy" class="control-label">Created by:</label>
                 <input asp-for="Transaction.CreatedBy" class="form-control" />
                 <span asp-validation-for="Transaction.CreatedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Transaction.ModifiedBy" class="control-label"></label>
+                <label asp-for="Transaction.ModifiedBy" class="control-label">Modified by:</label>
                 <input asp-for="Transaction.ModifiedBy" class="form-control" />
                 <span asp-validation-for="Transaction.ModifiedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Transaction.ModifiedDate" class="control-label"></label>
-                <input asp-for="Transaction.ModifiedDate" class="form-control" />
+                <label asp-for="Transaction.ModifiedDate" class="control-label">Modified date:</label>
+                <input asp-for="MbDate" class="form-control" disabled/>
                 <span asp-validation-for="Transaction.ModifiedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
         </form>
     </div>
@@ -67,6 +68,3 @@
     <a asp-page="./Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

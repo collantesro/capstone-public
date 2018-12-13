@@ -1,0 +1,29 @@
+@model IEnumerable<Transaction>
+
+<div class="transactionsRecentViewComponent">
+    <h5>Recently modified transactions</h5>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Transaction Date</th>
+                <th>Agency</th>
+                <th>In/Out</th>
+                <th>Line Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Transaction t in Model){
+                <tr>
+                    @if(t.IsArchived){
+                        <td>@t.TransactionDate.ToString("MM/dd/yyyy") (archived)</td>
+                    } else {
+                        <td><a asp-page="/Transactions/Details" asp-route-id="@t.TransactionID">@t.TransactionDate.ToString("MM/dd/yyyy")</a></td>
+                    }
+                    <td>@t.Agency.AgencyName</td>
+                    <td>@(t.IsOutgoing ? "Outgoing" : "Incoming")</td>
+                    <td>@t.LineItems.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

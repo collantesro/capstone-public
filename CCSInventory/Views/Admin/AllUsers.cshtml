@@ -1,67 +1,202 @@
+@model PaginatedList<User>
 @*
     View description:
     This view is associated with the AdminController.AllUsers() action.
     It displays all of the system's users in a table.
     This view has button links to actions to edit an existing user and to create a new user.
 
-    Depends on: 
+    Depends on:
     wwwroot/admin/allusers.js
     wwwroot/admin/allusers.css
 *@
 
 @{
     ViewBag.Title = "All Users";
+    var searchString = ViewData["searchString"];
+    var sortOrder = ViewData["sortOrder"] ?? "username_desc";
+
+    var sortSplit = ((string)sortOrder).Split('_', 2);
+
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
 @section includes {
-    <link rel="stylesheet" href="~/admin/allusers.css"/>
-    <script>
-        var listOfUsers = @Html.Raw(ViewData["Users"]);
-    </script>
-    <script defer src="~/lib/lodash/lodash.min.js"></script>
-    <script defer src="~/admin/allusers.js"></script>
+    <link rel="stylesheet" href="~/admin/allusers.css" />
 }
 
-<div class="container">
-    <div class="text-right">
-        <a asp-controller="Admin" asp-action="NewUser" class="btn btn-success">
-            <i class="fa fa-user-plus"></i> New User
-        </a>
-    </div>
-    <p id="noUsersMsg" class="hidden text-danger">No users in database... how are you seeing this?</p>
-    <div id="filterBar" class="btn-group">
-        <h4>Filter: </h4>
-        <input id="filterUsername" type="text" placeholder="Username"/>
-        <input id="filterName" type="text" placeholder="Name"/>
-        <input id="filterEmail" type="text" placeholder="Email"/>
-        <div id="filterRole" class="dropdown">
-            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">User Role</button>
-            <ul class="dropdown-menu">
-                @foreach(string userRole in Enum.GetNames(typeof(UserRole))){
-                    <li class="dropdown-item"><a href="#" id="@("filter" + userRole)"><i class="fa fa-check-square visible"></i> @userRole</a></li>
+<div class="d-flex justify-content-between my-4" id="filterBar">
+    <div>
+        <form asp-action="AllUsers" method="get">
+            <input type="hidden" name="sortOrder" value="@sortOrder" />
+            <div class="form-inline">
+                <input type="text" class="form-control mr-2" name="searchString" value="@searchString" placeholder="Search Users" />
+                <input type="submit" value="Search" class="btn btn-primary mr-2" />
+                @if (!string.IsNullOrWhiteSpace(searchString as string))
+                {
+                    <a asp-controller="Admin" asp-action="AllUsers" asp-route-sortOrder="@sortOrder" class="btn btn-outline-dark">Clear</a>
                 }
-            </ul>
-        </div>
-        <input id="filterNote" type="text" placeholder="User Note"/>
-        <button id="filterClear" class="btn"><i class="fa fa-times-circle-o"></i> Clear</button>
+            </div>
+        </form>
     </div>
-    <div class="table-responsive">
-        <table class="table">
-            <thead class="thead-light">
+    <div>
+        <a asp-controller="Admin" asp-action="NewUser" class="btn btn-outline-success"><i class="fa fa-user-plus mr-2"></i>New User</a>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th class="row-details-icon"></th>
+                <th>
+                    @if ("username" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="username_desc" asp-route-searchString="@searchString">
+                                Username <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="username_asc" asp-route-searchString="@searchString">
+                                Username <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="username_asc" asp-route-searchString="@searchString">
+                            Username
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("fullnamelf" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="fullnamelf_desc" asp-route-searchString="@searchString">
+                                Name <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="fullnamelf_asc" asp-route-searchString="@searchString">
+                                Name <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="fullnamelf_asc" asp-route-searchString="@searchString">
+                            Name
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("email" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="email_desc" asp-route-searchString="@searchString">
+                                Email <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="email_asc" asp-route-searchString="@searchString">
+                                Email <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="email_asc" asp-route-searchString="@searchString">
+                            Email
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("userrole" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="userrole_desc" asp-route-searchString="@searchString">
+                                User Role <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="userrole_asc" asp-route-searchString="@searchString">
+                                User Role <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="userrole_asc" asp-route-searchString="@searchString">
+                            User Role
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("usernote" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="usernote_desc" asp-route-searchString="@searchString">
+                                Note <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="usernote_asc" asp-route-searchString="@searchString">
+                                Note <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Admin" asp-action="AllUsers" asp-route-p="1" asp-route-sortOrder="usernote_asc" asp-route-searchString="@searchString">
+                            Note
+                        </a>
+                    }
+                </th>
+            </tr>
+        </thead>
+        <tbody id="userList">
+            @foreach (var u in Model)
+            {
                 <tr>
-                    <th></th>
-                    <th><a class="sortLink" id="sortUsername"     href="#">Username</a></th>
-                    <th><a class="sortLink" id="sortName"         href="#">Name</a></th>
-                    <th><a class="sortLink" id="sortEmail"        href="#">Email</a></th>
-                    <th><a class="sortLink" id="sortUserRole"     href="#">User Role</a></th>
-                    <th><a class="sortLink" id="sortUserNote"     href="#">User Note</a></th>
-                    <th><a class="sortLink" id="sortModifiedDate" href="#">Last Modified</a></th>
+                    <td class="row-details-icon">
+                        <a asp-controller="Admin" asp-action="EditUser" asp-route-userID="@u.UserID" class="text-muted" title="View Details"><i class="fa fa-lg fa-ellipsis-v"></i></a>
+                    </td>
+                    <td>@u.Username</td>
+                    <td>@u.FullNameLastFirst</td>
+                    <td>@u.Email</td>
+                    <td>@u.UserRole</td>
+                    <td>@u.UserNote</td>
                 </tr>
-            </thead>
-            <tbody id="userList">
-                @* Content filled in by javascript.  File: wwwroot/admin/allusers.js *@
-            </tbody>
-        </table>
-    </div>
-    <p id="userCounts"></p>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-action="AllUsers"
+        asp-route-p="@(Model.PageIndex - 1)"
+        asp-route-searchString="@searchString"
+        asp-route-sortOrder="@sortOrder"
+        class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="AllUsers"
+        asp-route-p="@(Model.PageIndex + 1)"
+        asp-route-searchString="@searchString"
+        asp-route-sortOrder="@sortOrder"
+        class="btn btn-primary @nextDisabled">
+        Next
+    </a>
 </div>

@@ -1,0 +1,97 @@
+﻿@page
+@model TransactionPrintModel
+
+@section includes {
+    <link rel="stylesheet" href="~/transactions/receipt.css" />
+}
+
+<div class="noPrint">
+    <a asp-area="Print" onclick="JavaScript: window.print();">Print</a> |
+    <a asp-page="./Index">All Transactions</a>
+</div>
+
+<div id="printarea" class="printStuff textArea" style="font-family:Calibri">
+    <div class="center" style="margin:10px"><img alt="Catholic Community Services logo" src="~/images/ccslogo-name.png" /></div>
+    <p class="center"><strong>745 East South ♦ Salt Lake City, UT. 84102</strong></p>
+    <p class="center"><strong>(801)977-9119 ♦ Fax (801) 977-8227</strong></p>
+    <br />
+
+    <div id="donor-info" class="center" style="width:inherit">
+        <span class="label">Donor:</span><label class="underline" style="width:630px">@Model.Agency.AgencyName</label>
+        <br />
+        @if (Model.Agency.HasAddress)
+        {
+            <label class="label">Address:</label><label class="underline" style="width:630px">@(Model.Address.StreetAddress1 + " " + Model.Address.StreetAddress2)</label>
+            <br />
+            <label class="label">City:</label><label class="underline" style="width:310px"> @Model.Address.City</label>
+            <label class="label">State:</label><label class="underline" style="width:90px"> @Model.Address.State</label>
+            <label class="label">Zip:</label><label class="underline" style="width:120px"> @Model.Address.Zip</label>
+        }
+        else
+        {
+            <label class="label">Address:</label><label class="underline" style="width:630px"> </label>
+            <br />
+            <label class="label">City:</label><label class="underline" style="width:310px"> </label>
+            <label class="label">State:</label><label class="underline" style="width:90px"> </label>
+            <label class="label">Zip:</label><label class="underline" style="width:120px"> </label>
+        }
+        <br />
+        <label class="label">Email Address: </label><label class="underline" style="width:205px">@(Model.Agency.EmailAddress + " ")</label>
+        <label class="label">Phone Number: </label><label class="underline" style="width:170px"> @Model.Agency.PhoneNumber</label>
+    </div>
+
+    <center>
+        <div style="text-align:center">
+            <table id="tableItems" style="margin: 0px auto;">
+                <tr>
+                    <th style="width:150px">Quantity</th>
+                    <th style="width:150px">Weight</th>
+                    <th style="width:300px">Description</th>
+                </tr>
+                @foreach (var item in Model.LineItems)
+                {
+                    <tr>
+                        <td style="width:150px">@(item.Units)</td>
+                        <td style="width:150px">@(item.Weight)</td>
+                        <td style="width:300px">@(item.Subcategory.SubcategoryName + " " + item.Subcategory.SubcategoryNote)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </center>
+
+    <center>
+        <div id="volunteer-hours">
+            <br />
+            <label class="label">Number of Volunteers:</label><label class="underline" style="width:75px"> </label>
+            <label class="label">Total Volunteer Hours:</label><label class="underline" style="width:75px"> </label>
+            <br />
+            <label class="label">Estimated Value (<em>Determined by Donor</em>)</label><label class="underline" style="width:75px"> </label>
+        </div>
+
+        <label class="label">Taxable:</label><label class="underline" style="width:75px"> </label>
+        <label>(Donor <strong>paid</strong> taxes on donation)</label>
+        <br />
+        <span class="label">Non-Taxable:</span><label class="underline" style="width:75px"> </label>
+        <label>(Donor did <strong>not pay</strong> taxes on donation)</label>
+
+        <br />
+
+        <label class="label">Received By</label><label class="underline" style="width:300px">@User.FindFirst("FullName").Value</label>
+        <label class="label">Date:</label><label class="underline" style="width:250px; text-align:center;">@Model.Transaction.TransactionDate.ToString()</label>
+
+        <br />
+        <br />
+
+        <div>
+            <p class="center">
+                Thank you for your donation! You are helping Catholic Communty Services of Utah, a 501c3 charity, help hundreds of
+                thousands of needy people annually. In-kind donations are deductible, to the extent allowed by law, for income tax purposes.
+            </p>
+
+            <p class="center"> <strong>Catholic Community Services of Utah</strong></p>
+            <p class="center"><strong> Refuge Resettlement ♦ Treatment Service ♦ Basic Needs Services</strong></p>
+            <p class="center"><strong>Northern Utah</strong></p>
+        </div>      
+    </center>
+</div>

@@ -2,24 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@ViewBag.Title - CCSInventory</title>
-    <title>CCSInventory</title>
+    @if (ViewBag.Title != null) {
+        <title>@ViewBag.Title - CCS Inventory</title>
+    } else {
+        <title>CCS Inventory</title>
+    }
     @*Common includes here.  Such as CSS and JS*@
     <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/_common.css" />
-    <link rel="stylesheet" href="~/_sidebar.css" />
+    <link rel="stylesheet" href="~/css/sidebar.css" />
+    <link rel="icon" href="~/favicon.ico" />
+
     <script defer src="~/lib/jquery/jquery.min.js"></script>
     <script defer src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script defer src="~/_sidebar.js"></script>
+    <script defer src="~/scripts/sidebar.js"></script>
     @*Page-Specific styling: *@
     @RenderSection("includes", required: false)
 </head>
 <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark noprint">
         <a class="navbar-brand" asp-page="/Index">
             <img class="d-inline-block align-top mr-2" alt="CCS" src="~/images/ccslogo.png" />
             <span class="menu-collapsed">CCS Inventory</span>
@@ -36,19 +42,6 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-page="/Help">Help</a>
                 </li>
-
-                <!-- Menu hidden on bigger devices. Holds the sidebar on small screens only. -->
-                <li class="nav-item dropdown d-sm-block d-md-none">
-                    <a class="nav-link dropdown-toggle" href="#" id="smallscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="fa fa-bars fa-fw mr-2"></span>Main Menu</a>
-                    <div class="dropdown-menu" aria-labelledby="smallscreenmenu">
-                        <a class="dropdown-item" href="#"><span class="fa fa-exchange fa-fw mr-2"></span>Transactions</a>
-                        <a class="dropdown-item" href="#"><span class="fa fa-archive fa-fw mr-2"></span>Containers</a>
-                        <a class="dropdown-item" href="#"><span class="fa fa-shopping-basket fa-fw mr-2"></span>Pantry Packs</a>
-                        <a class="dropdown-item" href="#"><span class="fa fa-table fa-fw mr-2"></span>Reports</a>
-                        <a class="dropdown-item" href="#"><span class="fa fa-cog fa-fw mr-2"></span>Administration</a>
-                    </div>
-                </li><!-- /small screen menu -->
             </ul>
 
             @*Need to check if user is logged in and display the appropriate action (login vs logout)*@
@@ -64,224 +57,158 @@
                         <span>Not Logged In</span>
                     }
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right bg-dark">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="dropdown-item" href="#"><span class="fa fa-cog mr-2"></span>User Settings</a>
-                        <a class="dropdown-item" asp-page="/Account/Login" asp-page-handler="Logout"><span class="fa fa-sign-out mr-2"></span>Logout</a>
+                        <a class="dropdown-item text-light bg-dark" asp-page="/Account/Self"><span class="fa fa-cog mr-2"></span>User Settings</a>
+                        <a class="dropdown-item text-light bg-dark" asp-page="/Account/Login" asp-page-handler="Logout"><span class="fa fa-sign-out mr-2"></span>Logout</a>
                     }
                     else
                     {
-                        <a class="dropdown-item" asp-page="/Account/Login"><span class="fa fa-sign-in mr-2"></span>Login</a>
+                        <a class="dropdown-item text-white" asp-page="/Account/Login"><span class="fa fa-sign-in mr-2"></span>Login</a>
                     }
                 </div>
             </div>
         </div>
     </nav> <!-- /navbar -->
 
-    <!-- body-row -->
-    <div class="row" id="body-row">
+    <!-- body -->
+    <div class="wrapper d-flex w-100">
         <!-- sidebar -->
-        @if (User.Identity.IsAuthenticated)
-        {
-        <div id="sidebar-container" class="sidebar-expanded d-none d-md-block"> <!-- hidden in smaller than med screens -->
-            <ul class="list-group">
-                <!-- separator -->
-                <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <nav id="sidebar" class="text-white noprint">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item sidebar-separator-title text-muted">
                     <small>MAIN MENU</small>
-                </li> <!-- /separator -->
+                </div>
 
-                <!-- menu and submenu -->
-                <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-exchange fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Transactions</span>
-                        <span class="submenu-icon ml-auto"></span>
-                    </div>
+                <!-- menu item and submenu -->
+                <a class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center" data-toggle="collapse" href="#submenu1" aria-expanded="false">
+                    <span class="fa fa-fw fa-exchange mr-3"></span>
+                    <span>Transactions</span>
+                    <span class="submenu-icon fa ml-auto"></span>
                 </a>
-                <!-- submenu content -->
-                <div id="submenu1" class="collapse sidebar-submenu">
+                <div id="submenu1" class="list-group collapse sidebar-submenu">
                     <a asp-page="/Transactions/Incoming" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-long-arrow-right fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Incoming Food</span>
+                        <span class="fa fa-fw fa-long-arrow-right mr-2"></span>
+                        Incoming Food
                     </a>
                     <a asp-page="/Transactions/Outgoing" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-long-arrow-left fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Outgoing Food</span>
+                        <span class="fa fa-fw fa-long-arrow-left mr-2"></span>
+                        Outgoing Food
                     </a>
                     <a asp-page="/Transactions/Index" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-list fa-fw mr-1"></span>
-                        <span class="menu-collapsed">All Transactions</span>
+                        <span class="fa fa-fw fa-list mr-2"></span>
+                        All Transactions
                     </a>
-                </div> <!-- /submenu content -->
+                </div>
 
-                <!-- menu and submenu -->
-                <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-archive fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Containers</span>
-                        <span class="submenu-icon ml-auto"></span>
-                    </div>
+                <!-- menu item and submenu -->
+                <a class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center" data-toggle="collapse" href="#submenu2" aria-expanded="false">
+                    <span class="fa fa-fw fa-archive mr-3"></span>
+                    <span>Containers</span>
+                    <span class="submenu-icon fa ml-auto"></span>
                 </a>
-                <!-- submenu content -->
-                <div id="submenu2" class="collapse sidebar-submenu">
-                    <a asp-controller="Containers" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-barcode fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Scan</span>
+                <div id="submenu2" class="list-group collapse sidebar-submenu">
+                    <a asp-controller="Containers" asp-action="Create" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="fa fa-fw fa-plus mr-2"></span>
+                        Create
                     </a>
                     <a asp-controller="Containers" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-search fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Locate</span>
+                        <span class="fa fa-fw fa-cubes mr-2"></span>
+                        All Containers
                     </a>
-                    <a asp-controller="Containers" asp-action="NewBin" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-plus fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Create</span>
-                    </a>
-                    <a asp-controller="Containers" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-cubes fa-fw mr-1"></span>
-                        <span class="menu-collapsed">All Containers</span>
-                    </a>
-                </div> <!-- /submenu content -->
+                </div>
 
-                <!-- menu and submenu -->
-                <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-shopping-basket fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Pantry Packs</span>
-                        <span class="submenu-icon ml-auto"></span>
-                    </div>
+                <!-- separator -->
+                <div class="list-group-item sidebar-separator-title text-muted">
+                    <small>MANAGEMENT</small>
+                </div>
+
+                <!-- menu item and submenu -->
+                <a class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center" data-toggle="collapse" href="#submenu3" aria-expanded="false">
+                    <span class="fa fa-fw fa-table mr-3"></span>
+                    <span>Reports</span>
+                    <span class="submenu-icon fa ml-auto"></span>
                 </a>
-                <!-- submenu content -->
-                <div id="submenu3" class="collapse sidebar-submenu">
-                    <a asp-controller="PantryPack" asp-action="LoadInGoingTransactionPage" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-long-arrow-right fa-fw mr-1"></span>
-                        <span class="menu-collapsed">In Going Transaction</span>
-                    </a>
-
-                    <a asp-controller="PantryPack" asp-action="LoadOutGoingTransactionPage" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-long-arrow-left fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Out Going Transaction</span>
-                    </a>
-
-                    <a asp-controller="PantryPack" asp-action="LoadPantryPackType" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-plus fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Add New Pack Type</span>
-                    </a>
-
-                    <a asp-controller="PantryPack" asp-action="LoadUpdatePantryPackTypes" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-list fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Pantry Pack Types</span>
-                    </a>
-                </div> <!-- /submenu content -->
-
-                <!-- separator with title -->
-                <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
-                    <small>ADMINISTRATION</small>
-                </li> <!-- /separator -->
-                
-                <!-- menu and submenu -->
-                <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-table fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Reports</span>
-                        <span class="submenu-icon ml-auto"></span>
-                    </div>
-                </a>
-                <!-- submenu content -->
-                <div id="submenu4" class="collapse sidebar-submenu">
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-long-arrow-right fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Incoming</span>
+                <div id="submenu3" class="list-group collapse sidebar-submenu">
+                    <a asp-controller="IncomingReports" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="fa fa-fw fa-long-arrow-right mr-2"></span>
+                        Incoming
                     </a>
                     <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-long-arrow-left fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Outgoing</span>
+                        <span class="fa fa-fw fa-long-arrow-left mr-2"></span>
+                        Outgoing
                     </a>
                     <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-database fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Inventory</span>
+                        <span class="fa fa-fw fa-cube mr-2"></span>
+                        Pantry Packs
+                    </a>
+                    <a asp-controller="ContainersReport" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="fa fa-fw fa-database mr-2"></span>
+                        Inventory
                     </a>
                     <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-shopping-cart fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Grocery Rescue</span>
+                        <span class="fa fa-fw fa-shopping-cart mr-2"></span>
+                        Grocery Rescue
                     </a>
                     <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-dollar fa-fw mr-1"></span>
-                        <span class="menu-collapsed">In-Kind Slip (Bank)</span>
+                        <span class="fa fa-fw fa-dollar mr-2"></span>
+                        In-Kind Slip (Bank)
                     </a>
-                </div> <!-- /submenu content -->
+                </div>
 
-                @if(User.FindFirst("UserRole").Value == UserRole.ADMIN.ToString())
+                @if (User.FindFirst("UserRole").Value == UserRole.ADMIN.ToString())
                 {
-                <!-- menu and submenu -->
-                <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-cog fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Administration</span>
-                        <span class="submenu-icon ml-auto"></span>
+                    <!-- menu item and submenu -->
+                    <a class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center" data-toggle="collapse" href="#submenu4" aria-expanded="false">
+                        <span class="fa fa-fw fa-cog mr-3"></span>
+                        <span>Administration</span>
+                        <span class="submenu-icon fa ml-auto"></span>
+                    </a>
+                    <div id="submenu4" class="list-group collapse sidebar-submenu">
+                        <a asp-page="/Agencies/Index" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="fa fa-fw fa-handshake-o mr-2"></span>
+                            Agencies
+                        </a>
+                        <a asp-page="/Categories/Index" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="fa fa-fw fa-sitemap mr-2"></span>
+                            Categories
+                        </a>
+                        <a asp-page="/ChangeLog/Index" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="fa fa-fw fa-code-fork mr-2"></span>
+                            Changelog
+                        </a>
+                        <a asp-controller="Admin" asp-action="AllUsers" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="fa fa-fw fa-users mr-2"></span>
+                            Users
+                        </a>
                     </div>
-                </a>
-                <!-- submenu content -->
-                <div id="submenu5" class="collapse sidebar-submenu">
-                    <a href="/Agencies" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-handshake-o fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Agencies</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-balance-scale fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Audits</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-sitemap fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Categories</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-code-fork fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Changelog</span>
-                    </a>
-                    <a asp-controller="Admin" asp-action="AllUsers" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="fa fa-users fa-fw mr-1"></span>
-                        <span class="menu-collapsed">Users</span>
-                    </a>
-                </div> <!-- /submenu content -->
                 }
 
-                <!-- separator with title -->
-                <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+                <!-- separator -->
+                <div class="list-group-item sidebar-separator-title text-muted">
                     <small>QUICK ACTIONS</small>
-                </li> <!-- /separator -->
-                <!-- menu link -->
-                <a asp-page="/Transactions/Incoming" class="bg-dark list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fa fa-long-arrow-right fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Incoming Food</span>
-                    </div>
-                </a><!-- /menu link -->
+                </div>
 
-                <!-- Separator without title -->
-                <li class="list-group-item sidebar-separator menu-collapsed"></li>
+                <!-- menu item -->
+                <a asp-page="/Transactions/Incoming" class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center">
+                    <span class="fa fa-fw fa-long-arrow-right mr-3"></span>
+                    <span>Incoming Transaction</span>
+                </a>
+            </div>
+        </nav>
 
-                <!-- collapse button -->
-                <a href="#" data-toggle="sidebar-collapse" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span id="collapse-icon" class="fa fa-2x mr-3"></span>
-                        <span id="collapse-text" class="menu-collapsed">Collapse Menu</span>
-                    </div>
-                </a><!-- /collapse button -->
-            </ul><!-- /list group -->
-        </div><!-- /sidebar-container -->
-        }
-
-        <!-- MAIN CONTENT -->
-        <div class="col" id="main-content">
+        <!-- page content -->
+        <div id="content">
+            <button class="btn btn-light d-none border border-secondary" id="sidebarCollapse" type="button">
+                <span class="collapse-icon fa fa-lg fa-bars text-secondary"></span>
+            </button>
             @if (ViewBag.Title != null)
             {
-                <div class="text-center">
-                    <h1>@ViewBag.Title</h1>
-                </div>
+                <h1>@ViewBag.Title</h1>
             }
-            @RenderBody() <!-- body content of pages that use this layout -->
-        </div><!-- /main content -->
-    </div><!-- /body-row -->
+            @RenderBody() <!-- body page content -->
+        </div>
+    </div>
 </body>
 </html>

@@ -19,7 +19,7 @@
       "destination": "wwwroot/lib/lodash"
     },
     {
-      "library": "jquery-validate@1.18.0",
+      "library": "jquery-validate@1.19.0",
       "destination": "wwwroot/lib/jquery-validate"
     },
     {

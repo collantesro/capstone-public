@@ -1,17 +1,245 @@
+@model PaginatedList<Container>
 @*
     View description:
-    This is the index view for ContainersController.
+    This is the Index view for ContainersController.
+    It lists all the containers in the database with pagination.
 *@
 
 @{
-    ViewBag.Title = "Containers";
+    ViewData["Title"] = "Containers";
+    var searchString = ViewData["searchString"];
+    var sortOrder = ViewData["sortOrder"] ?? "created_desc";
+
+    var sortSplit = ((string)sortOrder).Split('_', 2);
+
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-<div class="container">
+@section includes {
+    <link rel="stylesheet" href="~/containers/index.css" />
+}
 
-Links:
+<div class="d-flex justify-content-between my-4">
+    <div>
+        <form asp-action="Index" method="get">
+            <input type="hidden" name="sortOrder" value="@sortOrder" />
+            <div class="form-inline">
+                <input type="text" class="form-control mr-2" name="searchString" value="@searchString" placeholder="Search Bins" />
+                <input type="submit" value="Search" class="btn btn-primary mr-2" />
+                @if (!string.IsNullOrWhiteSpace(searchString as string))
+                {
+                    <a asp-controller="Containers" asp-action="Index" asp-route-sortOrder="@sortOrder" class="btn btn-outline-dark">Clear</a>
+                }
+            </div>
+        </form>
+    </div>
+    <div>
+        <a asp-action="Create" class="btn btn-outline-success"><i class="fa fa-shopping-basket mr-2"></i>New Bin</a>
+    </div>
+</div>
 
-<a asp-controller="Containers" asp-action="NewBin">Create a new bin</a>
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th class="row-details-icon"></th>
+                <th>
+                    @if ("created" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="created_desc" asp-route-searchString="@searchString">
+                                Created <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="created_asc" asp-route-searchString="@searchString">
+                                Created <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="created_asc" asp-route-searchString="@searchString">
+                            Created
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("binNumber" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="binNumber_desc" asp-route-searchString="@searchString">
+                                Bin Number <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="binNumber_asc" asp-route-searchString="@searchString">
+                                Bin Number <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="binNumber_asc" asp-route-searchString="@searchString">
+                            Bin Number
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("weight" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="weight_desc" asp-route-searchString="@searchString">
+                                Weight <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="weight_asc" asp-route-searchString="@searchString">
+                                Weight <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="weight_asc" asp-route-searchString="@searchString">
+                            Weight
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("category" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="category_desc" asp-route-searchString="@searchString">
+                                Category <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="category_asc" asp-route-searchString="@searchString">
+                                Category <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="category_asc" asp-route-searchString="@searchString">
+                            Category
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("subcategory" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="subcategory_desc" asp-route-searchString="@searchString">
+                                Subcategory <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="subcategory_asc" asp-route-searchString="@searchString">
+                                Subcategory <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="subcategory_asc" asp-route-searchString="@searchString">
+                            Subcategory
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("location" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="location_desc" asp-route-searchString="@searchString">
+                                Location <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="location_asc" asp-route-searchString="@searchString">
+                                Location <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="location_asc" asp-route-searchString="@searchString">
+                            Location
+                        </a>
+                    }
+                </th>
+                <th>
+                    @if ("expiration" == sortSplit[0])
+                    {
+                        if ("asc" == sortSplit[1])
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="expiration_desc" asp-route-searchString="@searchString">
+                                Expiration <i class="fa fa-caret-up" title="Ascending Sort"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="expiration_asc" asp-route-searchString="@searchString">
+                                Expiration <i class="fa fa-caret-down" title="Descending Sort"></i>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Containers" asp-action="Index" asp-route-p="1" asp-route-sortOrder="expiration_asc" asp-route-searchString="@searchString">
+                            Expiration
+                        </a>
+                    }
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="row-details-icon">
+                        <a asp-action="Details" asp-route-containerID="@item.ContainerID" class="text-muted" title="View Details"><i class="fa fa-lg fa-ellipsis-v"></i></a>
+                    </td>
+                    <td>@item.CreatedDate.ToLocalTime().ToString("MM/dd/yyyy")</td>
+                    <td>@item.BinNumber</td>
+                    <td>@item.Weight</td>
+                    <td>@item.Subcategory.Category.CategoryName</td>
+                    <td>@item.Subcategory.SubcategoryName</td>
+                    <td>@item.Location.LocationName</td>
+                    <td>@(item.ExpirationDate?.ToString("MM/dd/yyyy"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-@await Component.InvokeAsync("ContainersRecent")
+<div>
+    <a asp-action="Index"
+        asp-route-p="@(Model.PageIndex - 1)"
+        asp-route-searchString="@searchString"
+        asp-route-sortOrder="@sortOrder"
+        class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+        asp-route-p="@(Model.PageIndex + 1)"
+        asp-route-searchString="@searchString"
+        asp-route-sortOrder="@sortOrder"
+        class="btn btn-primary @nextDisabled">
+        Next
+    </a>
 </div>

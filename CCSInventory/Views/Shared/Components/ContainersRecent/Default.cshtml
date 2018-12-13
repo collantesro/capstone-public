@@ -1,0 +1,29 @@
+@model IEnumerable<Container>
+
+<div class="containersRecentViewComponent">
+    <h5>Recently modified bins</h5>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Bin Number</th>
+                <th>Category</th>
+                <th>Weight</th>
+                <th>Cases</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Container c in Model){
+                <tr>
+                    @if(c.IsArchived){
+                        <td>@c.BinNumber (archived)</td>
+                    } else {
+                        <td><a asp-controller="Containers" asp-action="Details" asp-route-containerID="@c.ContainerID">@c.BinNumber</a></td>
+                    }
+                    <td>@c.Subcategory.Category.CategoryName &gt; @c.Subcategory.SubcategoryName</td>
+                    <td>@c.Weight</td>
+                    <td>@c.Units</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

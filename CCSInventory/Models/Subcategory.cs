@@ -12,6 +12,7 @@ namespace CCSInventory.Models
 
         [Required]
         public string SubcategoryName { get; set; }
+        public bool IsArchived { get; set; }
         public string SubcategoryNote { get; set; }
 
         // Navigation Properties for the above Foreign Key

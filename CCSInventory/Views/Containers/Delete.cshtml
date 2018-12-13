@@ -1,0 +1,33 @@
+@model Container
+
+@*
+    View description:
+    This is the view for the Delete action of ContainersController.
+    It displays the container information similar to Details, but it has a button to delete.
+    In the backend, a container isn't deleted, it's merely marked as Archived.
+*@
+
+@{
+    ViewData["Title"] = "Delete Bin";
+}
+
+<div class="container">
+    <h2>Are you sure you want to delete this bin?</h2>
+    <h5>Deleting this bin will free up the Bin Number for reuse.</h5>
+    <div class="text-center">
+        <img class="barcode" src="/barcode?code=@Model.BinNumber" alt="Barcode image for bin @Model.BinNumber" title="Barcode for: @Model.BinNumber"/>
+    </div>
+    <div><span class="font-weight-bold">Bin Number:</span> @Model.BinNumber</div>
+    <div><span class="font-weight-bold">Category:</span> @Model.Subcategory.Category.CategoryName &gt; @Model.Subcategory.SubcategoryName @Model.Subcategory.SubcategoryNote</div>
+    <div><span class="font-weight-bold">@(Model.Subcategory.Category.CategoryName.Contains("Pantry Pack", StringComparison.CurrentCultureIgnoreCase) ? "Quantity:" : "Cases:")</span> @Model.Units</div>
+    <div><span class="font-weight-bold">Weight:</span> @Model.Weight</div>
+    <div><span class="font-weight-bold">Expiration Date:</span> @Model.ExpirationDate?.ToString("MM/dd/yyyy")</div>
+    <div><span class="font-weight-bold">Storage Location:</span> @Model.Location.LocationName</div>
+    <div><span class="font-weight-bold">Note:</span> @Model.ContainerNote</div>
+    <div><span class="font-weight-bold">Created On:</span> @Model.CreatedDate.ToLocalTime()</div>
+    <div><span class="font-weight-bold">Created By:</span> @Model.CreatedBy</div>
+    <div><span class="font-weight-bold">Modified On:</span> @Model.ModifiedDate.ToLocalTime()</div>
+    <div><span class="font-weight-bold">Modified By:</span> @Model.ModifiedBy</div>
+    <a asp-controller="Containers" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-controller="Containers" asp-action="ConfirmDelete" asp-route-containerID="@Model.ContainerID" class="btn btn-danger"><i class="fa fa-trash"></i> Delete Bin</a>
+</div>
