@@ -3,25 +3,29 @@ using System;
 using CCSInventory.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CCSInventory.Migrations
 {
     [DbContext(typeof(CCSDbContext))]
-    [Migration("20181212030333_SQLiteD")]
-    partial class SQLiteD
+    [Migration("20181208080143_TitanA")]
+    partial class TitanA
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("CCSInventory.Models.Address", b =>
                 {
                     b.Property<int>("AddressID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AddressNote");
 
@@ -70,7 +74,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Agency", b =>
                 {
                     b.Property<int>("AgencyID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("AddressID");
 
@@ -83,11 +88,11 @@ namespace CCSInventory.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("EmailAddress");
-
                     b.Property<bool>("HasAddress");
 
                     b.Property<bool>("IsArchived");
+
+                    b.Property<int?>("MailingAddressID");
 
                     b.Property<string>("ModifiedBy");
 
@@ -101,6 +106,8 @@ namespace CCSInventory.Migrations
 
                     b.HasIndex("AddressID");
 
+                    b.HasIndex("MailingAddressID");
+
                     b.ToTable("Agencies");
 
                     b.HasData(
@@ -113,21 +120,23 @@ namespace CCSInventory.Migrations
                             CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
                             HasAddress = true,
                             IsArchived = false,
+                            MailingAddressID = 1,
                             ModifiedBy = "Seeded Data",
-                            ModifiedDate = new DateTime(2018, 12, 12, 3, 0, 0, 0, DateTimeKind.Utc),
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
                             PhoneNumber = "+18013945944"
                         },
                         new
                         {
                             AgencyID = 2,
+                            AddressID = 1,
                             AgencyName = "Anonymous",
-                            AgencyNote = "This is a catch-all Agency for anonymous donations.",
+                            AgencyNote = "This is a catch-all Agency for anonymous donations.  The address is CCS Ogden",
                             CreatedBy = "Seeded Data",
                             CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
-                            HasAddress = false,
+                            HasAddress = true,
                             IsArchived = false,
                             ModifiedBy = "Seeded Data",
-                            ModifiedDate = new DateTime(2018, 12, 12, 3, 0, 0, 0, DateTimeKind.Utc),
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
                             PhoneNumber = "+10000000000"
                         });
                 });
@@ -135,7 +144,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Category", b =>
                 {
                     b.Property<int>("CategoryID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
                         .IsRequired();
@@ -216,7 +226,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Container", b =>
                 {
                     b.Property<int>("ContainerID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BinNumber");
 
@@ -256,7 +267,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Location", b =>
                 {
                     b.Property<int>("LocationID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy");
 
@@ -375,13 +387,12 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Log", b =>
                 {
                     b.Property<int>("LogID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("Description");
-
-                    b.Property<bool>("IsArchived");
 
                     b.Property<int>("UserID");
 
@@ -395,7 +406,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Subcategory", b =>
                 {
                     b.Property<int>("SubcategoryID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryID");
 
@@ -2227,7 +2239,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Template", b =>
                 {
                     b.Property<int>("TemplateID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy");
 
@@ -2253,15 +2266,14 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.Transaction", b =>
                 {
                     b.Property<int>("TransactionID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AgencyID");
 
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
-
-                    b.Property<bool>("IsArchived");
 
                     b.Property<bool>("IsOutgoing");
 
@@ -2283,7 +2295,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.TransactionLineItem", b =>
                 {
                     b.Property<int>("TransactionLineItemID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy");
 
@@ -2321,7 +2334,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.TransactionType", b =>
                 {
                     b.Property<int>("TransactionTypeID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy");
 
@@ -2440,7 +2454,8 @@ namespace CCSInventory.Migrations
             modelBuilder.Entity("CCSInventory.Models.User", b =>
                 {
                     b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy");
 
@@ -2497,6 +2512,10 @@ namespace CCSInventory.Migrations
                     b.HasOne("CCSInventory.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressID");
+
+                    b.HasOne("CCSInventory.Models.Address", "MailingAddress")
+                        .WithMany()
+                        .HasForeignKey("MailingAddressID");
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Container", b =>

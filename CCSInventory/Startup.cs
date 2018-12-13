@@ -30,8 +30,8 @@ namespace CCSInventory
         {
             // Configuration of the DbContext (Connection strings are defined in appsettings.json):
             // CCSDbContext: The app's primary data, and likely only Db.  Logging may be folded into this DB
-            //services.AddDbContext<CCSDbContext>(o => o.UseSqlServer(AppSettings["Databases:Production:TitanConnectionString"]));
-            services.AddDbContext<CCSDbContext>(o => o.UseSqlite(AppSettings["Databases:Development:SQLiteConnectionString"]));
+            services.AddDbContext<CCSDbContext>(o => o.UseSqlServer(AppSettings["Databases:Production:TitanConnectionString"]));
+            //services.AddDbContext<CCSDbContext>(o => o.UseSqlite(AppSettings["Databases:Development:SQLiteConnectionString"]));
 
             // C#, by convention, uses PascalCasing.  By default, urls also have PascalCasing
             // This makes urls lowercase instead.

@@ -4,14 +4,16 @@ using CCSInventory.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CCSInventory.Migrations
 {
     [DbContext(typeof(CCSDbContext))]
-    partial class CCSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181212013350_TitanB")]
+    partial class TitanB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,6 +94,8 @@ namespace CCSInventory.Migrations
 
                     b.Property<bool>("IsArchived");
 
+                    b.Property<int?>("MailingAddressID");
+
                     b.Property<string>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
@@ -103,6 +107,8 @@ namespace CCSInventory.Migrations
                     b.HasAlternateKey("AgencyName");
 
                     b.HasIndex("AddressID");
+
+                    b.HasIndex("MailingAddressID");
 
                     b.ToTable("Agencies");
 
@@ -116,21 +122,23 @@ namespace CCSInventory.Migrations
                             CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
                             HasAddress = true,
                             IsArchived = false,
+                            MailingAddressID = 1,
                             ModifiedBy = "Seeded Data",
-                            ModifiedDate = new DateTime(2018, 12, 12, 3, 0, 0, 0, DateTimeKind.Utc),
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
                             PhoneNumber = "+18013945944"
                         },
                         new
                         {
                             AgencyID = 2,
+                            AddressID = 1,
                             AgencyName = "Anonymous",
-                            AgencyNote = "This is a catch-all Agency for anonymous donations.",
+                            AgencyNote = "This is a catch-all Agency for anonymous donations.  The address is CCS Ogden",
                             CreatedBy = "Seeded Data",
                             CreatedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
-                            HasAddress = false,
+                            HasAddress = true,
                             IsArchived = false,
                             ModifiedBy = "Seeded Data",
-                            ModifiedDate = new DateTime(2018, 12, 12, 3, 0, 0, 0, DateTimeKind.Utc),
+                            ModifiedDate = new DateTime(2018, 11, 28, 16, 38, 0, 0, DateTimeKind.Utc),
                             PhoneNumber = "+10000000000"
                         });
                 });
@@ -2510,6 +2518,10 @@ namespace CCSInventory.Migrations
                     b.HasOne("CCSInventory.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressID");
+
+                    b.HasOne("CCSInventory.Models.Address", "MailingAddress")
+                        .WithMany()
+                        .HasForeignKey("MailingAddressID");
                 });
 
             modelBuilder.Entity("CCSInventory.Models.Container", b =>
