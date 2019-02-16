@@ -33,20 +33,6 @@ By Kion Shamsa: [https://www.youtube.com/watch?v=qPix-HWC-O8](https://www.youtub
 
 This ASP.NET Core application is an inventory manager for Catholic Community Services of Utah.  Its purpose is to manage food donations.  Bins can be created to organize the warehouse.
 
-## Unfinished Business
-
-1. Finish the reports system.  We got incoming and inventory to a good base. The way they were written could be used as templates to write the other reports.  The Inventory report can output to an Excel file, while the incoming transaction report can output a CSV file.  One format needs to be picked, as mixing and matching isn't good.
-2. The Inventory report didn't finish full functionality for filtering based on categories/subcategories/locations.  The UI needs to be implemented, and the back-end filter code should be fixed.  At the time of writing, the other filters (Upper/Lower Bounds, Start and End dates) should be working.
-3. The Inventory report saves every report as a template, even when the Save Template box isn't checked.
-4. (Possible bug): DateTime fields for CreatedDate and ModifiedDate are saved in UTC time.  The user is entering their date ranges in local time (in the browser frontend).  Ensure those entry dates are converted to UTC.
-5. General testing and formatting. We think we got most of the bugs ironed out, but I think there should be some more in-depth testing done.
-6. Providing real seed data to the database that matches the defaults that the clients expect (users, donors, etc) (seed data goes in Models/CCSDbContext.cs)
-7. When clicking on a User's name in the top left, there is an option for User Settings.  At the time of writing, it merely displays their information, but there is no proper edit functionality for that info or password.  Clicking the Edit button directs the user to the admin page to edit that user, but non-administrators cannot access this page.  Any administrator can edit any user through the /admin/allusers page.  Note that LoginValidator (Utilities/LoginValidator.cs) will reset all old logins for that user if the ModifiedDate is different than their login cookie.
-8. Getting the database set up on their server.  The development database was SQLite, but switching to SQL Server is simply a matter of changing the line in the ConfigureServices method of Startup.cs (one is commented out), and the migrations need to be deleted if they were made against SQLite.  See the `dotnet ef` commands below.  They apply to SQL Server as well.  The git branch `sqlserver` is the branch Osiris/Titan were set up against.
-9. Some changes to the database produce a runtime log to the console.  This wasn't tied into the Log table in the DbContext.  Logging functionality for CRUD functionality needs to be finished. (This may be required for State Audits).  Models do store the username that created them, along with the username that last edited them.
-10. A page for runtime exceptions needs to be made.  Currently, it merely throws an error 500 code with no details.  A page telling the user that an error has occurred (along with an entry in some log for someone to fix) should be made.
-11. Consider moving Agencies to a different part of the menu.  A warehouse worker receiving donations shouldn't necessarily be an Administrator, but that section of the side-bar will not appear for them.  Requiring an Administrator to add a new donor would impede throughput.
-
 ## Restore Instructions
 
 These instructions are executed in the working directory of CCSInventory/ (LibMan & Migrations)
